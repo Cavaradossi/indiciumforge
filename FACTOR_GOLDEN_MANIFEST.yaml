@@ -1,5 +1,6 @@
 reference: indiciumgrid@indiciumgrid-golden-v1
 domain: factor_core
+note: private/reference inventory only; requires private factor pack; not open-source golden
 scenarios:
   - id: locked_float_advance_hit
     source: FACTOR_CASES
@@ -9,7 +10,7 @@ scenarios:
     tag: strong_positive
     expectation: hit
     source_test: test_factor_case_validation_uses_cached_case_frames
-    status: planned_export
+    status: private_reference
   - id: clustered_limit_up_hit
     source: FACTOR_CASES
     code: "600330"
@@ -18,7 +19,7 @@ scenarios:
     tag: strong_positive
     expectation: hit
     source_test: test_factor_case_validation_uses_cached_case_frames
-    status: planned_export
+    status: private_reference
   - id: clustered_limit_up_miss
     source: FACTOR_CASES
     code: "002969"
@@ -27,7 +28,7 @@ scenarios:
     tag: hard_negative
     expectation: miss
     source_test: test_factor_case_validation_uses_cached_case_frames
-    status: planned_export
+    status: private_reference
   - id: yang_line_density_boundary
     source: FACTOR_CASES
     code: "603778"
@@ -36,7 +37,7 @@ scenarios:
     tag: boundary
     expectation: miss
     source_test: test_factor_case_validation_uses_cached_case_frames
-    status: planned_export
+    status: private_reference
   - id: multi_primary_scan
     source: synthetic
     assets:
@@ -45,4 +46,4 @@ scenarios:
       - code: "600330"
         factor: clustered_limit_up
     source_test: test_factor_scan_detects_locked_float_and_clustered_limitup
-    status: planned_export
+    status: private_reference

@@ -1,6 +1,6 @@
 # ADR-0011: Open-Core Private-Extension Boundary
 
-Status: proposed
+Status: accepted
 
 ## Context
 
@@ -51,7 +51,7 @@ or entry points.
 
 ## Consequences
 
-- Future factor-core v0.3 should implement `FactorDetectorPort`, a demo detector, and a
-  private-pack loading boundary before any detector migration.
+- v0.3 implemented `FactorDetectorPort`, demo detectors, and private-pack loading boundary per ADR-0012.
 - Real IndiciumGrid long_structure detector internals must not be copied into the open-source repo.
 - Golden fixtures must remain synthetic, curated, or anonymized.
+- IG `FACTOR_GOLDEN_MANIFEST.yaml` scenarios require private factor packs for export/parity.

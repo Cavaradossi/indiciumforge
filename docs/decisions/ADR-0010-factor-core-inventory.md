@@ -1,17 +1,18 @@
 # ADR-0010: Factor Core Inventory and Golden Planning
 
-Status: proposed
+Status: accepted
 
 ## Context
 
 - IndiciumGrid factor-core (`factors.mining`, `case_library`) is distinct from `factor_tracking` and market-gate.
 - IG ignored paths (`output/factors/`, `.indiciumgrid/tdx/`) inform schema and scenario seeds but must not enter Lucerna Git as raw data.
-- Lucerna v0.2.1 delivered provider contract v1; factor scan logic is not yet migrated.
+- Lucerna v0.2.1 delivered provider contract v1; v0.3 delivered open-source factor detector port and demo detectors.
 
 ## Decision
 
-- v0.2.2 delivers factor-core inventory, FACTOR_GOLDEN_MANIFEST.yaml, and golden scenario planning docs only.
-- Factor-core implementation (scan kernel, export script, golden parity tests) is deferred to v0.3.
+- v0.2.2 delivered factor-core inventory, FACTOR_GOLDEN_MANIFEST.yaml, and golden scenario planning docs only.
+- v0.3 delivered `FactorDetectorPort`, demo detectors, registry, scan runner, and private-pack loading boundary.
+- IG golden export and proprietary detector parity remain deferred to private extension packs.
 - Factor-tracking remains a separate capability with its own future ADR and golden manifest.
 
 ## Open-source boundary
@@ -27,8 +28,14 @@ Status: proposed
 ## Scope (v0.2.2)
 
 - Taxonomy and artifact family inventory in docs/FACTOR_CORE_INVENTORY.md.
-- Five `planned_export` scenarios in FACTOR_GOLDEN_MANIFEST.yaml.
+- Five `private_reference` scenarios in FACTOR_GOLDEN_MANIFEST.yaml.
 - Comparison strategy in docs/FACTOR_GOLDEN_SCENARIO_PLAN.md.
+
+## Scope (v0.3)
+
+- `lucerna_core.factors` models, port, registry, scan runner, artifact schema.
+- Demo detectors and contract tests on synthetic fixtures.
+- Private-pack loading via config and entry points. See ADR-0012.
 
 ## Out of scope (v0.2.2)
 
@@ -41,7 +48,7 @@ Status: proposed
 ## Consequences
 
 - CAPABILITY_REGISTER: factor-core inventory -> `implemented_v0.2.2`; factor detector port ->
-  `planned_v0.3`; proprietary detectors -> `private_extension`.
+  `implemented_v0.3`; proprietary detectors -> `private_extension`.
 - MIGRATION_MAP: additive factor-core rows; Local Ignored Assets Inventory preserved.
-- v0.3 export must use synthetic OHLCV inputs per MIGRATION_MAP handling rules.
+- Open-source demo scenarios live in FACTOR_DEMO_MANIFEST.yaml; IG scenarios remain private reference.
 - Open-core/private-extension split is authoritative in ADR-0011.

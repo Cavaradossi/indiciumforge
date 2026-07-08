@@ -19,7 +19,8 @@ Source: frozen `indiciumgrid @ indiciumgrid-golden-v1`
 | docs/IMPLEMENTATION_GAP_REGISTER.md | translate | CAPABILITY_REGISTER.md |
 | docs/LONG_STRUCTURE_FACTORS.md | translate/split | docs/FACTOR_CORE_INVENTORY.md + FACTOR_GOLDEN_MANIFEST |
 | Open-core/private-extension boundary | carry_forward | ADR-0011 + CAPABILITY_REGISTER |
-| docs/DECISIONS/* | carry_forward | docs/decisions/ADR-0001..0011 |
+| Factor detector port v0.3 | carry_forward | ADR-0012 + lucerna_core.factors |
+| docs/DECISIONS/* | carry_forward | docs/decisions/ADR-0001..0012 |
 | docs/archive/* | drop | not copied |
 | docs/RUNBOOK_DAILY_WORKFLOW.md | archive_reference | operator note only |
 

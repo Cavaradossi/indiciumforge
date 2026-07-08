@@ -1,20 +1,38 @@
 # Factor Golden Scenario Plan
 
-Reference: [FACTOR_GOLDEN_MANIFEST.yaml](../FACTOR_GOLDEN_MANIFEST.yaml)
+Reference manifests:
 
-Lucerna v0.2.2 plans factor-core golden scenarios. Export and parity tests are deferred to v0.3.
+- [FACTOR_DEMO_MANIFEST.yaml](../FACTOR_DEMO_MANIFEST.yaml) — open-source demo scenarios (v0.3)
+- [FACTOR_GOLDEN_MANIFEST.yaml](../FACTOR_GOLDEN_MANIFEST.yaml) — IG private/reference scenarios
 
-## Scenario set (planned_export)
+Lucerna v0.3 implements demo detector contract tests. IG golden export remains private-reference
+until a private factor pack provides real detectors.
+
+## Open-source demo scenarios (v0.3)
 
 | id | Seed | Expectation | Purpose |
 | --- | --- | --- | --- |
-| `locked_float_advance_hit` | FACTOR_CASES 688498 | hit | primary state-factor detection |
-| `clustered_limit_up_hit` | FACTOR_CASES 600330 | hit | event-factor detection |
-| `clustered_limit_up_miss` | FACTOR_CASES 002969 | miss | hard-negative non-detection |
-| `yang_line_density_boundary` | FACTOR_CASES 603778 | miss | threshold edge case |
-| `multi_primary_scan` | IG synthetic test | dual hit | two-asset scan parity |
+| `demo_volume_breakout_hit` | synthetic DEMO001 | hit | demo volume spike rule |
+| `demo_volume_breakout_miss` | synthetic DEMO001 subset | miss | insufficient bars |
+| `demo_quiet_accumulation_hit` | synthetic DEMO002 | hit | demo quiet range rule |
+| `demo_multi_detector_scan` | synthetic dual-asset | dual hit | scan runner integration |
 
-## Directory layout (v0.3 export target)
+Contract tests live under `tests/contract/test_factor_*.py` with fixtures in
+`tests/fixtures/ohlcv/` and `tests/fixtures/factor_detectors.yaml`.
+
+## IG private-reference scenarios (not open-source golden)
+
+| id | Seed | Expectation | Purpose |
+| --- | --- | --- | --- |
+| `locked_float_advance_hit` | FACTOR_CASES 688498 | hit | private/reference only |
+| `clustered_limit_up_hit` | FACTOR_CASES 600330 | hit | private/reference only |
+| `clustered_limit_up_miss` | FACTOR_CASES 002969 | miss | private/reference only |
+| `yang_line_density_boundary` | FACTOR_CASES 603778 | miss | private/reference only |
+| `multi_primary_scan` | IG synthetic test | dual hit | private/reference only |
+
+These scenarios require a private factor pack. Lucerna open core does not export or implement them.
+
+## Directory layout (future private-pack golden export)
 
 ```text
 tests/golden/factor_core/{scenario_id}/
@@ -28,11 +46,7 @@ tests/golden/factor_core/{scenario_id}/
     meta.json
 ```
 
-Case-library scenarios use one OHLCV file per `code`. `multi_primary_scan` uses two files
-(688498, 600330). Inputs must be synthetic OHLCV with columns
-`date,open,high,low,close,volume` (same contract as provider v0.2.1).
-
-Do not copy from `output/factors/`, `.indiciumgrid/tdx/`, or IG case-cache directories.
+v0.3 does not create this tree for IG scenarios. Demo validation uses contract tests only.
 
 ## Comparison levels
 
@@ -42,14 +56,12 @@ Extend [GOLDEN_ARTIFACT_TEST_PLAN.md](../GOLDEN_ARTIFACT_TEST_PLAN.md) principle
 
 - Required files exist under `expected/factor_scan/`.
 - JSON keys present: `as_of`, signals or rows list, warnings.
-- CSV columns include at minimum: code, factor, as_of (exact column names follow IG compat labels in v0.3).
+- CSV columns include at minimum: code, factor, as_of, matched, score, metrics.
 
 ### Semantic equality
 
-- Case scenarios: `matched` / signal presence aligns with `expectation` (hit/miss/context).
-- `multi_primary_scan`: signal set includes `(688498, locked_float_advance)` and
-  `(600330, clustered_limit_up)`.
-- Score and metrics: compare rounded values or presence of key metric fields; tolerate float noise.
+- Demo scenarios: `matched` aligns with `expectation` (hit/miss).
+- IG scenarios: deferred to private extension packs.
 
 ### Unstable field exclusions
 
@@ -58,15 +70,6 @@ Do not byte-compare:
 - `data_path`, absolute filesystem paths
 - `updated_at`, run timestamps
 - provider provenance paths
-
-Classify differences as `match`, `intentional_change`, or `unsupported_gap` per Constitution.
-
-## Export prerequisites (v0.3)
-
-1. `lucerna_core.factors` scan kernel implemented.
-2. `scripts/export_golden_factor.py` reads FACTOR_GOLDEN_MANIFEST.yaml and writes curated synthetic inputs.
-3. Provider input via explicit `fixture_root` or per-scenario OHLCV under `inputs/ohlcv/`.
-4. No bulk copy from ignored local paths.
 
 ## Out of scope
 

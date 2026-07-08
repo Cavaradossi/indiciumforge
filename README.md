@@ -2,7 +2,9 @@
 
 Lucerna is an evidence-first financial research workspace extracted from the frozen IndiciumGrid reference implementation.
 
-Lucerna v0.2.2 adds factor-core inventory and golden scenario planning (docs only; implementation in v0.3).
+Lucerna v0.3 adds `FactorDetectorPort`, demo detectors, scan runner, and private-pack loading boundary.
+
+Lucerna v0.2.2 adds factor-core inventory and golden scenario planning (docs only).
 
 Lucerna v0.2.1 adds `DataProviderPort` v1, `ProviderRegistry`, and `LocalFixtureProvider` (synthetic CSV fixtures only).
 
@@ -66,8 +68,8 @@ Test layers:
 | Layer | Path | Purpose |
 | --- | --- | --- |
 | Golden | `tests/golden/` | Semantic parity vs exported IG artifacts (5 market-gate scenarios) |
-| Contract | `tests/contract/` | Artifact store, provider registry, fixture provider, manifest audit |
-| Fixtures | `tests/fixtures/ohlcv/` | Hand-authored synthetic OHLCV (not copied from TDX/cache) |
+| Contract | `tests/contract/` | Artifact store, provider registry, fixture provider, manifest audit, factor detectors |
+| Fixtures | `tests/fixtures/ohlcv/` | Hand-authored synthetic OHLCV including DEMO001/DEMO002 demo series |
 | CLI smoke | `tests/cli/` | Typer help + `workflow market-gate` + `artifact list/audit` |
 
 ## CLI
@@ -94,12 +96,30 @@ artifact-root/
 
 Outputs are written under `artifact-root/workflows/{YYYYMMDD}/market_gate/` (7 artifact families: strict, observation, active_watch, rejected, calibration, summary, state).
 
+## v0.3 boundaries
+
+**In scope (implemented_v0.3):**
+
+- `lucerna_core.factors` — `FactorSignal`, `FactorScanResult`, `FactorDetectorPort`, `FactorDetectorRegistry`
+- Demo detectors: `demo_volume_breakout`, `demo_quiet_accumulation` (toy/synthetic logic only)
+- `FactorScanRunner` + factor_scan artifact schema/writer
+- Private-pack loading boundary via config and entry points (`load_detectors_from_config`)
+- [FACTOR_DEMO_MANIFEST.yaml](FACTOR_DEMO_MANIFEST.yaml) — open-source demo scenarios
+- ADR-0012 (proposed); ADR-0010/0011 updated to accepted
+
+**Explicitly not in v0.3:**
+
+- Real IG long-structure detector migration
+- `scripts/export_golden_factor.py` or `tests/golden/factor_core/` IG exports
+- Factor CLI, workflow wiring, factor-tracking, trade-plan/evaluate
+- Live providers and private pack implementations
+
 ## v0.2.2 boundaries
 
 **In scope (implemented_v0.2.2):**
 
 - [docs/FACTOR_CORE_INVENTORY.md](docs/FACTOR_CORE_INVENTORY.md) — symbol/taxonomy/artifact inventory
-- [FACTOR_GOLDEN_MANIFEST.yaml](FACTOR_GOLDEN_MANIFEST.yaml) — five `planned_export` scenarios
+- [FACTOR_GOLDEN_MANIFEST.yaml](FACTOR_GOLDEN_MANIFEST.yaml) — five `private_reference` IG scenarios
 - [docs/FACTOR_GOLDEN_SCENARIO_PLAN.md](docs/FACTOR_GOLDEN_SCENARIO_PLAN.md) — v0.3 compare/export strategy
 - ADR-0010 (proposed) and ADR-0011 (proposed) — open-core/private-extension boundary
 
@@ -147,7 +167,7 @@ calibrated policies live in private extension packs.
 
 - `market-gate` decision kernel with golden parity
 - Local artifact I/O + semantic comparator
-- Constitution, ADR-0001..0011, ruff, pytest
+- Constitution, ADR-0001..0012, ruff, pytest
 - Thin reference CLI
 
 **Contract only (ports defined, no production adapters):**

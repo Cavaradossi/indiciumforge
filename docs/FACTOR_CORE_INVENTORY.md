@@ -4,7 +4,7 @@ Reference: frozen `indiciumgrid @ indiciumgrid-golden-v1`
 
 Lucerna v0.2.2 records factor-core migration inventory and golden scenario planning only.
 Implementation is deferred to v0.3. See [FACTOR_GOLDEN_MANIFEST.yaml](../FACTOR_GOLDEN_MANIFEST.yaml) and
-[ADR-0010](decisions/ADR-0010-factor-core-inventory.md) and [ADR-0011](decisions/ADR-0011-open-core-private-extension-boundary.md).
+[ADR-0010](decisions/ADR-0010-factor-core-inventory.md), [ADR-0011](decisions/ADR-0011-open-core-private-extension-boundary.md), and [ADR-0012](decisions/ADR-0012-factor-detector-port-v0.3.md).
 
 ## Scope boundary
 
@@ -28,6 +28,21 @@ automatically, or replace factor-tracking sample-out monitoring.
 - Real detector implementations and calibrated thresholds remain in private factor packs.
 - If public release requires hiding factor names too, replace private factor names with neutral
   placeholders before publishing or squashing history.
+
+## Open-source v0.3 modules
+
+| Module | Purpose |
+| --- | --- |
+| `lucerna_core.factors.models` | `FactorSignal`, `FactorScanResult` |
+| `lucerna_core.factors.ports` | `FactorDetectorPort` |
+| `lucerna_core.factors.registry` | `FactorDetectorRegistry` |
+| `lucerna_core.factors.loading` | config/entry-point private-pack loading boundary |
+| `lucerna_core.factors.scan` | `FactorScanRunner` |
+| `lucerna_core.factors.artifacts` | factor_scan JSON/CSV schema and writer |
+| `lucerna_core.factors.demo.*` | neutral demo detectors only |
+
+Demo scenarios: [FACTOR_DEMO_MANIFEST.yaml](../FACTOR_DEMO_MANIFEST.yaml).
+IG private/reference scenarios: [FACTOR_GOLDEN_MANIFEST.yaml](../FACTOR_GOLDEN_MANIFEST.yaml).
 
 ## Symbol inventory
 
@@ -63,7 +78,7 @@ Source: `indiciumgrid.factors.mining` (`FactorName`, taxonomy dicts).
 
 | IndiciumGrid source | Future Lucerna target | v0.2.2 | Golden / test anchor |
 | --- | --- | --- | --- |
-| `run_factor_scan` | `lucerna_core.factors.scan` | inventory | `multi_primary_scan` |
+| `run_factor_scan` | `lucerna_core.factors.scan` | implemented v0.3 | FACTOR_DEMO_MANIFEST |
 | `evaluate_factor_parameters` | `lucerna_core.factors.evaluation` | inventory | defer to v0.3+ |
 | `FACTOR_CASES` / `validate_factor_cases` | golden + contract | inventory | case-library scenarios |
 | `factors.trading` / `trading_core` | workflow slice | inventory | trade-plan deferred |

@@ -1,0 +1,33 @@
+reference: lucerna@v0.3.0
+domain: factor_core_demo
+scenarios:
+  - id: demo_volume_breakout_hit
+    source: synthetic
+    code: DEMO001
+    factor: demo_volume_breakout
+    as_of: 2026-05-06
+    expectation: hit
+    status: contract_test
+  - id: demo_volume_breakout_miss
+    source: synthetic
+    code: DEMO001
+    factor: demo_volume_breakout
+    as_of: 2026-05-06
+    expectation: miss
+    note: insufficient bars subset in contract test
+    status: contract_test
+  - id: demo_quiet_accumulation_hit
+    source: synthetic
+    code: DEMO002
+    factor: demo_quiet_accumulation
+    as_of: 2026-05-10
+    expectation: hit
+    status: contract_test
+  - id: demo_multi_detector_scan
+    source: synthetic
+    assets:
+      - code: DEMO001
+        factor: demo_volume_breakout
+      - code: DEMO002
+        factor: demo_quiet_accumulation
+    status: contract_test
