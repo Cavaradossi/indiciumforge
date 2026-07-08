@@ -1,0 +1,28 @@
+trade_date: 2026-06-23
+themes:
+  - theme_name: "\u5f3a\u65b9\u5411"
+    sample_count: 40
+    median_1d: 0.02
+    median_3d: 0.04
+    up_rate: 0.75
+    relative_1d: 0.018
+    ge5_ratio: 0.08
+    limit_up_count: 3
+  - theme_name: "\u786c\u5f31\u65b9\u5411"
+    sample_count: 40
+    median_1d: -0.03
+    median_3d: -0.01
+    up_rate: 0.25
+    relative_1d: -0.02
+    ge5_ratio: 0.01
+    le_minus5_ratio: 0.15
+    limit_down_count: 3
+  - theme_name: "\u8f6c\u5f31\u65b9\u5411"
+    sample_count: 40
+    median_1d: -0.005
+    median_3d: 0.05
+    up_rate: 0.40
+    relative_1d: -0.005
+    ge5_ratio: 0.02
+    le_minus5_ratio: 0.10
+    limit_up_count: 1

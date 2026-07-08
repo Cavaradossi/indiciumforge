@@ -13,5 +13,9 @@ def market_gate_stage_dir(artifact_root: Path, trade_date: date) -> Path:
 
 
 def theme_state_ranking_path(artifact_root: Path, trade_date: date) -> Path:
+    return daily_review_dir(artifact_root, trade_date) / "theme_state_ranking.csv"
+
+
+def daily_review_dir(artifact_root: Path, trade_date: date) -> Path:
     day = trade_date.strftime("%Y%m%d")
-    return artifact_root / "market_awareness" / day / "daily_review" / "theme_state_ranking.csv"
+    return artifact_root / "market_awareness" / day / "daily_review"
