@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import csv
 import json
 from dataclasses import dataclass, field
 from datetime import date
@@ -7,9 +8,26 @@ from pathlib import Path
 from typing import Any
 
 from lucerna_core.artifacts.comparator import GATE_ARTIFACTS, load_meta
-from lucerna_core.artifacts.paths import market_gate_stage_dir
+from lucerna_core.artifacts.paths import daily_review_dir, market_gate_stage_dir
+from lucerna_core.labels.market_gate import MARKET_DAILY, MARKET_ZH
 
 MARKET_GATE_STAGE = "market_gate"
+DAILY_REVIEW_STAGE = "daily_review"
+
+DAILY_REVIEW_REQUIRED_FILES = (
+    "theme_state_ranking.csv",
+    "market_daily_review_state.json",
+)
+DAILY_REVIEW_STATE_SCHEMA = "lucerna.market_daily_review_state.v1"
+
+THEME_STATE_RANKING_COLUMNS: tuple[str, ...] = (
+    MARKET_ZH["theme_name"],
+    MARKET_DAILY["status"],
+    MARKET_DAILY["daily_state"],
+    MARKET_DAILY["mid_state"],
+    MARKET_DAILY["risk_state"],
+    MARKET_DAILY["divergence_state"],
+)
 
 MARKET_GATE_JSON_SCHEMAS: dict[str, str] = {
     "market_gate_calibration_audit.json": (
@@ -50,6 +68,17 @@ class MarketGateStageRef:
     @property
     def core_artifact_count(self) -> int:
         return sum(1 for name in GATE_ARTIFACTS if name in self.present_files)
+
+
+@dataclass(frozen=True)
+class DailyReviewStageRef:
+    trade_date: str
+    stage_dir: Path
+    present_files: tuple[str, ...]
+
+    @property
+    def core_artifact_count(self) -> int:
+        return sum(1 for name in DAILY_REVIEW_REQUIRED_FILES if name in self.present_files)
 
 
 def _load_json(path: Path) -> dict[str, Any]:
@@ -212,6 +241,167 @@ def resolve_market_gate_audit_target(
     if artifact_root is None or trade_date is None:
         raise ValueError("provide --stage-dir or both --artifact-root and --trade-date")
     return market_gate_stage_dir(artifact_root, trade_date), trade_date.isoformat()
+
+
+def list_daily_review_stages(artifact_root: Path) -> list[DailyReviewStageRef]:
+    awareness = artifact_root / "market_awareness"
+    if not awareness.is_dir():
+        return []
+
+    refs: list[DailyReviewStageRef] = []
+    for day_dir in sorted(awareness.iterdir()):
+        if not day_dir.is_dir():
+            continue
+        stage_dir = day_dir / DAILY_REVIEW_STAGE
+        if not stage_dir.is_dir():
+            continue
+        raw = day_dir.name
+        if len(raw) == 8 and raw.isdigit():
+            trade_date = f"{raw[:4]}-{raw[4:6]}-{raw[6:8]}"
+        else:
+            trade_date = raw
+        refs.append(
+            DailyReviewStageRef(
+                trade_date=trade_date,
+                stage_dir=stage_dir,
+                present_files=tuple(scan_stage_dir(stage_dir)),
+            )
+        )
+    return refs
+
+
+def _read_csv_header(path: Path) -> list[str] | None:
+    if not path.is_file():
+        return None
+    with path.open(encoding="utf-8-sig", newline="") as handle:
+        reader = csv.reader(handle)
+        return next(reader, None)
+
+
+def validate_daily_review_stage(
+    stage_dir: Path,
+    *,
+    expected_trade_date: str | None = None,
+) -> ArtifactManifest:
+    violations: list[AuditViolation] = []
+    present = scan_stage_dir(stage_dir)
+
+    if not stage_dir.is_dir():
+        violations.append(
+            AuditViolation("missing_stage_dir", f"stage directory not found: {stage_dir}")
+        )
+        return ArtifactManifest(
+            stage=DAILY_REVIEW_STAGE,
+            stage_dir=stage_dir,
+            trade_date=expected_trade_date,
+            required_files=DAILY_REVIEW_REQUIRED_FILES,
+            present_files=tuple(present),
+            violations=violations,
+        )
+
+    for name in DAILY_REVIEW_REQUIRED_FILES:
+        path = stage_dir / name
+        if not path.is_file():
+            violations.append(
+                AuditViolation(
+                    "missing_file",
+                    f"missing required artifact: {name}",
+                    str(path),
+                )
+            )
+
+    ranking_path = stage_dir / "theme_state_ranking.csv"
+    if ranking_path.is_file():
+        header = _read_csv_header(ranking_path)
+        if header is None:
+            violations.append(
+                AuditViolation(
+                    "invalid_csv",
+                    "theme_state_ranking.csv: empty or unreadable header",
+                    str(ranking_path),
+                )
+            )
+        elif tuple(header) != THEME_STATE_RANKING_COLUMNS:
+            violations.append(
+                AuditViolation(
+                    "csv_column_mismatch",
+                    (
+                        "theme_state_ranking.csv: expected columns "
+                        f"{list(THEME_STATE_RANKING_COLUMNS)!r}, got {header!r}"
+                    ),
+                    str(ranking_path),
+                )
+            )
+
+    trade_dates: list[str] = []
+    if expected_trade_date:
+        trade_dates.append(expected_trade_date)
+
+    state_path = stage_dir / "market_daily_review_state.json"
+    if state_path.is_file():
+        try:
+            payload = _load_json(state_path)
+        except json.JSONDecodeError as exc:
+            violations.append(
+                AuditViolation(
+                    "invalid_json",
+                    f"market_daily_review_state.json: {exc}",
+                    str(state_path),
+                )
+            )
+        else:
+            actual_schema = payload.get("schema")
+            if actual_schema != DAILY_REVIEW_STATE_SCHEMA:
+                violations.append(
+                    AuditViolation(
+                        "schema_mismatch",
+                        (
+                            "market_daily_review_state.json: expected schema "
+                            f"{DAILY_REVIEW_STATE_SCHEMA!r}, got {actual_schema!r}"
+                        ),
+                        str(state_path),
+                    )
+                )
+            trade_date = _normalize_trade_date(payload.get("trade_date"))
+            if trade_date:
+                trade_dates.append(trade_date)
+
+    unique_dates = {value for value in trade_dates if value}
+    if len(unique_dates) > 1:
+        violations.append(
+            AuditViolation(
+                "trade_date_mismatch",
+                f"inconsistent trade_date values: {sorted(unique_dates)}",
+            )
+        )
+
+    resolved_trade_date = next(iter(unique_dates)) if len(unique_dates) == 1 else None
+
+    return ArtifactManifest(
+        stage=DAILY_REVIEW_STAGE,
+        stage_dir=stage_dir,
+        trade_date=resolved_trade_date or expected_trade_date,
+        required_files=DAILY_REVIEW_REQUIRED_FILES,
+        present_files=tuple(present),
+        violations=violations,
+    )
+
+
+def resolve_daily_review_audit_target(
+    *,
+    artifact_root: Path | None,
+    trade_date: date | None,
+    stage_dir: Path | None,
+) -> tuple[Path, str | None]:
+    if stage_dir is not None:
+        return stage_dir, None
+    if artifact_root is None or trade_date is None:
+        raise ValueError("provide --stage-dir or both --artifact-root and --trade-date")
+    return daily_review_dir(artifact_root, trade_date), trade_date.isoformat()
+
+
+def is_daily_review_stage_dir(stage_dir: Path) -> bool:
+    return stage_dir.name == DAILY_REVIEW_STAGE
 
 
 def format_audit_report(manifest: ArtifactManifest) -> str:

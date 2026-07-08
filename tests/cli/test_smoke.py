@@ -33,6 +33,7 @@ def test_cli_workflow_help() -> None:
 
     assert result.exit_code == 0
     assert "market-gate" in result.stdout
+    assert "daily-review" in result.stdout
 
 
 def test_cli_workflow_market_gate_smoke(tmp_path: Path) -> None:
@@ -141,6 +142,7 @@ def test_cli_artifact_list_after_market_gate(tmp_path: Path) -> None:
     )
 
     assert list_result.exit_code == 0, list_result.stdout + list_result.stderr
+    assert "market_gate" in list_result.stdout
     assert "2026-06-23" in list_result.stdout
 
 
@@ -162,3 +164,108 @@ def test_cli_artifact_audit_stage_dir_checks_trade_date() -> None:
 
     assert result.exit_code == 1
     assert "trade_date_mismatch" in result.stdout
+
+
+DEMO_FIXTURE = ROOT / "tests" / "fixtures" / "market_awareness" / "theme_sectors_demo.yaml"
+
+
+def test_cli_workflow_daily_review_help() -> None:
+    runner = CliRunner()
+    result = runner.invoke(app, ["workflow", "daily-review", "--help"])
+
+    assert result.exit_code == 0
+    assert "--fixture-path" in result.stdout
+
+
+def test_cli_workflow_daily_review_smoke(tmp_path: Path) -> None:
+    runner = CliRunner()
+
+    result = runner.invoke(
+        app,
+        [
+            "workflow",
+            "daily-review",
+            "--trade-date",
+            "2026-06-23",
+            "--artifact-root",
+            str(tmp_path),
+            "--fixture-path",
+            str(DEMO_FIXTURE),
+        ],
+    )
+
+    assert result.exit_code == 0, result.stdout + result.stderr
+    assert "Wrote daily-review artifacts" in result.stdout
+    stage_dir = tmp_path / "market_awareness" / "20260623" / "daily_review"
+    assert (stage_dir / "theme_state_ranking.csv").is_file()
+    assert (stage_dir / "market_daily_review_state.json").is_file()
+
+
+def test_cli_artifact_audit_daily_review_after_run(tmp_path: Path) -> None:
+    runner = CliRunner()
+
+    run_result = runner.invoke(
+        app,
+        [
+            "workflow",
+            "daily-review",
+            "--trade-date",
+            "2026-06-23",
+            "--artifact-root",
+            str(tmp_path),
+            "--fixture-path",
+            str(DEMO_FIXTURE),
+        ],
+    )
+    assert run_result.exit_code == 0
+
+    audit_result = runner.invoke(
+        app,
+        [
+            "artifact",
+            "audit",
+            "--artifact-root",
+            str(tmp_path),
+            "--trade-date",
+            "2026-06-23",
+            "--stage-type",
+            "daily_review",
+        ],
+    )
+
+    assert audit_result.exit_code == 0, audit_result.stdout + audit_result.stderr
+    assert "status: ok" in audit_result.stdout
+    assert "stage: daily_review" in audit_result.stdout
+
+
+def test_cli_artifact_list_includes_daily_review(tmp_path: Path) -> None:
+    runner = CliRunner()
+
+    run_result = runner.invoke(
+        app,
+        [
+            "workflow",
+            "daily-review",
+            "--trade-date",
+            "2026-06-23",
+            "--artifact-root",
+            str(tmp_path),
+            "--fixture-path",
+            str(DEMO_FIXTURE),
+        ],
+    )
+    assert run_result.exit_code == 0
+
+    list_result = runner.invoke(
+        app,
+        [
+            "artifact",
+            "list",
+            "--artifact-root",
+            str(tmp_path),
+        ],
+    )
+
+    assert list_result.exit_code == 0, list_result.stdout + list_result.stderr
+    assert "daily_review" in list_result.stdout
+    assert "2026-06-23" in list_result.stdout
