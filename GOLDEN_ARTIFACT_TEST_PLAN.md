@@ -23,3 +23,10 @@ reference: indiciumgrid@indiciumgrid-golden-v1
 - Byte equality: only small stable JSON fixtures without paths, timestamps, or unstable ordering.
 
 Differences must be classified as `match`, `intentional_change`, or `unsupported_gap`.
+
+## Factor core scenarios (planned)
+
+Factor-core golden scenarios are defined in [FACTOR_GOLDEN_MANIFEST.yaml](FACTOR_GOLDEN_MANIFEST.yaml).
+Planning details: [docs/FACTOR_GOLDEN_SCENARIO_PLAN.md](docs/FACTOR_GOLDEN_SCENARIO_PLAN.md).
+
+All five scenarios are `planned_export` until v0.3 implements scan export and parity tests.

@@ -17,7 +17,8 @@ Source: frozen `indiciumgrid @ indiciumgrid-golden-v1`
 | docs/INTRADAY_WATCH_DESIGN.md | archive_reference | docs/archive_reference/ |
 | docs/ACCOUNT_ANALYSIS_DESIGN.md | archive_reference | docs/archive_reference/ |
 | docs/IMPLEMENTATION_GAP_REGISTER.md | translate | CAPABILITY_REGISTER.md |
-| docs/DECISIONS/* | carry_forward | docs/decisions/ADR-0001..0009 |
+| docs/LONG_STRUCTURE_FACTORS.md | translate/split | docs/FACTOR_CORE_INVENTORY.md + FACTOR_GOLDEN_MANIFEST |
+| docs/DECISIONS/* | carry_forward | docs/decisions/ADR-0001..0010 |
 | docs/archive/* | drop | not copied |
 | docs/RUNBOOK_DAILY_WORKFLOW.md | archive_reference | operator note only |
 

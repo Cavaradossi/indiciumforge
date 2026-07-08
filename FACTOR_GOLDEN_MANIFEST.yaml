@@ -1,0 +1,48 @@
+reference: indiciumgrid@indiciumgrid-golden-v1
+domain: factor_core
+scenarios:
+  - id: locked_float_advance_hit
+    source: FACTOR_CASES
+    code: "688498"
+    factor: locked_float_advance
+    as_of: 2026-04-30
+    tag: strong_positive
+    expectation: hit
+    source_test: test_factor_case_validation_uses_cached_case_frames
+    status: planned_export
+  - id: clustered_limit_up_hit
+    source: FACTOR_CASES
+    code: "600330"
+    factor: clustered_limit_up
+    as_of: 2026-02-04
+    tag: strong_positive
+    expectation: hit
+    source_test: test_factor_case_validation_uses_cached_case_frames
+    status: planned_export
+  - id: clustered_limit_up_miss
+    source: FACTOR_CASES
+    code: "002969"
+    factor: clustered_limit_up
+    as_of: 2025-06-13
+    tag: hard_negative
+    expectation: miss
+    source_test: test_factor_case_validation_uses_cached_case_frames
+    status: planned_export
+  - id: yang_line_density_boundary
+    source: FACTOR_CASES
+    code: "603778"
+    factor: yang_line_density
+    as_of: 2025-12-15
+    tag: boundary
+    expectation: miss
+    source_test: test_factor_case_validation_uses_cached_case_frames
+    status: planned_export
+  - id: multi_primary_scan
+    source: synthetic
+    assets:
+      - code: "688498"
+        factor: locked_float_advance
+      - code: "600330"
+        factor: clustered_limit_up
+    source_test: test_factor_scan_detects_locked_float_and_clustered_limitup
+    status: planned_export

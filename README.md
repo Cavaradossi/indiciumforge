@@ -2,6 +2,8 @@
 
 Lucerna is an evidence-first financial research workspace extracted from the frozen IndiciumGrid reference implementation.
 
+Lucerna v0.2.2 adds factor-core inventory and golden scenario planning (docs only; implementation in v0.3).
+
 Lucerna v0.2.1 adds `DataProviderPort` v1, `ProviderRegistry`, and `LocalFixtureProvider` (synthetic CSV fixtures only).
 
 Lucerna v0.2 extends the walking skeleton with a read-only artifact manifest and audit CLI.
@@ -92,6 +94,22 @@ artifact-root/
 
 Outputs are written under `artifact-root/workflows/{YYYYMMDD}/market_gate/` (7 artifact families: strict, observation, active_watch, rejected, calibration, summary, state).
 
+## v0.2.2 boundaries
+
+**In scope (implemented_v0.2.2):**
+
+- [docs/FACTOR_CORE_INVENTORY.md](docs/FACTOR_CORE_INVENTORY.md) — symbol/taxonomy/artifact inventory
+- [FACTOR_GOLDEN_MANIFEST.yaml](FACTOR_GOLDEN_MANIFEST.yaml) — five `planned_export` scenarios
+- [docs/FACTOR_GOLDEN_SCENARIO_PLAN.md](docs/FACTOR_GOLDEN_SCENARIO_PLAN.md) — v0.3 compare/export strategy
+- ADR-0010 (proposed)
+
+**Explicitly not in v0.2.2:**
+
+- `lucerna_core.factors` scan implementation
+- `scripts/export_golden_factor.py` or `tests/golden/factor_core/` exports
+- factor-tracking migration
+- copying `output/factors/`, TDX cache, or `tmp/` data into Git
+
 ## v0.2.1 boundaries
 
 **In scope (implemented_v1):**
@@ -103,7 +121,7 @@ Outputs are written under `artifact-root/workflows/{YYYYMMDD}/market_gate/` (7 a
 
 **Explicitly not in v0.2.1:**
 
-- live/network providers (OpenBB, yfinance, 智兔, TDX adapters)
+- live/network providers (OpenBB, yfinance, Zhitu, TDX adapters)
 - workflow wiring (`market-gate` still uses file inputs only)
 - market daily-review upstream
 - copying ignored IG local data (`.indiciumgrid/tdx/`, cache, `output/`, `tmp/`)
@@ -126,7 +144,7 @@ Outputs are written under `artifact-root/workflows/{YYYYMMDD}/market_gate/` (7 a
 
 - `market-gate` decision kernel with golden parity
 - Local artifact I/O + semantic comparator
-- Constitution, ADR-0001..0009, ruff, pytest
+- Constitution, ADR-0001..0010, ruff, pytest
 - Thin reference CLI
 
 **Contract only (ports defined, no production adapters):**
@@ -151,4 +169,4 @@ See `CAPABILITY_REGISTER.md` for the full capability matrix and promotion rules.
 | `lucerna-workflow` | `market_gate` kernel, resolver, runner |
 | `lucerna-cli` | Reference CLI (`lucerna workflow market-gate`, `lucerna artifact list/audit`) |
 
-Governance docs: `LUCERNA_CONSTITUTION.md`, `MIGRATION_MAP_FROM_INDICIUMGRID.md`, `docs/AGENT_WORKFLOW.md`.
+Governance docs: `LUCERNA_CONSTITUTION.md`, `MIGRATION_MAP_FROM_INDICIUMGRID.md`, `docs/FACTOR_CORE_INVENTORY.md`, `docs/AGENT_WORKFLOW.md`.
