@@ -2,6 +2,8 @@
 
 Lucerna is an evidence-first financial research workspace extracted from the frozen IndiciumGrid reference implementation.
 
+Lucerna v0.2.1 adds `DataProviderPort` v1, `ProviderRegistry`, and `LocalFixtureProvider` (synthetic CSV fixtures only).
+
 Lucerna v0.2 extends the walking skeleton with a read-only artifact manifest and audit CLI.
 
 Lucerna v0.1 is a **Minimum Reusable Core + Walking Skeleton**:
@@ -62,7 +64,8 @@ Test layers:
 | Layer | Path | Purpose |
 | --- | --- | --- |
 | Golden | `tests/golden/` | Semantic parity vs exported IG artifacts (5 market-gate scenarios) |
-| Contract | `tests/contract/` | Artifact store, provider registry, manifest structural audit |
+| Contract | `tests/contract/` | Artifact store, provider registry, fixture provider, manifest audit |
+| Fixtures | `tests/fixtures/ohlcv/` | Hand-authored synthetic OHLCV (not copied from TDX/cache) |
 | CLI smoke | `tests/cli/` | Typer help + `workflow market-gate` + `artifact list/audit` |
 
 ## CLI
@@ -89,6 +92,22 @@ artifact-root/
 
 Outputs are written under `artifact-root/workflows/{YYYYMMDD}/market_gate/` (7 artifact families: strict, observation, active_watch, rejected, calibration, summary, state).
 
+## v0.2.1 boundaries
+
+**In scope (implemented_v1):**
+
+- `DataProviderPort` v1 (`supports`, `fetch_ohlcv`, `Provenance`)
+- `ProviderRegistry` with ordered fallback and warning preservation
+- `LocalFixtureProvider` reading explicit `fixture_root`
+- Synthetic fixture: `tests/fixtures/ohlcv/{exchange}_{asset_type}_{code}.csv`
+
+**Explicitly not in v0.2.1:**
+
+- live/network providers (OpenBB, yfinance, 智兔, TDX adapters)
+- workflow wiring (`market-gate` still uses file inputs only)
+- market daily-review upstream
+- copying ignored IG local data (`.indiciumgrid/tdx/`, cache, `output/`, `tmp/`)
+
 ## v0.2 boundaries
 
 **In scope (implemented_v1):**
@@ -107,12 +126,11 @@ Outputs are written under `artifact-root/workflows/{YYYYMMDD}/market_gate/` (7 a
 
 - `market-gate` decision kernel with golden parity
 - Local artifact I/O + semantic comparator
-- Constitution, ADR-0001..0008, ruff, pytest
+- Constitution, ADR-0001..0009, ruff, pytest
 - Thin reference CLI
 
 **Contract only (ports defined, no production adapters):**
 
-- Data provider
 - Capture/evidence
 - Research engine
 
@@ -129,7 +147,7 @@ See `CAPABILITY_REGISTER.md` for the full capability matrix and promotion rules.
 
 | Package | Role |
 | --- | --- |
-| `lucerna-core` | Domain, labels, ports, artifacts, theme rules |
+| `lucerna-core` | Domain, labels, ports, artifacts, providers, theme rules |
 | `lucerna-workflow` | `market_gate` kernel, resolver, runner |
 | `lucerna-cli` | Reference CLI (`lucerna workflow market-gate`, `lucerna artifact list/audit`) |
 
