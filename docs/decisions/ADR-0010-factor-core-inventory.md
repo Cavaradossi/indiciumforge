@@ -14,6 +14,16 @@ Status: proposed
 - Factor-core implementation (scan kernel, export script, golden parity tests) is deferred to v0.3.
 - Factor-tracking remains a separate capability with its own future ADR and golden manifest.
 
+## Open-source boundary
+
+- v0.2.2 inventory records IndiciumGrid private/reference factor surface; it is not an
+  open-source implementation promise.
+- Lucerna open-source factor-core may include taxonomy compatibility, factor signal artifact
+  schema, `FactorDetectorPort`, synthetic/demo detectors, and golden comparison tools.
+- Proprietary long-structure detector rules remain in private factor packs. See ADR-0011.
+- v0.3 must not directly migrate real detector internals. It should first define the detector
+  port, plugin/private-pack loading mechanism, and demo detector.
+
 ## Scope (v0.2.2)
 
 - Taxonomy and artifact family inventory in docs/FACTOR_CORE_INVENTORY.md.
@@ -30,6 +40,8 @@ Status: proposed
 
 ## Consequences
 
-- CAPABILITY_REGISTER: factor-core inventory -> `implemented_v0.2.2`; factor-core implementation -> `planned_v0.3`.
+- CAPABILITY_REGISTER: factor-core inventory -> `implemented_v0.2.2`; factor detector port ->
+  `planned_v0.3`; proprietary detectors -> `private_extension`.
 - MIGRATION_MAP: additive factor-core rows; Local Ignored Assets Inventory preserved.
 - v0.3 export must use synthetic OHLCV inputs per MIGRATION_MAP handling rules.
+- Open-core/private-extension split is authoritative in ADR-0011.

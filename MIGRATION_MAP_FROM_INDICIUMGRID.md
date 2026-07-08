@@ -14,16 +14,22 @@ IndiciumGrid is frozen at `indiciumgrid-golden-v1`. This map records what Lucern
 | `THEME_STATE_RULES` | `lucerna_core.market.theme_rules` | metadata only | state/summary artifacts |
 | provider registry | `lucerna_core.providers.registry` + `DataProviderPort` | implement v0.2.1 | contract tests |
 | LocalFixtureProvider | `lucerna_core.providers.local_fixture` | implement v0.2.1 | `tests/fixtures/ohlcv` |
-| `run_factor_scan` | `lucerna_core.factors.scan` (planned) | inventory v0.2.2 | `multi_primary_scan` |
-| `FACTOR_CASES` / `validate_factor_cases` | golden + contract (planned) | inventory v0.2.2 | FACTOR_GOLDEN_MANIFEST |
-| `evaluate_factor_parameters` | `lucerna_core.factors.evaluation` (planned) | inventory v0.2.2 | defer v0.3+ |
-| `factors.trading` / `trading_core` | workflow slice (planned) | inventory v0.2.2 | trade-plan deferred |
+| `run_factor_scan` | `lucerna_core.factors.scan` (planned; port/demo only) | inventory v0.2.2; detector internals private-extension | `multi_primary_scan` |
+| `FACTOR_CASES` / `validate_factor_cases` | golden + contract (planned) | inventory v0.2.2; IG cases reference-only | FACTOR_GOLDEN_MANIFEST |
+| `evaluate_factor_parameters` | `lucerna_core.factors.evaluation` (planned) | inventory v0.2.2; calibrated params private-extension | defer v0.3+ |
+| `factors.trading` / `trading_core` | workflow slice (planned) | inventory v0.2.2; trade-plan deferred | trade-plan deferred |
 | intraday watch | future watch capability | not in v0.1 | none |
 | factor tracking | future research/evidence audit capability | not in v0.2.x | `output/factor_tracking/` local |
 | account analysis | future account evidence capability | not in v0.1 | none |
 | catalyst/research experimental branch | future capture/evidence capability | not in v0.1 | none |
 
 Do not use line numbers as migration anchors. Use symbol names, scenario ids, and artifact names.
+
+Factor-core rows above inventory IG reference surface only. Real long-structure detector internals,
+calibrated thresholds, and proprietary alpha logic are **private-extension only** per
+[ADR-0011](docs/decisions/ADR-0011-open-core-private-extension-boundary.md). Open-source Lucerna
+may implement ports, schemas, demo detectors, and golden tools; private packs load through explicit
+ports/config.
 
 ## Local Ignored Assets Migration Inventory
 

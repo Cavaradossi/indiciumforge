@@ -4,7 +4,7 @@ Reference: frozen `indiciumgrid @ indiciumgrid-golden-v1`
 
 Lucerna v0.2.2 records factor-core migration inventory and golden scenario planning only.
 Implementation is deferred to v0.3. See [FACTOR_GOLDEN_MANIFEST.yaml](../FACTOR_GOLDEN_MANIFEST.yaml) and
-[ADR-0010](decisions/ADR-0010-factor-core-inventory.md).
+[ADR-0010](decisions/ADR-0010-factor-core-inventory.md) and [ADR-0011](decisions/ADR-0011-open-core-private-extension-boundary.md).
 
 ## Scope boundary
 
@@ -16,6 +16,18 @@ Implementation is deferred to v0.3. See [FACTOR_GOLDEN_MANIFEST.yaml](../FACTOR_
 
 Factor core produces research signals and scan evidence. It does not place trades, tune parameters
 automatically, or replace factor-tracking sample-out monitoring.
+
+## Open-source boundary
+
+- The 10 IndiciumGrid long-structure factors listed here are private/reference inventory for
+  migration planning.
+- Listing factor names and compatibility labels does not mean Lucerna will publish their detector
+  internals.
+- Open-source Lucerna should define detector ports, signal schemas, artifact contracts, synthetic
+  examples, and comparison rules.
+- Real detector implementations and calibrated thresholds remain in private factor packs.
+- If public release requires hiding factor names too, replace private factor names with neutral
+  placeholders before publishing or squashing history.
 
 ## Symbol inventory
 

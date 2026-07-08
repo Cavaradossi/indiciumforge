@@ -101,7 +101,10 @@ Outputs are written under `artifact-root/workflows/{YYYYMMDD}/market_gate/` (7 a
 - [docs/FACTOR_CORE_INVENTORY.md](docs/FACTOR_CORE_INVENTORY.md) — symbol/taxonomy/artifact inventory
 - [FACTOR_GOLDEN_MANIFEST.yaml](FACTOR_GOLDEN_MANIFEST.yaml) — five `planned_export` scenarios
 - [docs/FACTOR_GOLDEN_SCENARIO_PLAN.md](docs/FACTOR_GOLDEN_SCENARIO_PLAN.md) — v0.3 compare/export strategy
-- ADR-0010 (proposed)
+- ADR-0010 (proposed) and ADR-0011 (proposed) — open-core/private-extension boundary
+
+Lucerna open-source core does not publish proprietary alpha logic; private factor detectors and
+calibrated policies live in private extension packs.
 
 **Explicitly not in v0.2.2:**
 
@@ -144,7 +147,7 @@ Outputs are written under `artifact-root/workflows/{YYYYMMDD}/market_gate/` (7 a
 
 - `market-gate` decision kernel with golden parity
 - Local artifact I/O + semantic comparator
-- Constitution, ADR-0001..0010, ruff, pytest
+- Constitution, ADR-0001..0011, ruff, pytest
 - Thin reference CLI
 
 **Contract only (ports defined, no production adapters):**

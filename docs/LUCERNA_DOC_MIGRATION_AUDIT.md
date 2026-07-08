@@ -18,7 +18,8 @@ Source: frozen `indiciumgrid @ indiciumgrid-golden-v1`
 | docs/ACCOUNT_ANALYSIS_DESIGN.md | archive_reference | docs/archive_reference/ |
 | docs/IMPLEMENTATION_GAP_REGISTER.md | translate | CAPABILITY_REGISTER.md |
 | docs/LONG_STRUCTURE_FACTORS.md | translate/split | docs/FACTOR_CORE_INVENTORY.md + FACTOR_GOLDEN_MANIFEST |
-| docs/DECISIONS/* | carry_forward | docs/decisions/ADR-0001..0010 |
+| Open-core/private-extension boundary | carry_forward | ADR-0011 + CAPABILITY_REGISTER |
+| docs/DECISIONS/* | carry_forward | docs/decisions/ADR-0001..0011 |
 | docs/archive/* | drop | not copied |
 | docs/RUNBOOK_DAILY_WORKFLOW.md | archive_reference | operator note only |
 
