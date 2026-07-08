@@ -87,7 +87,7 @@ Outputs are written under `artifact-root/workflows/{YYYYMMDD}/market_gate/` (7 a
 
 - `market-gate` decision kernel with golden parity
 - Local artifact I/O + semantic comparator
-- Constitution, ADR-0001..0007, ruff, pytest
+- Constitution, ADR-0001..0008 (0008 proposed), ruff, pytest
 - Thin reference CLI
 
 **Contract only (ports defined, no production adapters):**
