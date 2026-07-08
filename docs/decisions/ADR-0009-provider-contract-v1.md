@@ -22,13 +22,13 @@ Status: accepted
 
 ## Out of scope (v0.2.1)
 
-- live/network providers (OpenBB, yfinance, 智兔, TDX production adapters).
+- live/network providers (OpenBB, yfinance, Zhitu, TDX production adapters).
 - workflow wiring (`market_gate` runner still reads file inputs only).
 - market daily-review upstream generation.
 - bulk copy or commit of ignored local market/account/cache data.
 
 ## Consequences
 
-- CAPABILITY_REGISTER: data provider port → `implemented_v1`.
-- MIGRATION_MAP: provider registry + LocalFixtureProvider rows → `implement v0.2.1`.
+- CAPABILITY_REGISTER: data provider port -> `implemented_v1`.
+- MIGRATION_MAP: provider registry + LocalFixtureProvider rows -> `implement v0.2.1`.
 - Tests: contract coverage for registry fallback and fixture provider.
