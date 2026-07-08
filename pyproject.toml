@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "lucerna-workspace"
-version = "0.2.2"
+version = "0.3.0"
 description = "Lucerna monorepo workspace."
 requires-python = ">=3.10"
 dependencies = []

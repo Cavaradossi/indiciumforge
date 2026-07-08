@@ -1,0 +1,5 @@
+detectors:
+  - module: lucerna_core.factors.demo.volume_breakout
+    class: DemoVolumeBreakoutDetector
+  - module: lucerna_core.factors.demo.quiet_accumulation
+    class: DemoQuietAccumulationDetector
