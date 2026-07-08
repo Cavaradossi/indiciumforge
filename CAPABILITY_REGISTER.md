@@ -5,7 +5,7 @@ Status values:
 - `implemented_v1`: implemented, tested, and documented.
 - `implemented_v0.2.2`: documented inventory/planning or boundary slice for v0.2.2 (no runtime code).
 - `implemented_v0.3`: implemented factor detector port slice for v0.3.
-- `planned_v0.4`: ADR proposed or accepted; implementation targeted for v0.4 vertical slice.
+- `implemented_v0.4`: implemented market daily-review upstream skeleton for v0.4.
 - `private_extension`: intentionally outside the open-source repository; implemented only by private packs/plugins.
 - `contract_only`: contract exists; production adapter or domain implementation is deferred.
 - `technical_reserve`: intentionally reserved for later.
@@ -25,11 +25,11 @@ Status values:
 | factor detector port + demo detector | `implemented_v0.3` | `FactorDetectorPort`, demo detectors, registry, loading boundary; ADR-0010/0011/0012. |
 | factor scan runner + artifact schema | `implemented_v0.3` | `FactorScanRunner`, factor_scan JSON/CSV writer; synthetic contract tests only. |
 | proprietary long-structure detectors | `private_extension` | Real IG detector rules; private factor packs only. |
-| market daily-review upstream | `planned_v0.4` | `theme_state_ranking` generation; default next slice; see docs/MIGRATION_ROADMAP.md. |
+| market daily-review upstream | `implemented_v0.4` | Skeleton `theme_state_ranking` generation; ADR-0013; synthetic fixtures only. |
 | post-close / preopen workflow chain | `not_in_v0.3` | Review path chain across workflow stages; planned v0.4/v0.5 candidate. |
 | factor tracking evidence audit | `not_in_v0.2.x` | Sample-out tracking evidence; distinct from factor-core; future ADR. |
 | factor trade-plan/evaluate/backtest adapter | `technical_reserve` | Trade-plan and evaluate outputs; defer past v0.3 core slice. |
-| constitution + ADR + CI | `implemented_v1` | Constitution, ADR-0001..0012 (0012 proposed), ruff, pytest. |
+| constitution + ADR + CI | `implemented_v1` | Constitution, ADR-0001..0013 (0013 proposed), ruff, pytest. |
 | capture/evidence port | `contract_only` | No Firecrawl/Scrapling implementation in v0.1. |
 | research engine port | `contract_only` | No RQAlpha/Qlib/backtrader implementation in v0.1. |
 | execution port | `technical_reserve` | No broker order placement. |
@@ -63,6 +63,10 @@ Forward schedule and original-plan reconciliation:
 
 - v0.3 delivered: **factor detector port + demo detectors + scan runner + loading boundary** (not proprietary detector migration).
 
-## v0.4 forward candidate (planning only)
+## v0.4 vertical slice (completed)
 
-- Default next slice: **market daily-review upstream** (`theme_state_ranking` generation with synthetic/fixture inputs).
+- v0.4 delivered: **market daily-review upstream skeleton** (`theme_state_ranking.csv` from synthetic fixtures).
+
+## v0.4-b forward candidate (planning only)
+
+- CLI `lucerna workflow daily-review`, optional stub bundle, manifest audit for `market_awareness/`.

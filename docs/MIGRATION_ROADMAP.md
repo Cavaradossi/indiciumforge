@@ -24,6 +24,7 @@ indiciumgrid @ indiciumgrid-golden-v1
 | v0.2.1 | DataProviderPort v1 + LocalFixtureProvider | foundation; original v0.2 prerequisite |
 | v0.2.2 | factor inventory + open-core boundary | privacy governance insert |
 | v0.3 | FactorDetectorPort + demo + loading | original v0.3 partial: port only, not workflow chain |
+| v0.4 | market daily-review upstream skeleton | original v0.2 daily-review (partial: ranking only) |
 
 ---
 
@@ -31,7 +32,7 @@ indiciumgrid @ indiciumgrid-golden-v1
 
 | Capability | Original plan version | Actual status | Forward target |
 | --- | --- | --- | --- |
-| market daily-review (`theme_state_ranking`) | v0.2 | not started (`not_in_v0.2`) | **v0.4 candidate** |
+| market daily-review (`theme_state_ranking`) | v0.2 | `implemented_v0.4` skeleton | v0.4-b CLI/bundle optional |
 | post-close -> preopen workflow chain | v0.3 | not started | **v0.4/v0.5 candidate** |
 | factor scan port (open source) | v0.3 (partial) | `implemented_v0.3` | done |
 | proprietary long-structure detectors | implicit IG migration | `private_extension` | private packs only |
@@ -49,7 +50,8 @@ Lucerna remains on the migration main line:
 - v0.1 walking skeleton delivered with golden + contract tests
 - v0.2 through v0.3 prioritized foundation (artifact audit, provider port, open-core boundary,
   factor detector port) before upstream workflow generation
-- Acceptable drifts: foundation-first reordering; ADR-0011 open-core insert; v0.3 scope narrowing
+- v0.4 implemented market daily-review upstream skeleton per ADR-0013
+- Acceptable drifts: foundation-first reordering; ADR-0011 open-core insert; v0.3/v0.4 scope narrowing
   (port/demo only, no IG detector migration, no workflow chain)
 
 Risk guard: do not export IG factor golden trees or migrate proprietary detector internals into the
@@ -61,16 +63,10 @@ open-source repo without a private factor pack (ADR-0011).
 
 Owner may reprioritize via future ADR. Default orientation:
 
-### v0.4-a: market daily-review generation (default next)
+### v0.4-a: market daily-review generation (completed)
 
-| Item | Detail |
-| --- | --- |
-| Scope | Generate `theme_state_ranking.csv` upstream artifact using synthetic/fixture inputs |
-| Prerequisites | `DataProviderPort` v1, artifact manifest/audit, market-gate kernel |
-| ADR | New ADR likely required for daily-review kernel contract |
-| Golden | New scenarios under `tests/golden/market_awareness/` or equivalent |
-| Open-core | No live TDX/network; no proprietary watchlist/source lists in Git |
-| Out of scope | Full cyclic scheduler; live provider adapters |
+Delivered in v0.4.0: skeleton `theme_state_ranking.csv` + state JSON via synthetic fixtures.
+See ADR-0013. Full IG daily-review bundle deferred to v0.4-b+.
 
 ### v0.4-b or v0.5: post-close -> preopen workflow chain
 

@@ -2,6 +2,8 @@
 
 Lucerna is an evidence-first financial research workspace extracted from the frozen IndiciumGrid reference implementation.
 
+Lucerna v0.4 adds market daily-review upstream skeleton (`theme_state_ranking.csv` generation).
+
 Lucerna v0.3 adds `FactorDetectorPort`, demo detectors, scan runner, and private-pack loading boundary.
 
 Lucerna v0.2.2 adds factor-core inventory and golden scenario planning (docs only).
@@ -29,7 +31,7 @@ See [docs/MIGRATION_ROADMAP.md](docs/MIGRATION_ROADMAP.md) for original-plan rec
 
 ## What's next
 
-- **v0.4 candidate (default):** market daily-review upstream (`theme_state_ranking` generation)
+- **v0.4-b candidate:** `lucerna workflow daily-review` CLI + optional stub bundle artifacts
 - **v0.4/v0.5 candidate:** post-close -> preopen workflow chain
 - **Later:** intraday watch, factor tracking, account analysis per [MIGRATION_ROADMAP](docs/MIGRATION_ROADMAP.md)
 
@@ -76,7 +78,7 @@ Test layers:
 | Layer | Path | Purpose |
 | --- | --- | --- |
 | Golden | `tests/golden/` | Semantic parity vs exported IG artifacts (5 market-gate scenarios) |
-| Contract | `tests/contract/` | Artifact store, provider registry, fixture provider, manifest audit, factor detectors |
+| Contract | `tests/contract/` | Artifact store, provider, factor detectors, daily-review skeleton |
 | Fixtures | `tests/fixtures/ohlcv/` | Hand-authored synthetic OHLCV including DEMO001/DEMO002 demo series |
 | CLI smoke | `tests/cli/` | Typer help + `workflow market-gate` + `artifact list/audit` |
 
@@ -103,6 +105,23 @@ artifact-root/
 ```
 
 Outputs are written under `artifact-root/workflows/{YYYYMMDD}/market_gate/` (7 artifact families: strict, observation, active_watch, rejected, calibration, summary, state).
+
+## v0.4 boundaries
+
+**In scope (implemented_v0.4):**
+
+- `lucerna_workflow.market_awareness` — skeleton daily-review upstream
+- `run_daily_review_skeleton` — synthetic fixture -> `theme_state_ranking.csv` + state JSON
+- Theme state classifier using `THEME_STATE_RULES` (skeleton semantics, not IG port)
+- Fixtures: `tests/fixtures/market_awareness/theme_sectors_*.yaml`
+- ADR-0013 (proposed)
+
+**Explicitly not in v0.4:**
+
+- Full IG `run_market_daily_review` bundle (index, breadth, constituents, xlsx)
+- TDX board parsing, live/network providers
+- Daily-review CLI (v0.4-b)
+- Artifact manifest audit for `market_awareness/` stage
 
 ## v0.3 boundaries
 
@@ -175,7 +194,7 @@ calibrated policies live in private extension packs.
 
 - `market-gate` decision kernel with golden parity
 - Local artifact I/O + semantic comparator
-- Constitution, ADR-0001..0012, ruff, pytest
+- Constitution, ADR-0001..0013, ruff, pytest
 - Thin reference CLI
 
 **Contract only (ports defined, no production adapters):**

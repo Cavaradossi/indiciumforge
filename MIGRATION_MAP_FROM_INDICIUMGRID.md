@@ -22,7 +22,7 @@ IndiciumGrid is frozen at `indiciumgrid-golden-v1`. This map records what Lucern
 | factor tracking | future research/evidence audit capability | not in v0.2.x | `output/factor_tracking/` local |
 | account analysis | future account evidence capability | not in v0.1 | none |
 | catalyst/research experimental branch | future capture/evidence capability | not in v0.1 | none |
-| `market_awareness` daily-review | `lucerna_workflow.market_awareness` (planned) | reference-only until v0.4 | `theme_state_ranking` |
+| `market_awareness` daily-review | `lucerna_workflow.market_awareness` | implemented v0.4 skeleton | `theme_state_ranking` |
 
 Do not use line numbers as migration anchors. Use symbol names, scenario ids, and artifact names.
 
