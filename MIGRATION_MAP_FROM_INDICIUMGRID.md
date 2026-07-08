@@ -22,6 +22,7 @@ IndiciumGrid is frozen at `indiciumgrid-golden-v1`. This map records what Lucern
 | factor tracking | future research/evidence audit capability | not in v0.2.x | `output/factor_tracking/` local |
 | account analysis | future account evidence capability | not in v0.1 | none |
 | catalyst/research experimental branch | future capture/evidence capability | not in v0.1 | none |
+| `market_awareness` daily-review | `lucerna_workflow.market_awareness` (planned) | reference-only until v0.4 | `theme_state_ranking` |
 
 Do not use line numbers as migration anchors. Use symbol names, scenario ids, and artifact names.
 
@@ -30,6 +31,8 @@ calibrated thresholds, and proprietary alpha logic are **private-extension only*
 [ADR-0011](docs/decisions/ADR-0011-open-core-private-extension-boundary.md). Open-source Lucerna
 may implement ports, schemas, demo detectors, and golden tools; private packs load through explicit
 ports/config.
+
+Forward capability schedule: [docs/MIGRATION_ROADMAP.md](docs/MIGRATION_ROADMAP.md).
 
 ## Local Ignored Assets Migration Inventory
 

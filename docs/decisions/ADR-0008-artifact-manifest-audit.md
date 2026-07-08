@@ -27,6 +27,7 @@ Status: accepted
 
 ## Consequences
 
-- CAPABILITY_REGISTER: artifact manifest / audit CLI → `planned_v0.2`.
+- CAPABILITY_REGISTER: artifact manifest / audit CLI -> `implemented_v1`.
 - Tests: contract tests on golden `expected/` dirs; negative cases for missing artifacts.
 - README: document `lucerna artifact` commands when implemented.
+- Forward: market daily-review upstream deferred to v0.4 candidate; see docs/MIGRATION_ROADMAP.md.

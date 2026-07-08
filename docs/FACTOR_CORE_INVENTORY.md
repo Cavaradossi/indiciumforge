@@ -2,8 +2,8 @@
 
 Reference: frozen `indiciumgrid @ indiciumgrid-golden-v1`
 
-Lucerna v0.2.2 records factor-core migration inventory and golden scenario planning only.
-Implementation is deferred to v0.3. See [FACTOR_GOLDEN_MANIFEST.yaml](../FACTOR_GOLDEN_MANIFEST.yaml) and
+Lucerna v0.3 delivered the open-source factor detector port and demo detectors; proprietary IG
+detectors remain `private_extension`. See [FACTOR_GOLDEN_MANIFEST.yaml](../FACTOR_GOLDEN_MANIFEST.yaml) and
 [ADR-0010](decisions/ADR-0010-factor-core-inventory.md), [ADR-0011](decisions/ADR-0011-open-core-private-extension-boundary.md), and [ADR-0012](decisions/ADR-0012-factor-detector-port-v0.3.md).
 
 ## Scope boundary

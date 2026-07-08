@@ -29,4 +29,5 @@ Differences must be classified as `match`, `intentional_change`, or `unsupported
 Factor-core golden scenarios are defined in [FACTOR_GOLDEN_MANIFEST.yaml](FACTOR_GOLDEN_MANIFEST.yaml).
 Planning details: [docs/FACTOR_GOLDEN_SCENARIO_PLAN.md](docs/FACTOR_GOLDEN_SCENARIO_PLAN.md).
 
-All five scenarios are `planned_export` until v0.3 implements scan export and parity tests.
+IG scenarios in FACTOR_GOLDEN_MANIFEST.yaml are `private_reference` (require private factor pack).
+Open-source demo scenarios: [FACTOR_DEMO_MANIFEST.yaml](FACTOR_DEMO_MANIFEST.yaml).

@@ -5,13 +5,14 @@ Status values:
 - `implemented_v1`: implemented, tested, and documented.
 - `implemented_v0.2.2`: documented inventory/planning or boundary slice for v0.2.2 (no runtime code).
 - `implemented_v0.3`: implemented factor detector port slice for v0.3.
-- `planned_v0.3`: ADR proposed or accepted; implementation targeted for v0.3 vertical slice.
+- `planned_v0.4`: ADR proposed or accepted; implementation targeted for v0.4 vertical slice.
 - `private_extension`: intentionally outside the open-source repository; implemented only by private packs/plugins.
 - `contract_only`: contract exists; production adapter or domain implementation is deferred.
 - `technical_reserve`: intentionally reserved for later.
 - `not_in_v0.1`: explicitly outside v0.1.
 - `not_in_v0.2`: explicitly outside v0.2.
 - `not_in_v0.2.x`: explicitly outside v0.2.x planning slices.
+- `not_in_v0.3`: explicitly outside v0.3.
 
 | Capability | Status | Boundary |
 | --- | --- | --- |
@@ -24,6 +25,8 @@ Status values:
 | factor detector port + demo detector | `implemented_v0.3` | `FactorDetectorPort`, demo detectors, registry, loading boundary; ADR-0010/0011/0012. |
 | factor scan runner + artifact schema | `implemented_v0.3` | `FactorScanRunner`, factor_scan JSON/CSV writer; synthetic contract tests only. |
 | proprietary long-structure detectors | `private_extension` | Real IG detector rules; private factor packs only. |
+| market daily-review upstream | `planned_v0.4` | `theme_state_ranking` generation; default next slice; see docs/MIGRATION_ROADMAP.md. |
+| post-close / preopen workflow chain | `not_in_v0.3` | Review path chain across workflow stages; planned v0.4/v0.5 candidate. |
 | factor tracking evidence audit | `not_in_v0.2.x` | Sample-out tracking evidence; distinct from factor-core; future ADR. |
 | factor trade-plan/evaluate/backtest adapter | `technical_reserve` | Trade-plan and evaluate outputs; defer past v0.3 core slice. |
 | constitution + ADR + CI | `implemented_v1` | Constitution, ADR-0001..0012 (0012 proposed), ruff, pytest. |
@@ -31,7 +34,6 @@ Status values:
 | research engine port | `contract_only` | No RQAlpha/Qlib/backtrader implementation in v0.1. |
 | execution port | `technical_reserve` | No broker order placement. |
 | workflow enrichment port | `technical_reserve` | Explanation only, never strict gate input. |
-| market daily-review upstream | `not_in_v0.2` | Explicitly deferred; depends on provider + manifest foundations. |
 | intraday watch | `not_in_v0.1` | Future event recorder migration. |
 | account analysis | `not_in_v0.1` | Future local account evidence domain. |
 | catalyst/KOL ingestion | `not_in_v0.1` | Future capture/evidence adapter. |
@@ -39,6 +41,11 @@ Status values:
 | ETF workflow | `not_in_v0.1` | Future capability. |
 
 Promotion rule: a capability can advance only when implementation, tests, and documentation agree.
+
+## Migration roadmap
+
+Forward schedule and original-plan reconciliation:
+[docs/MIGRATION_ROADMAP.md](docs/MIGRATION_ROADMAP.md).
 
 ## v0.2 vertical slice (completed)
 
@@ -55,3 +62,7 @@ Promotion rule: a capability can advance only when implementation, tests, and do
 ## v0.3 vertical slice (completed)
 
 - v0.3 delivered: **factor detector port + demo detectors + scan runner + loading boundary** (not proprietary detector migration).
+
+## v0.4 forward candidate (planning only)
+
+- Default next slice: **market daily-review upstream** (`theme_state_ranking` generation with synthetic/fixture inputs).

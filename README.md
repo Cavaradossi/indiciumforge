@@ -25,6 +25,14 @@ indiciumgrid @ indiciumgrid-golden-v1
 
 Lucerna preserves behavior where explicitly covered by golden artifacts. It does not copy IndiciumGrid's module structure.
 
+See [docs/MIGRATION_ROADMAP.md](docs/MIGRATION_ROADMAP.md) for original-plan reconciliation and forward schedule.
+
+## What's next
+
+- **v0.4 candidate (default):** market daily-review upstream (`theme_state_ranking` generation)
+- **v0.4/v0.5 candidate:** post-close -> preopen workflow chain
+- **Later:** intraday watch, factor tracking, account analysis per [MIGRATION_ROADMAP](docs/MIGRATION_ROADMAP.md)
+
 ## Install
 
 Requirements: Python 3.10+.
