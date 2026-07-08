@@ -6,6 +6,7 @@ Status values:
 - `implemented_v0.2.2`: documented inventory/planning or boundary slice for v0.2.2 (no runtime code).
 - `implemented_v0.3`: implemented factor detector port slice for v0.3.
 - `implemented_v0.4`: implemented market daily-review upstream skeleton for v0.4.
+- `implemented_v0.4.1`: daily-review CLI + manifest audit for market_awareness stage.
 - `private_extension`: intentionally outside the open-source repository; implemented only by private packs/plugins.
 - `contract_only`: contract exists; production adapter or domain implementation is deferred.
 - `technical_reserve`: intentionally reserved for later.
@@ -18,18 +19,18 @@ Status values:
 | --- | --- | --- |
 | market-gate decision kernel | `implemented_v1` | Full strict/observation/active_watch/rejected/calibration semantics with golden parity. |
 | artifact store + golden compare | `implemented_v1` | Local artifact I/O, semantic comparator, five golden scenarios. |
-| artifact manifest / audit CLI | `implemented_v1` | Read-only scan + validate market-gate stage dirs; `lucerna artifact list/audit`; ADR-0008. |
+| artifact manifest / audit CLI | `implemented_v0.4.1` | Scan + validate market_gate and daily_review stage dirs; `lucerna artifact list/audit`; ADR-0008, ADR-0014. |
 | data provider port | `implemented_v1` | `DataProviderPort` v1, `ProviderRegistry`, `LocalFixtureProvider`; synthetic fixtures only; ADR-0009. |
 | open-core/private-extension boundary | `implemented_v0.2.2` | ADR-0011; authoritative split between open core and private packs. |
 | factor-core inventory + golden planning | `implemented_v0.2.2` | FACTOR_CORE_INVENTORY, FACTOR_GOLDEN_MANIFEST, scenario plan; ADR-0010. |
 | factor detector port + demo detector | `implemented_v0.3` | `FactorDetectorPort`, demo detectors, registry, loading boundary; ADR-0010/0011/0012. |
 | factor scan runner + artifact schema | `implemented_v0.3` | `FactorScanRunner`, factor_scan JSON/CSV writer; synthetic contract tests only. |
 | proprietary long-structure detectors | `private_extension` | Real IG detector rules; private factor packs only. |
-| market daily-review upstream | `implemented_v0.4` | Skeleton `theme_state_ranking` generation; ADR-0013; synthetic fixtures only. |
+| market daily-review upstream | `implemented_v0.4.1` | Skeleton `theme_state_ranking` generation + `lucerna workflow daily-review` CLI; ADR-0013/0014; synthetic fixtures only. |
 | post-close / preopen workflow chain | `not_in_v0.3` | Review path chain across workflow stages; planned v0.4/v0.5 candidate. |
 | factor tracking evidence audit | `not_in_v0.2.x` | Sample-out tracking evidence; distinct from factor-core; future ADR. |
 | factor trade-plan/evaluate/backtest adapter | `technical_reserve` | Trade-plan and evaluate outputs; defer past v0.3 core slice. |
-| constitution + ADR + CI | `implemented_v1` | Constitution, ADR-0001..0013 (0013 proposed), ruff, pytest. |
+| constitution + ADR + CI | `implemented_v1` | Constitution, ADR-0001..0014 (0013/0014 proposed), ruff, pytest. |
 | capture/evidence port | `contract_only` | No Firecrawl/Scrapling implementation in v0.1. |
 | research engine port | `contract_only` | No RQAlpha/Qlib/backtrader implementation in v0.1. |
 | execution port | `technical_reserve` | No broker order placement. |
@@ -67,6 +68,11 @@ Forward schedule and original-plan reconciliation:
 
 - v0.4 delivered: **market daily-review upstream skeleton** (`theme_state_ranking.csv` from synthetic fixtures).
 
-## v0.4-b forward candidate (planning only)
+## v0.4-b vertical slice (completed)
 
-- CLI `lucerna workflow daily-review`, optional stub bundle, manifest audit for `market_awareness/`.
+- v0.4.1 delivered: **daily-review CLI** (`lucerna workflow daily-review`) and **manifest audit**
+  for `market_awareness/{YYYYMMDD}/daily_review/` (ADR-0014).
+
+## v0.5 forward candidate (planning only)
+
+- post-close -> preopen workflow chain; optional stub daily-review bundle artifacts.

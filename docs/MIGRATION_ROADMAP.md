@@ -25,6 +25,7 @@ indiciumgrid @ indiciumgrid-golden-v1
 | v0.2.2 | factor inventory + open-core boundary | privacy governance insert |
 | v0.3 | FactorDetectorPort + demo + loading | original v0.3 partial: port only, not workflow chain |
 | v0.4 | market daily-review upstream skeleton | original v0.2 daily-review (partial: ranking only) |
+| v0.4.1 | daily-review CLI + manifest audit | original v0.2 daily-review operator loop |
 
 ---
 
@@ -32,8 +33,8 @@ indiciumgrid @ indiciumgrid-golden-v1
 
 | Capability | Original plan version | Actual status | Forward target |
 | --- | --- | --- | --- |
-| market daily-review (`theme_state_ranking`) | v0.2 | `implemented_v0.4` skeleton | v0.4-b CLI/bundle optional |
-| post-close -> preopen workflow chain | v0.3 | not started | **v0.4/v0.5 candidate** |
+| market daily-review (`theme_state_ranking`) | v0.2 | `implemented_v0.4.1` skeleton + CLI | optional stub bundle v0.5+ |
+| post-close -> preopen workflow chain | v0.3 | not started | **v0.5 candidate** |
 | factor scan port (open source) | v0.3 (partial) | `implemented_v0.3` | done |
 | proprietary long-structure detectors | implicit IG migration | `private_extension` | private packs only |
 | intraday watch | v0.4 | not started | v0.5+ |
@@ -51,6 +52,7 @@ Lucerna remains on the migration main line:
 - v0.2 through v0.3 prioritized foundation (artifact audit, provider port, open-core boundary,
   factor detector port) before upstream workflow generation
 - v0.4 implemented market daily-review upstream skeleton per ADR-0013
+- v0.4.1 added daily-review CLI and manifest audit for `market_awareness/` per ADR-0014
 - Acceptable drifts: foundation-first reordering; ADR-0011 open-core insert; v0.3/v0.4 scope narrowing
   (port/demo only, no IG detector migration, no workflow chain)
 
@@ -66,9 +68,14 @@ Owner may reprioritize via future ADR. Default orientation:
 ### v0.4-a: market daily-review generation (completed)
 
 Delivered in v0.4.0: skeleton `theme_state_ranking.csv` + state JSON via synthetic fixtures.
-See ADR-0013. Full IG daily-review bundle deferred to v0.4-b+.
+See ADR-0013.
 
-### v0.4-b or v0.5: post-close -> preopen workflow chain
+### v0.4-b: daily-review CLI + manifest audit (completed)
+
+Delivered in v0.4.1: `lucerna workflow daily-review`, unified `artifact list/audit` for
+`market_awareness/{YYYYMMDD}/daily_review/`. See ADR-0014. Full IG daily-review bundle deferred.
+
+### v0.5: post-close -> preopen workflow chain (candidate)
 
 | Item | Detail |
 | --- | --- |

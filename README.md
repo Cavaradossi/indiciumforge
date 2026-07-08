@@ -2,6 +2,8 @@
 
 Lucerna is an evidence-first financial research workspace extracted from the frozen IndiciumGrid reference implementation.
 
+Lucerna v0.4.1 adds daily-review CLI and manifest audit for `market_awareness/` stages.
+
 Lucerna v0.4 adds market daily-review upstream skeleton (`theme_state_ranking.csv` generation).
 
 Lucerna v0.3 adds `FactorDetectorPort`, demo detectors, scan runner, and private-pack loading boundary.
@@ -31,9 +33,8 @@ See [docs/MIGRATION_ROADMAP.md](docs/MIGRATION_ROADMAP.md) for original-plan rec
 
 ## What's next
 
-- **v0.4-b candidate:** `lucerna workflow daily-review` CLI + optional stub bundle artifacts
-- **v0.4/v0.5 candidate:** post-close -> preopen workflow chain
-- **Later:** intraday watch, factor tracking, account analysis per [MIGRATION_ROADMAP](docs/MIGRATION_ROADMAP.md)
+- **v0.5 candidate:** post-close -> preopen workflow chain
+- **Later:** optional stub daily-review bundle, intraday watch, factor tracking, account analysis per [MIGRATION_ROADMAP](docs/MIGRATION_ROADMAP.md)
 
 ## Install
 
@@ -80,7 +81,7 @@ Test layers:
 | Golden | `tests/golden/` | Semantic parity vs exported IG artifacts (5 market-gate scenarios) |
 | Contract | `tests/contract/` | Artifact store, provider, factor detectors, daily-review skeleton |
 | Fixtures | `tests/fixtures/ohlcv/` | Hand-authored synthetic OHLCV including DEMO001/DEMO002 demo series |
-| CLI smoke | `tests/cli/` | Typer help + `workflow market-gate` + `artifact list/audit` |
+| CLI smoke | `tests/cli/` | Typer help + `workflow market-gate/daily-review` + `artifact list/audit` |
 
 ## CLI
 
@@ -88,9 +89,11 @@ Test layers:
 lucerna --help
 lucerna workflow --help
 lucerna workflow market-gate --trade-date 2026-06-23 --artifact-root D:\path\to\artifact-root
+lucerna workflow daily-review --trade-date 2026-06-23 --artifact-root D:\path\to\artifact-root --fixture-path D:\path\to\theme_sectors_demo.yaml
 lucerna artifact --help
 lucerna artifact list --artifact-root D:\path\to\artifact-root
 lucerna artifact audit --artifact-root D:\path\to\artifact-root --trade-date 2026-06-23
+lucerna artifact audit --artifact-root D:\path\to\artifact-root --trade-date 2026-06-23 --stage-type daily_review
 lucerna artifact audit --stage-dir D:\path\to\workflows\20260623\market_gate --meta-path D:\path\to\meta.json
 ```
 
@@ -108,20 +111,21 @@ Outputs are written under `artifact-root/workflows/{YYYYMMDD}/market_gate/` (7 a
 
 ## v0.4 boundaries
 
-**In scope (implemented_v0.4):**
+**In scope (implemented_v0.4 / v0.4.1):**
 
 - `lucerna_workflow.market_awareness` — skeleton daily-review upstream
 - `run_daily_review_skeleton` — synthetic fixture -> `theme_state_ranking.csv` + state JSON
+- `lucerna workflow daily-review` — CLI wrapper (v0.4.1)
+- `lucerna artifact list/audit` — market_gate + daily_review stages (v0.4.1)
 - Theme state classifier using `THEME_STATE_RULES` (skeleton semantics, not IG port)
 - Fixtures: `tests/fixtures/market_awareness/theme_sectors_*.yaml`
-- ADR-0013 (proposed)
+- ADR-0013, ADR-0014 (proposed)
 
 **Explicitly not in v0.4:**
 
 - Full IG `run_market_daily_review` bundle (index, breadth, constituents, xlsx)
 - TDX board parsing, live/network providers
-- Daily-review CLI (v0.4-b)
-- Artifact manifest audit for `market_awareness/` stage
+- post-close -> preopen workflow chain (v0.5 candidate)
 
 ## v0.3 boundaries
 
