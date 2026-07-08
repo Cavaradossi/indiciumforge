@@ -1,6 +1,6 @@
 # ADR-0008: Artifact Manifest and Audit CLI
 
-Status: proposed
+Status: accepted
 
 ## Context
 

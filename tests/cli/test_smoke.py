@@ -81,3 +81,84 @@ def test_cli_rejects_invalid_trade_date(tmp_path: Path) -> None:
     )
 
     assert result.exit_code != 0
+
+
+def test_cli_artifact_help() -> None:
+    runner = CliRunner()
+    result = runner.invoke(app, ["artifact", "--help"])
+
+    assert result.exit_code == 0
+    assert "audit" in result.stdout
+    assert "list" in result.stdout
+
+
+def test_cli_artifact_audit_golden_expected() -> None:
+    runner = CliRunner()
+    stage_dir = SCENARIO / "expected" / "market_gate"
+    meta_path = SCENARIO / "expected" / "meta.json"
+
+    result = runner.invoke(
+        app,
+        [
+            "artifact",
+            "audit",
+            "--stage-dir",
+            str(stage_dir),
+            "--meta-path",
+            str(meta_path),
+        ],
+    )
+
+    assert result.exit_code == 0, result.stdout + result.stderr
+    assert "status: ok" in result.stdout
+
+
+def test_cli_artifact_list_after_market_gate(tmp_path: Path) -> None:
+    runner = CliRunner()
+    _copy_scenario_inputs(tmp_path)
+
+    run_result = runner.invoke(
+        app,
+        [
+            "workflow",
+            "market-gate",
+            "--trade-date",
+            "2026-06-23",
+            "--artifact-root",
+            str(tmp_path),
+        ],
+    )
+    assert run_result.exit_code == 0
+
+    list_result = runner.invoke(
+        app,
+        [
+            "artifact",
+            "list",
+            "--artifact-root",
+            str(tmp_path),
+        ],
+    )
+
+    assert list_result.exit_code == 0, list_result.stdout + list_result.stderr
+    assert "2026-06-23" in list_result.stdout
+
+
+def test_cli_artifact_audit_stage_dir_checks_trade_date() -> None:
+    runner = CliRunner()
+    stage_dir = SCENARIO / "expected" / "market_gate"
+
+    result = runner.invoke(
+        app,
+        [
+            "artifact",
+            "audit",
+            "--stage-dir",
+            str(stage_dir),
+            "--trade-date",
+            "2026-06-24",
+        ],
+    )
+
+    assert result.exit_code == 1
+    assert "trade_date_mismatch" in result.stdout

@@ -2,6 +2,8 @@
 
 Lucerna is an evidence-first financial research workspace extracted from the frozen IndiciumGrid reference implementation.
 
+Lucerna v0.2 extends the walking skeleton with a read-only artifact manifest and audit CLI.
+
 Lucerna v0.1 is a **Minimum Reusable Core + Walking Skeleton**:
 
 - a small package workspace,
@@ -60,8 +62,8 @@ Test layers:
 | Layer | Path | Purpose |
 | --- | --- | --- |
 | Golden | `tests/golden/` | Semantic parity vs exported IG artifacts (5 market-gate scenarios) |
-| Contract | `tests/contract/` | Artifact store roundtrip, provider registry skeleton |
-| CLI smoke | `tests/cli/` | Typer help + `workflow market-gate` happy path |
+| Contract | `tests/contract/` | Artifact store, provider registry, manifest structural audit |
+| CLI smoke | `tests/cli/` | Typer help + `workflow market-gate` + `artifact list/audit` |
 
 ## CLI
 
@@ -69,7 +71,13 @@ Test layers:
 lucerna --help
 lucerna workflow --help
 lucerna workflow market-gate --trade-date 2026-06-23 --artifact-root D:\path\to\artifact-root
+lucerna artifact --help
+lucerna artifact list --artifact-root D:\path\to\artifact-root
+lucerna artifact audit --artifact-root D:\path\to\artifact-root --trade-date 2026-06-23
+lucerna artifact audit --stage-dir D:\path\to\workflows\20260623\market_gate --meta-path D:\path\to\meta.json
 ```
+
+`artifact audit` checks structural completeness (required files, schema IDs, trade_date consistency). Semantic parity remains the golden comparator's job.
 
 Inputs expected under `--artifact-root` (same layout as golden scenarios):
 
@@ -81,13 +89,25 @@ artifact-root/
 
 Outputs are written under `artifact-root/workflows/{YYYYMMDD}/market_gate/` (7 artifact families: strict, observation, active_watch, rejected, calibration, summary, state).
 
+## v0.2 boundaries
+
+**In scope (implemented_v1):**
+
+- artifact manifest scan + structural audit CLI (`lucerna artifact list/audit`)
+- contract tests on golden `expected/market_gate/` dirs
+
+**Explicitly not in v0.2:**
+
+- market daily-review upstream generation
+- live data provider adapters (deferred to v0.2.1)
+
 ## v0.1 boundaries
 
 **In scope (implemented_v1):**
 
 - `market-gate` decision kernel with golden parity
 - Local artifact I/O + semantic comparator
-- Constitution, ADR-0001..0008 (0008 proposed), ruff, pytest
+- Constitution, ADR-0001..0008, ruff, pytest
 - Thin reference CLI
 
 **Contract only (ports defined, no production adapters):**
@@ -111,6 +131,6 @@ See `CAPABILITY_REGISTER.md` for the full capability matrix and promotion rules.
 | --- | --- |
 | `lucerna-core` | Domain, labels, ports, artifacts, theme rules |
 | `lucerna-workflow` | `market_gate` kernel, resolver, runner |
-| `lucerna-cli` | Reference CLI (`lucerna workflow market-gate`) |
+| `lucerna-cli` | Reference CLI (`lucerna workflow market-gate`, `lucerna artifact list/audit`) |
 
 Governance docs: `LUCERNA_CONSTITUTION.md`, `MIGRATION_MAP_FROM_INDICIUMGRID.md`, `docs/AGENT_WORKFLOW.md`.

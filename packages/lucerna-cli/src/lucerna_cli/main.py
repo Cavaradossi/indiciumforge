@@ -6,9 +6,12 @@ from pathlib import Path
 import typer
 from lucerna_workflow.market_gate.runner import run_market_gate
 
+from lucerna_cli.artifact import artifact_app
+
 app = typer.Typer(help="Lucerna reference CLI.")
 workflow_app = typer.Typer(help="Workflow commands.")
 app.add_typer(workflow_app, name="workflow")
+app.add_typer(artifact_app, name="artifact")
 
 TRADE_DATE_OPTION = typer.Option(..., "--trade-date")
 ARTIFACT_ROOT_OPTION = typer.Option(..., "--artifact-root")
