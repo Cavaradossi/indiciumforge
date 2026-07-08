@@ -1,0 +1,28 @@
+THEME_STATE_RULE_VERSION = "theme_state_v2"
+
+THEME_STATE_RULES = {
+    "min_sample": 10,
+    "strong_min_sample": 30,
+    "daily_strong_min_1d_median": 0.015,
+    "daily_strong_min_relative_1d": 0.015,
+    "daily_strong_min_up_rate": 0.70,
+    "daily_strong_min_ge5_ratio": 0.05,
+    "daily_strong_min_limit_up_count": 2,
+    "hard_weak_max_1d_median": -0.02,
+    "hard_weak_max_relative_1d": -0.015,
+    "hard_weak_max_up_rate": 0.35,
+    "hard_weak_min_le_minus5_ratio": 0.10,
+    "hard_weak_min_limit_down_count": 2,
+    "hard_weak_max_relative_up_rate": -0.20,
+    "mid_strong_quantile": 0.75,
+    "turn_weak_max_1d_median": 0.0,
+    "turn_weak_max_3d_median": 0.0,
+    "turn_weak_max_up_rate": 0.45,
+    "turn_weak_max_relative_1d": -0.01,
+    "turn_weak_min_le_minus5_ratio": 0.08,
+    "divergent_min_limit_up_count": 5,
+    "divergent_min_ge5_ratio": 0.08,
+    "divergent_max_1d_median": 0.0,
+    "divergent_max_up_rate": 0.50,
+    "divergent_min_le_minus5_ratio": 0.08,
+}

@@ -1,0 +1,7 @@
+{
+  "trade_date": "2026-06-23",
+  "workflow_review_source_stage": "post_close",
+  "warnings": [
+    "未找到preopen候选表，已回退读取post_close internal候选表"
+  ]
+}

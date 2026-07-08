@@ -1,0 +1,22 @@
+reference: indiciumgrid@indiciumgrid-golden-v1
+scenarios:
+  - id: strict_pass_mixed
+    source_test: test_workflow_market_gate_writes_strict_observation_and_rejected
+    trade_date: 2026-06-23
+    status: exported
+  - id: empty_strict_c_grade
+    source_test: test_workflow_market_gate_audits_empty_strict_and_c_grade_watch
+    trade_date: 2026-06-24
+    status: exported
+  - id: fallback_post_close
+    source_test: test_workflow_market_gate_falls_back_to_post_close_review
+    trade_date: 2026-06-23
+    status: exported
+  - id: missing_theme_fail
+    trade_date: 2026-06-25
+    expects: FileNotFoundError
+    status: exported
+  - id: catalyst_ignored
+    trade_date: 2026-06-23
+    expects: strict unchanged when catalyst file is present
+    status: exported

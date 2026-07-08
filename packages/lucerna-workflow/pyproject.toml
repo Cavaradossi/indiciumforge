@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lucerna-workflow"
+version = "0.1.0"
+description = "Workflow services for Lucerna."
+requires-python = ">=3.10"
+dependencies = ["lucerna-core", "pandas>=2.0", "tabulate>=0.9"]
+
+[tool.setuptools.packages.find]
+where = ["src"]

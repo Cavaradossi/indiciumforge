@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lucerna-cli"
+version = "0.1.0"
+description = "Reference CLI for Lucerna."
+requires-python = ">=3.10"
+dependencies = ["lucerna-workflow", "typer>=0.9"]
+
+[project.scripts]
+lucerna = "lucerna_cli.main:app"
+
+[tool.setuptools.packages.find]
+where = ["src"]
