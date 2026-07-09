@@ -1,0 +1,6 @@
+schema: lucerna.provider_pack.v1
+pack_id: demo-provider-pack
+version: "0.1.0"
+load:
+  providers_config: providers_fixture.yaml
+  include_entry_points: false

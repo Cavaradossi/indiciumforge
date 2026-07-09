@@ -9,15 +9,18 @@ from lucerna_workflow.market_gate.runner import run_market_gate
 from lucerna_cli.artifact import artifact_app
 from lucerna_cli.daily_review import workflow_daily_review
 from lucerna_cli.factor import factor_scan
+from lucerna_cli.provider import provider_fetch, provider_inspect
 from lucerna_cli.synthetic_e2e import workflow_synthetic_e2e
 from lucerna_cli.workflow_chain import workflow_chain
 
 app = typer.Typer(help="Lucerna reference CLI.")
 workflow_app = typer.Typer(help="Workflow commands.")
 factor_app = typer.Typer(help="Factor commands.")
+provider_app = typer.Typer(help="Data provider commands.")
 app.add_typer(workflow_app, name="workflow")
 app.add_typer(artifact_app, name="artifact")
 app.add_typer(factor_app, name="factor")
+app.add_typer(provider_app, name="provider")
 
 TRADE_DATE_OPTION = typer.Option(..., "--trade-date")
 ARTIFACT_ROOT_OPTION = typer.Option(..., "--artifact-root")
@@ -97,6 +100,48 @@ def workflow_chain_command(
         ohlcv_fixture_root=ohlcv_fixture_root,
         asset_fixture_list=asset_fixture_list,
         codes=codes,
+    )
+
+
+@provider_app.command("inspect", help="List loaded providers and capability matrix.")
+def provider_inspect_command(
+    provider_pack: Path | None = typer.Option(None, "--provider-pack"),
+    providers_config: Path | None = typer.Option(None, "--providers-config"),
+    include_entry_points: bool = typer.Option(False, "--include-entry-points"),
+    ohlcv_fixture_root: Path | None = typer.Option(None, "--ohlcv-fixture-root"),
+) -> None:
+    provider_inspect(
+        provider_pack=provider_pack,
+        providers_config=providers_config,
+        include_entry_points=include_entry_points,
+        ohlcv_fixture_root=ohlcv_fixture_root,
+    )
+
+
+@provider_app.command("fetch", help="Single-query provider smoke (fixture/fake only).")
+def provider_fetch_command(
+    trade_date: str = TRADE_DATE_OPTION,
+    code: str = typer.Option(..., "--code"),
+    data_kind: str = typer.Option("ohlcv", "--data-kind"),
+    provider_pack: Path | None = typer.Option(None, "--provider-pack"),
+    providers_config: Path | None = typer.Option(None, "--providers-config"),
+    include_entry_points: bool = typer.Option(False, "--include-entry-points"),
+    ohlcv_fixture_root: Path | None = typer.Option(None, "--ohlcv-fixture-root"),
+    recipe_id: str = typer.Option("lucerna.recipe.ashare_daily_research.v1", "--recipe-id"),
+    cycle_id: str | None = typer.Option(None, "--cycle-id"),
+    checkpoint_id: str | None = typer.Option(None, "--checkpoint-id"),
+) -> None:
+    provider_fetch(
+        trade_date=trade_date,
+        code=code,
+        data_kind=data_kind,
+        provider_pack=provider_pack,
+        providers_config=providers_config,
+        include_entry_points=include_entry_points,
+        ohlcv_fixture_root=ohlcv_fixture_root,
+        recipe_id=recipe_id,
+        cycle_id=cycle_id,
+        checkpoint_id=checkpoint_id,
     )
 
 

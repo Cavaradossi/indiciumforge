@@ -1,0 +1,3 @@
+providers:
+  - module: fake_private_provider.provider
+    class: FakePrivateOhlcvProvider
