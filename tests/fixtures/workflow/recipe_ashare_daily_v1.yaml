@@ -1,0 +1,41 @@
+schema: lucerna.workflow_recipe.v1
+recipe_id: lucerna.recipe.ashare_daily_research.v1
+asset_domain: china_a_share
+session_model: calendar_day_cycle
+version: "1.0.0"
+stages:
+  - stage_id: awareness_daily_review
+    kind: evidence
+    ig_folder_name: daily_review
+    handoff_artifacts:
+      - theme_state_ranking
+  - stage_id: evidence_factor_scan
+    kind: evidence
+    ig_folder_name: factor_scan
+    handoff_artifacts:
+      - factor_scan_json
+    optional: true
+  - stage_id: discovery_post_close
+    kind: discovery
+    ig_folder_name: post_close
+    handoff_artifacts:
+      - candidate_pool_raw
+      - buy_point_review_internal
+  - stage_id: handoff_preopen
+    kind: handoff
+    ig_folder_name: preopen
+    handoff_artifacts:
+      - buy_point_review_internal
+      - buy_point_review_public
+  - stage_id: refresh_midday_quotes
+    kind: refresh
+    ig_folder_name: midday
+    handoff_artifacts:
+      - buy_point_review_internal
+    optional: true
+  - stage_id: gate_market_theme
+    kind: gate
+    ig_folder_name: market_gate
+    handoff_artifacts:
+      - market_gate_strict
+      - market_gate_summary

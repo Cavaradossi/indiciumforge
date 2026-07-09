@@ -18,13 +18,20 @@ from lucerna_core.artifacts.paths import (
     preopen_review_dir,
     workflow_chain_summary_path,
 )
+from lucerna_core.workflow.model import (
+    DEFAULT_ASHARE_RECIPE_ID,
+    AssetDomain,
+    SessionModel,
+    WorkflowSessionMetadata,
+    ashare_cycle_id,
+)
 
 from lucerna_workflow.factor_scan.runner import FactorScanStageConfig, run_factor_scan_stage
 from lucerna_workflow.market_awareness.runner import run_daily_review_skeleton
 from lucerna_workflow.market_gate.runner import run_market_gate
 from lucerna_workflow.workflow_chain.skeleton import seed_post_close_review, seed_preopen_review
 
-WORKFLOW_CHAIN_SUMMARY_SCHEMA = "lucerna.workflow_chain_summary.v2"
+WORKFLOW_CHAIN_SUMMARY_SCHEMA = "lucerna.workflow_chain_summary.v3"
 
 
 @dataclass(frozen=True)
@@ -89,6 +96,12 @@ def _write_chain_summary(
     payload: dict[str, Any] = {
         "schema": WORKFLOW_CHAIN_SUMMARY_SCHEMA,
         "trade_date": trade_date.isoformat(),
+        "workflow_session": WorkflowSessionMetadata(
+            recipe_id=DEFAULT_ASHARE_RECIPE_ID,
+            asset_domain=AssetDomain.CHINA_A_SHARE,
+            session_model=SessionModel.CALENDAR_DAY_CYCLE,
+            cycle_id=ashare_cycle_id(trade_date),
+        ).to_payload(),
         "provenance": {"mode": "workflow_chain_skeleton", "fixtures": fixtures},
         "stages": stages,
         "workflow_review_source_stage": workflow_review_source_stage,
