@@ -35,6 +35,7 @@ def test_cli_workflow_help() -> None:
     assert "market-gate" in result.stdout
     assert "daily-review" in result.stdout
     assert "synthetic-e2e" in result.stdout
+    assert "chain" in result.stdout
 
 
 def test_cli_workflow_market_gate_smoke(tmp_path: Path) -> None:
