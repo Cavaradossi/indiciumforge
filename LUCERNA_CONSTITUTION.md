@@ -13,4 +13,4 @@
 
 ## License
 
-License: TBD. ADR-0007 must be closed before first public release.
+License: **Apache License 2.0** (Apache-2.0). See [LICENSE](LICENSE) and [ADR-0007](docs/decisions/ADR-0007-license-strategy.md).
