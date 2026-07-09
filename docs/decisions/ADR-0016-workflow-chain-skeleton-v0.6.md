@@ -40,6 +40,12 @@ CLI: `lucerna workflow chain` with three required fixture paths.
 `synthetic-e2e` remains unchanged — shortest two-stage demo. Workflow chain adds explicit
 post_close and preopen stage boundaries for chain testing.
 
+## Relationship to ADR-0018 (v0.8)
+
+v0.8 clarifies that `post_close` and `preopen` folder names are **A-share recipe stage labels**,
+not universal Lucerna lifecycle enums. This ADR's skeleton behavior is unchanged; see
+[ADR-0018](ADR-0018-session-cyclic-workflow-model-v0.8.md).
+
 ## Out of scope (v0.6)
 
 - IG production review generation

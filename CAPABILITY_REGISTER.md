@@ -8,6 +8,7 @@ Status values:
 - `implemented_v0.4`: implemented market daily-review upstream skeleton for v0.4.
 - `implemented_v0.4.1`: daily-review CLI + manifest audit for market_awareness stage.
 - `implemented_v0.5_alpha`: synthetic end-to-end workflow demo orchestration for v0.5-alpha.
+- `implemented_v0.8`: session-cyclic workflow model contracts (ADR-0018).
 - `implemented_v0.7`: private factor pack loading integration + workflow chain factor_scan stage.
 - `implemented_v0.6`: workflow chain skeleton (post_close -> preopen -> market_gate).
 - `private_extension`: intentionally outside the open-source repository; implemented only by private packs/plugins.
@@ -29,14 +30,15 @@ Status values:
 | factor detector port + demo detector | `implemented_v0.3` | `FactorDetectorPort`, demo detectors, registry, loading boundary; ADR-0010/0011/0012. |
 | factor scan runner + artifact schema | `implemented_v0.3` | `FactorScanRunner`, factor_scan JSON/CSV writer; synthetic contract tests only. |
 | private factor pack loading integration | `implemented_v0.7` | `load_factor_pack`, pack YAML, entry points; `lucerna factor scan`; ADR-0017. |
-| workflow chain factor_scan stage | `implemented_v0.7` | Optional chain stage; summary v2; factor audit informational only; ADR-0017. |
+| workflow chain factor_scan stage | `implemented_v0.7` | Optional chain stage; summary v3; factor audit informational only; ADR-0017. |
+| session-cyclic workflow model | `implemented_v0.8` | AssetDomain, SessionModel, WorkflowRecipe, checkpoint/handoff contracts; ADR-0018. |
 | proprietary long-structure detectors | `private_extension` | Real IG detector rules; private factor packs only. |
 | market daily-review upstream | `implemented_v0.4.1` | Skeleton `theme_state_ranking` generation + `lucerna workflow daily-review` CLI; ADR-0013/0014; synthetic fixtures only. |
 | synthetic end-to-end workflow | `implemented_v0.5_alpha` | `lucerna workflow synthetic-e2e`; DR -> MG -> audit summary; ADR-0015; fixture-only demo. |
 | post-close / preopen workflow chain | `implemented_v0.6` | Skeleton chain: DR -> post_close -> preopen -> MG; `lucerna workflow chain`; ADR-0016; synthetic fixtures. |
 | factor tracking evidence audit | `not_in_v0.2.x` | Sample-out tracking evidence; distinct from factor-core; future ADR. |
 | factor trade-plan/evaluate/backtest adapter | `technical_reserve` | Trade-plan and evaluate outputs; defer past v0.3 core slice. |
-| constitution + ADR + CI | `implemented_v1` | Constitution, ADR-0001..0017, ruff, pytest, CI workflow. |
+| constitution + ADR + CI | `implemented_v1` | Constitution, ADR-0001..0018, ruff, pytest, CI workflow. |
 | capture/evidence port | `contract_only` | No Firecrawl/Scrapling implementation in v0.1. |
 | research engine port | `contract_only` | No RQAlpha/Qlib/backtrader implementation in v0.1. |
 | execution port | `technical_reserve` | No broker order placement. |
@@ -44,7 +46,7 @@ Status values:
 | intraday watch | `not_in_v0.1` | Future event recorder migration. |
 | account analysis | `not_in_v0.1` | Future local account evidence domain. |
 | catalyst/KOL ingestion | `not_in_v0.1` | Future capture/evidence adapter. |
-| global cyclic workflow | `not_in_v0.1` | Future scheduler and session model. |
+| global cyclic workflow | `implemented_v0.8` | Session-cyclic contracts; recipe model; execution deferred. |
 | ETF workflow | `not_in_v0.1` | Future capability. |
 
 Promotion rule: a capability can advance only when implementation, tests, and documentation agree.
@@ -94,6 +96,11 @@ Forward schedule and original-plan reconciliation:
 - v0.7.0 delivered: **private factor pack loading integration** (`lucerna factor scan`) and
   **workflow chain factor_scan stage** (ADR-0017; demo/fake detectors in open-core CI only).
 
-## v0.8+ forward candidate (planning only)
+## v0.8 vertical slice (completed)
 
-- production review generation; optional stub daily-review bundle; intraday watch.
+- v0.8.0 delivered: **session-cyclic workflow model** — recipe/checkpoint/handoff contracts,
+  `lucerna.workflow_recipe.v1`, A-share recipe fixture, summary v3 session metadata (ADR-0018).
+
+## v0.9+ forward candidate (planning only)
+
+- data adapter slice(s) with checkpoint-scoped provenance; production review generation (private recipe).

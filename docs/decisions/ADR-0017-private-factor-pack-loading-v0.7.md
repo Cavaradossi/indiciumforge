@@ -37,6 +37,11 @@ daily_review -> factor_scan (optional) -> post_close seed -> preopen seed -> mar
 Factor scan output is an **evidence sidecar**. It does **not** feed `buy_point_review_internal.csv`
 or market-gate strict gate.
 
+## Relationship to ADR-0018 (v0.8)
+
+v0.8 maps `factor_scan` to recipe stage `evidence_factor_scan` (optional evidence checkpoint).
+Placement in the chain skeleton is unchanged; naming is recipe-level, not universal lifecycle.
+
 ## chain_ok semantics
 
 `chain_ok` requires daily_review and market_gate structural audits only.

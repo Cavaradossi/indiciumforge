@@ -1,5 +1,26 @@
 # Lucerna Release Notes
 
+## v0.8.0 — session-cyclic workflow model
+
+Lucerna 0.8.0 introduces session-cyclic workflow **contracts** before data adapter work. IG folder
+names (`post_close`, `preopen`, `midday`) are documented as A-share **recipe stages**, not universal
+lifecycle enums.
+
+### Highlights
+
+| Area | Delivered |
+| --- | --- |
+| Core contracts | `lucerna_core.workflow` — `AssetDomain`, `SessionModel`, `WorkflowRecipe`, checkpoints |
+| Recipe schema | `lucerna.workflow_recipe.v1` + `recipe_ashare_daily_research.v1` fixture |
+| Summary v3 | `workflow_chain_summary.v3` adds `workflow_session` metadata |
+| Docs | ADR-0018, [WORKFLOW_SESSION_MODEL.md](docs/WORKFLOW_SESSION_MODEL.md) |
+
+### Explicit non-goals (v0.8)
+
+- No global/crypto workflow execution.
+- No data adapter / TDX sync (deferred to v0.9).
+- v0.6/v0.7 CLI commands and artifact paths unchanged.
+
 ## v0.7.0 — private factor pack loading integration
 
 Lucerna 0.7.0 closes the factor integration boundary between v0.3 factor port and v0.6 workflow chain.

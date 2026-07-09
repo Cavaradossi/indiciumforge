@@ -9,6 +9,8 @@ Lucerna is an evidence-first financial research workspace extracted from the fro
 
 Licensed under [Apache License 2.0](LICENSE). See [RELEASE_NOTES.md](RELEASE_NOTES.md) for release history.
 
+Lucerna v0.8 adds session-cyclic workflow model contracts (ADR-0018); `post_close`/`preopen` are A-share recipe stages, not universal lifecycle.
+
 Lucerna v0.7 adds private factor pack loading integration (`lucerna factor scan`) and optional workflow chain `factor_scan` stage.
 
 Lucerna v0.6 adds workflow chain skeleton (`lucerna workflow chain`).
@@ -102,7 +104,8 @@ python -m pytest -p no:cacheprovider -q --basetemp D:\project\indiciumgrid\.tmp_
 
 ## What's next
 
-- **v0.8+ candidate:** production review generation; optional stub daily-review bundle
+- **v0.9+ candidate:** data adapter slice(s) depending on v0.8 session contracts
+- **v0.8+ candidate:** production review generation deferred; see session model first
 - **Later:** intraday watch, factor tracking, account analysis per [MIGRATION_ROADMAP](docs/MIGRATION_ROADMAP.md)
 
 ## Install

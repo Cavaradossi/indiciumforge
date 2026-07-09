@@ -97,3 +97,10 @@ lucerna workflow chain \
 
 Lucerna writers emit `metrics` as opaque JSON without redaction. Before sharing artifacts outside
 your local environment, ensure metrics do not expose proprietary alpha logic.
+
+## Recipe placement (v0.8)
+
+In the A-share recipe (`lucerna.recipe.ashare_daily_research.v1`), factor scan attaches to the
+optional evidence stage `evidence_factor_scan`. Production discovery still belongs to the
+`discovery_post_close` recipe stage in IndiciumGrid; Lucerna v0.7 chain integration treats factor
+scan as a sidecar only. See [WORKFLOW_SESSION_MODEL.md](WORKFLOW_SESSION_MODEL.md).

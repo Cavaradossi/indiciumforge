@@ -97,15 +97,29 @@ Delivered in v0.7.0: `load_factor_pack`, `lucerna factor scan`, optional workflo
 `factor_scan` stage, artifact schemas (`lucerna.factor_scan.v1`, summary v2). See ADR-0017.
 Integration boundary only; no IG detector migration.
 
-### v0.8+: production review generation (candidate)
+### v0.8: session-cyclic workflow model (completed)
+
+Delivered in v0.8.0: `lucerna_core.workflow` contracts (`AssetDomain`, `SessionModel`,
+`WorkflowRecipe`, `WorkflowCheckpoint`, `HandoffArtifact`), `lucerna.workflow_recipe.v1`,
+A-share recipe fixture, `workflow_chain_summary.v3` session metadata. See ADR-0018 and
+[WORKFLOW_SESSION_MODEL.md](WORKFLOW_SESSION_MODEL.md). No global/crypto execution; no data adapter.
+
+### v0.9+: data adapter (candidate)
 
 | Item | Detail |
 | --- | --- |
-| Scope | Wire review artifact paths across workflow stages (post_close, preopen) |
-| Prerequisites | daily-review or stable theme inputs; artifact store paths |
-| ADR | Workflow chain ADR; depends on v0.4-a progress |
-| Golden | Extend market-gate golden with chain scenarios |
-| Open-core | Orchestration only; no proprietary alpha in open core |
+| Scope | Provider adapter slice(s) with checkpoint-scoped provenance per v0.8 contracts |
+| Prerequisites | v0.8 session model; artifact handoff kinds |
+| ADR | Data adapter ADR (TBD); depends on ADR-0018 |
+| Open-core | Port contracts + synthetic fixtures; no TDX migration |
+
+### v0.9+: production review generation (candidate, private recipe)
+
+| Item | Detail |
+| --- | --- |
+| Scope | Wire discovery/handoff review generation as A-share recipe implementation |
+| Prerequisites | v0.8 recipe model; optional v0.9 data adapters |
+| Note | Not universal Lucerna core lifecycle; A-share recipe only |
 
 ### Later (original long-range table)
 
