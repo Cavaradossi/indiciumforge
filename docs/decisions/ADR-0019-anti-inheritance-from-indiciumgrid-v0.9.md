@@ -33,6 +33,10 @@ Lucerna open core MUST NOT inherit the following from IndiciumGrid:
    or historical output trees.
 10. **No crypto/derivatives crammed into A-share daily provider model** — reserve capabilities;
     separate domains and evidence stages.
+11. **No single-stock research report builder as core abstraction** — do not migrate IG
+    `build_research_report()` / `ResearchReport` as Lucerna core research model. Lucerna targets
+    `ResearchDossier` / `EvidenceDossier` (subject-agnostic, domain-scoped), not
+    `StockResearchReport`. A-share single-stock dossier is a recipe/private extension only.
 
 ## Applies to
 
@@ -40,10 +44,14 @@ Lucerna open core MUST NOT inherit the following from IndiciumGrid:
 - Private adapter templates and pack loading
 - CLI commands (`provider inspect`, `provider fetch`)
 - Contract tests and no-leak regression tests
+- Forward research dossier ADR planning (v0.10+)
+- [CAPABILITY_REGISTER.md](../../CAPABILITY_REGISTER.md) and [MIGRATION_MAP_FROM_INDICIUMGRID.md](../../MIGRATION_MAP_FROM_INDICIUMGRID.md)
 
 ## Consequences
 
 - ADR-0020 implements session-aware provider v2 under these guards.
 - Real TDX sync deferred to v0.10 private adapter.
+- Research dossier model deferred to v0.10+ (contract-only first); prerequisites: v0.8 session
+  contracts + v0.9 provider provenance.
 - [`docs/DESIGN_DEFECT_MIGRATION_AUDIT.md`](../DESIGN_DEFECT_MIGRATION_AUDIT.md) records IG defects
-  vs Lucerna mitigations.
+  vs Lucerna mitigations, including `indiciumgrid/report/builder.py` coupling inventory.

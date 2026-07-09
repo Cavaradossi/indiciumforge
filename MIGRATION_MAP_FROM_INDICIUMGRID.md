@@ -16,6 +16,7 @@ IndiciumGrid is frozen at `indiciumgrid-golden-v1`. This map records what Lucern
 | IG `data/registry.py` priority model | `lucerna_core.providers.registry_v2` + `DataProviderPortV2` | implement v0.9 | authority + fallback tests |
 | LocalFixtureProvider | `lucerna_core.providers.local_fixture` | implement v0.2.1 | `tests/fixtures/ohlcv` |
 | LocalFixtureProvider v2 | `lucerna_core.providers.local_fixture_v2` | implement v0.9 | session query + pack demo |
+| `report/builder.py` `build_research_report()` | forward `ResearchDossier` model (v0.10+) | **Do not migrate as-is**; ADR-0019 rule 11 | not_in_v0.9 |
 | `run_factor_scan` | `lucerna_core.factors.scan.FactorScanRunner` | implemented v0.7 integration | FACTOR_DEMO_MANIFEST |
 | `FACTOR_CASES` / `validate_factor_cases` | golden + contract (planned) | inventory v0.2.2; IG cases reference-only | FACTOR_GOLDEN_MANIFEST |
 | `evaluate_factor_parameters` | `lucerna_core.factors.evaluation` (planned) | inventory v0.2.2; calibrated params private-extension | defer v0.3+ |

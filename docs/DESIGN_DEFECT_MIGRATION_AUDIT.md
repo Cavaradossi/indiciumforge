@@ -30,6 +30,33 @@ migrate. Reference: frozen `indiciumgrid @ indiciumgrid-golden-v1`. See
 | Empty frame + `provider=none` as silent outcome | Loses structured failure | `ProviderFailureStatus.empty` with attempt trace |
 | Cross-check not first-class | Silent override risk | Cross-check adds warnings; never replaces primary silently |
 
+## Research report builder defects
+
+IG `indiciumgrid/report/builder.py` — `build_research_report()` is a single-stock A-share package
+builder. Do **not** migrate as Lucerna core research abstraction.
+
+| IG assumption | Defect | Lucerna mitigation |
+| --- | --- | --- |
+| `code.zfill(6)` / 6-digit normalization | A-share TDX convention baked into identity | Universal `ResearchSubject`; domain-specific normalization in private adapters |
+| TDX stock names / board info | China equity metadata path | Private adapter or recipe layer only |
+| `fundamentals/normalized/company_profiles.csv` | Local IG cache layout as source of truth | Provider v2 + private fundamentals adapter; no default cache paths |
+| `fundamental_scores.csv`, `fundamental_forensics.csv` | A-share fundamental modules in one builder | `EvidenceModule` per domain; not folded into stock report core |
+| `output/workflows/YYYYMMDD/post_close/preopen/market_gate` | IG folder tree as `source_layer` | v0.8 checkpoint/session refs; recipe folder names = compatibility only |
+| `.indiciumgrid/accounts/default/...` | Private account evidence in report path | Account dossier = separate subject; never open-core default |
+| `600000_research` / `{code}_{stock_name}` output dirs | Stock-named artifact tree | `DossierScope` + opaque dossier ids; no stock-name directories in core |
+| CSRC industry, theme exposure, chip distribution, accounting risk | A-share modules folded into one builder | Recipe/private extension modules; not universal core |
+| `ResearchReport` dataclass shape | Subject locked to single A-share stock | Forward `ResearchDossier` / `EvidenceDossier`; not `StockResearchReport` |
+
+### Forward Lucerna model (v0.10+, not implemented in v0.9)
+
+Recommended core concepts for a future dossier ADR:
+
+- `ResearchSubject`, `ResearchDossier`, `EvidenceModule`, `DossierRenderer`, `DossierScope`
+- Scoped by: `asset_domain`, `as_of`, `workflow_checkpoint`, `provider_provenance`, `limitations`
+- Subjects: equity, ETF/fund, futures, options, FX, crypto spot/perp, portfolio/account,
+  theme/basket, cross-asset pairs
+- A-share single-stock dossier = **recipe/private extension only**
+
 ## What we keep (compatibility, not inheritance)
 
 - Synthetic golden artifacts for A-share market-gate parity
@@ -45,3 +72,4 @@ migrate. Reference: frozen `indiciumgrid @ indiciumgrid-golden-v1`. See
 | Production post_close/preopen review generation | v0.11+ |
 | Intraday watch / quote refresh execution | v0.12+ |
 | Crypto live snapshot adapter | later |
+| Research dossier model | v0.10+ (after provider v2 + session contracts) |

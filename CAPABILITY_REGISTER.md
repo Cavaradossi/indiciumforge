@@ -43,6 +43,7 @@ Status values:
 | constitution + ADR + CI | `implemented_v1` | Constitution, ADR-0001..0020, ruff, pytest, CI workflow. |
 | capture/evidence port | `contract_only` | No Firecrawl/Scrapling implementation in v0.1. |
 | research engine port | `contract_only` | No RQAlpha/Qlib/backtrader implementation in v0.1. |
+| research dossier model | `technical_reserve` | Forward `ResearchDossier` / `EvidenceModule` contracts; **not_in_v0.9**; A-share single-stock dossier is recipe/private extension only; ADR-0019 rule 11. |
 | execution port | `technical_reserve` | No broker order placement. |
 | workflow enrichment port | `technical_reserve` | Explanation only, never strict gate input. |
 | intraday watch | `not_in_v0.1` | Future event recorder migration. |
@@ -108,7 +109,8 @@ Forward schedule and original-plan reconciliation:
 - v0.9.0 delivered: **session-aware data provider contract v2** — `DataProviderPortV2`,
   `ProviderRegistryV2`, provider pack loading, `lucerna provider inspect/fetch`, fake private
   adapter fixture (ADR-0019/0020). v1 provider port retained for compatibility.
+- Research dossier model explicitly **not_in_v0.9** (ADR-0019 rule 11; forward v0.10+).
 
 ## v0.10+ forward candidate (planning only)
 
-- private TDX adapter + `lucerna data sync`; production review generation (private recipe).
+- private TDX adapter + `lucerna data sync`; research dossier contracts; production review generation (private recipe).

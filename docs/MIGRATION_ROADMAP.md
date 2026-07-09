@@ -112,6 +112,20 @@ Delivered in v0.9.0: `DataProviderPortV2`, `ProviderRegistryV2`, `load_provider_
 [PRIVATE_DATA_ADAPTER_TEMPLATE.md](PRIVATE_DATA_ADAPTER_TEMPLATE.md). Contract-only; no TDX sync,
 network providers, or workflow/gate coupling.
 
+Research dossier model explicitly **not_in_v0.9** (ADR-0019 rule 11). IG
+`build_research_report()` registered as anti-inheritance risk only.
+
+### v0.10+: research dossier model (candidate, contract-only first)
+
+| Item | Detail |
+| --- | --- |
+| Scope | `ResearchSubject` / `ResearchDossier` / `EvidenceModule` contracts — not IG `builder.py` port |
+| Prerequisites | v0.8 session/checkpoint model; v0.9 provider v2 provenance |
+| Open-core | ADR + register in first slice; no `600000_research` tree, no account paths |
+| Explicit non-goals for v0.9 | No dossier runtime, no IG builder migration |
+
+v0.11 production review generation may consume dossier/evidence modules as downstream recipe output.
+
 ### v0.10+: private TDX adapter (candidate)
 
 | Item | Detail |

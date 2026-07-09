@@ -10,6 +10,7 @@ authority-tagged provenance, and pack loading — without TDX sync or network pr
 | Area | Delivered |
 | --- | --- |
 | Anti-inheritance | ADR-0019 + [DESIGN_DEFECT_MIGRATION_AUDIT.md](docs/DESIGN_DEFECT_MIGRATION_AUDIT.md) |
+| Research dossier guard | ADR-0019 rule 11: IG `build_research_report()` not migrated; dossier deferred v0.10+ |
 | Provider v2 | `DataQuery`, `ProviderResult`, `DataProviderPortV2`, `ProviderRegistryV2` |
 | Pack loading | `load_provider_pack()` — `lucerna.provider_pack.v1` + entry points |
 | CLI | `lucerna provider inspect`, `lucerna provider fetch` (fixture/fake only) |
@@ -32,6 +33,7 @@ lucerna provider fetch \
 - No network providers in public CI.
 - No workflow chain or market_gate integration.
 - Provider output does not feed strict gate.
+- No research dossier runtime; no IG `builder.py` migration; no `600000_research` output tree.
 
 ## v0.8.0 — session-cyclic workflow model
 
