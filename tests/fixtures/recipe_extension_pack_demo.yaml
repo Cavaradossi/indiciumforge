@@ -1,0 +1,7 @@
+schema: lucerna.recipe_extension_pack.v1
+pack_id: demo-recipe-extension-pack
+version: "0.1.0"
+recipe_ids:
+  - lucerna.recipe.ashare_daily_research.v1
+load:
+  extensions_config: fake_ashare_recipe/recipe_extensions.yaml

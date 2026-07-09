@@ -1,0 +1,9 @@
+extensions:
+  - module: fake_ashare_recipe.extension
+    class: FakeAshareRecipeExtension
+    kwargs:
+      ohlcv_fixture_root: ../ohlcv
+      factor_detectors_config: ../factor_detectors_fake.yaml
+      asset_fixture_list: ../factor_scan_assets.yaml
+      post_close_review_fixture: ../workflow/post_close_buy_point_review_demo.csv
+      preopen_review_fixture: ../workflow/preopen_buy_point_review_demo.csv

@@ -69,14 +69,18 @@ def workflow_synthetic_e2e_command(
 
 @workflow_app.command(
     "chain",
-    help="Run workflow chain skeleton: daily-review -> post-close -> preopen -> market-gate.",
+    help="Run workflow chain: skeleton fixtures or recipe-driven private extension pack.",
 )
 def workflow_chain_command(
     trade_date: str = TRADE_DATE_OPTION,
     artifact_root: Path = ARTIFACT_ROOT_OPTION,
     daily_review_fixture: Path = typer.Option(..., "--daily-review-fixture"),
-    post_close_review_fixture: Path = typer.Option(..., "--post-close-review-fixture"),
-    preopen_review_fixture: Path = typer.Option(..., "--preopen-review-fixture"),
+    post_close_review_fixture: Path | None = typer.Option(
+        None, "--post-close-review-fixture"
+    ),
+    preopen_review_fixture: Path | None = typer.Option(None, "--preopen-review-fixture"),
+    recipe: Path | None = typer.Option(None, "--recipe"),
+    recipe_extension_pack: Path | None = typer.Option(None, "--recipe-extension-pack"),
     factor_pack: Path | None = typer.Option(None, "--factor-pack"),
     detectors_config: Path | None = typer.Option(None, "--detectors-config"),
     include_entry_points: bool = typer.Option(False, "--include-entry-points"),
@@ -94,6 +98,8 @@ def workflow_chain_command(
         daily_review_fixture=daily_review_fixture,
         post_close_review_fixture=post_close_review_fixture,
         preopen_review_fixture=preopen_review_fixture,
+        recipe=recipe,
+        recipe_extension_pack=recipe_extension_pack,
         factor_pack=factor_pack,
         detectors_config=detectors_config,
         include_entry_points=include_entry_points,
