@@ -29,8 +29,9 @@ IndiciumGrid is frozen at `indiciumgrid-golden-v1`. This map records what Lucern
 | synthetic E2E workflow | `lucerna_workflow.e2e.synthetic` + `lucerna workflow synthetic-e2e` | implemented v0.5-alpha | DR -> MG -> audit summary demo |
 | workflow chain skeleton | `lucerna_workflow.workflow_chain` + `lucerna workflow chain` | implemented v0.6 | DR -> post_close -> preopen -> MG |
 | IG workflow stage folders | `lucerna_core.workflow` recipe stage ids | implemented v0.8 | `recipe_ashare_daily_v1.yaml`; ADR-0018 |
-| `run_post_close_workflow` | recipe stage `discovery_post_close` | recipe mapping v0.8 | IG discovery + factor scan |
-| `run_preopen_workflow` | recipe stage `handoff_preopen` | recipe mapping v0.8 | IG handoff from post_close candidates |
+| `run_post_close_workflow` | recipe stage `discovery_post_close` + `CandidatePoolBuilderPort` / `ReviewBuilderPort` | implemented v0.10 wiring; production builder private v0.11+ | fake extension OSS CI |
+| `run_preopen_workflow` | recipe stage `handoff_preopen` + `ReviewBuilderPort` / `MarketContextPort` | implemented v0.10 wiring; production builder private v0.11+ | fake extension OSS CI |
+| `_build_workflow_review` | `ReviewBuilderPort` (private extension) | port + fake stub v0.10 | not in OSS |
 | `run_quote_workflow_stage` | recipe stage `refresh_midday_quotes` | recipe mapping v0.8 | quote refresh (future Lucerna) |
 
 Do not use line numbers as migration anchors. Use symbol names, scenario ids, and artifact names.

@@ -10,6 +10,7 @@ Status values:
 - `implemented_v0.5_alpha`: synthetic end-to-end workflow demo orchestration for v0.5-alpha.
 - `implemented_v0.8`: session-cyclic workflow model contracts (ADR-0018).
 - `implemented_v0.9`: session-aware data provider contract v2 (ADR-0019/0020).
+- `implemented_v0.10`: A-share private recipe integration — ports, RecipeRunner, fake extension (ADR-0021).
 - `implemented_v0.7`: private factor pack loading integration + workflow chain factor_scan stage.
 - `implemented_v0.6`: workflow chain skeleton (post_close -> preopen -> market_gate).
 - `private_extension`: intentionally outside the open-source repository; implemented only by private packs/plugins.
@@ -34,13 +35,14 @@ Status values:
 | private factor pack loading integration | `implemented_v0.7` | `load_factor_pack`, pack YAML, entry points; `lucerna factor scan`; ADR-0017. |
 | workflow chain factor_scan stage | `implemented_v0.7` | Optional chain stage; summary v3; factor audit informational only; ADR-0017. |
 | session-cyclic workflow model | `implemented_v0.8` | AssetDomain, SessionModel, WorkflowRecipe, checkpoint/handoff contracts; ADR-0018. |
+| A-share private recipe integration | `implemented_v0.10` | `lucerna_core.recipes`, RecipeRunner, extension pack loader, recipe-driven chain CLI; ADR-0021. |
 | proprietary long-structure detectors | `private_extension` | Real IG detector rules; private factor packs only. |
 | market daily-review upstream | `implemented_v0.4.1` | Skeleton `theme_state_ranking` generation + `lucerna workflow daily-review` CLI; ADR-0013/0014; synthetic fixtures only. |
 | synthetic end-to-end workflow | `implemented_v0.5_alpha` | `lucerna workflow synthetic-e2e`; DR -> MG -> audit summary; ADR-0015; fixture-only demo. |
 | post-close / preopen workflow chain | `implemented_v0.6` | Skeleton chain: DR -> post_close -> preopen -> MG; `lucerna workflow chain`; ADR-0016; synthetic fixtures. |
 | factor tracking evidence audit | `not_in_v0.2.x` | Sample-out tracking evidence; distinct from factor-core; future ADR. |
 | factor trade-plan/evaluate/backtest adapter | `technical_reserve` | Trade-plan and evaluate outputs; defer past v0.3 core slice. |
-| constitution + ADR + CI | `implemented_v1` | Constitution, ADR-0001..0020, ruff, pytest, CI workflow. |
+| constitution + ADR + CI | `implemented_v1` | Constitution, ADR-0001..0021, ruff, pytest, CI workflow. |
 | capture/evidence port | `contract_only` | No Firecrawl/Scrapling implementation in v0.1. |
 | research engine port | `contract_only` | No RQAlpha/Qlib/backtrader implementation in v0.1. |
 | research dossier model | `technical_reserve` | Forward `ResearchDossier` / `EvidenceModule` contracts; **not_in_v0.9**; A-share single-stock dossier is recipe/private extension only; ADR-0019 rule 11. |
@@ -111,6 +113,13 @@ Forward schedule and original-plan reconciliation:
   adapter fixture (ADR-0019/0020). v1 provider port retained for compatibility.
 - Research dossier model explicitly **not_in_v0.9** (ADR-0019 rule 11; forward v0.10+).
 
-## v0.10+ forward candidate (planning only)
+## v0.10 vertical slice (completed)
+
+- v0.10.0 delivered: **A-share private recipe integration** — `lucerna_core.recipes` ports,
+  `RecipeRunner`, `StageInputResolver`, recipe extension pack loader, fake A-share extension,
+  recipe-driven workflow chain CLI (`--recipe`, `--recipe-extension-pack`),
+  `workflow_chain_summary.v4` (ADR-0021; production review builder deferred v0.11+).
+
+## v0.11+ forward candidate (planning only)
 
 - private TDX adapter + `lucerna data sync`; research dossier contracts; production review generation (private recipe).

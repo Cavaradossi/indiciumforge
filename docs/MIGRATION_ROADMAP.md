@@ -115,6 +115,14 @@ network providers, or workflow/gate coupling.
 Research dossier model explicitly **not_in_v0.9** (ADR-0019 rule 11). IG
 `build_research_report()` registered as anti-inheritance risk only.
 
+### v0.10: A-share private recipe integration (completed)
+
+Delivered in v0.10.0: `lucerna_core.recipes` (ports, `RecipeRunner`, `StageInputResolver`,
+`load_recipe_extension_pack`), fake A-share recipe extension, recipe-driven workflow chain CLI,
+`workflow_chain_summary.v4`. See ADR-0021 and
+[PRIVATE_ASHARE_RECIPE_TEMPLATE.md](PRIVATE_ASHARE_RECIPE_TEMPLATE.md). Wiring + fake runtime only;
+production review builder deferred v0.11+.
+
 ### v0.10+: research dossier model (candidate, contract-only first)
 
 | Item | Detail |

@@ -107,6 +107,17 @@ Open-core CI uses fixture/fake providers only (`lucerna provider fetch`). Real a
 private `lucerna.data_providers` entry points — see
 [PRIVATE_DATA_ADAPTER_TEMPLATE.md](PRIVATE_DATA_ADAPTER_TEMPLATE.md).
 
+## Recipe runner dependency (v0.10)
+
+Delivered in v0.10.0: `RecipeRunner` loads recipe YAML, resolves handoff inputs, and dispatches
+stages to `lucerna.recipe_extensions` entry points. Open-core handlers cover evidence and gate
+stages; discovery/handoff require a private (or fake) extension. See
+[ADR-0021](decisions/ADR-0021-ashare-private-recipe-integration-v0.10.md) and
+[PRIVATE_ASHARE_RECIPE_TEMPLATE.md](PRIVATE_ASHARE_RECIPE_TEMPLATE.md).
+
+Chain summary `workflow_chain_summary.v4` records recipe id, extension pack provenance, and per-stage
+results. Skeleton chain (`workflow_chain_summary.v3`) remains available without `--recipe`.
+
 ## Golden test scope
 
 A-share golden tests prove **compatibility** with frozen IG artifacts. They do **not** prove

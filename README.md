@@ -9,6 +9,8 @@ Lucerna is an evidence-first financial research workspace extracted from the fro
 
 Licensed under [Apache License 2.0](LICENSE). See [RELEASE_NOTES.md](RELEASE_NOTES.md) for release history.
 
+Lucerna v0.10 adds A-share private recipe integration (ADR-0021); recipe-driven workflow chain via `--recipe` + fake extension pack.
+
 Lucerna v0.9 adds session-aware data provider contract v2 (ADR-0019/0020); `lucerna provider inspect/fetch` for fixture/fake smoke tests only.
 
 Lucerna v0.8 adds session-cyclic workflow model contracts (ADR-0018); `post_close`/`preopen` are A-share recipe stages, not universal lifecycle.
@@ -96,6 +98,13 @@ lucerna workflow chain \
   --ohlcv-fixture-root tests/fixtures/ohlcv \
   --asset-fixture-list tests/fixtures/factor_scan_assets.yaml
 
+lucerna workflow chain \
+  --trade-date 2026-06-23 \
+  --artifact-root /tmp/lucerna-recipe \
+  --recipe tests/fixtures/workflow/recipe_ashare_daily_v1.yaml \
+  --recipe-extension-pack tests/fixtures/recipe_extension_pack_demo.yaml \
+  --daily-review-fixture tests/fixtures/market_awareness/theme_sectors_demo.yaml
+
 lucerna provider inspect --ohlcv-fixture-root tests/fixtures/ohlcv
 
 lucerna provider fetch \
@@ -113,8 +122,8 @@ python -m pytest -p no:cacheprovider -q --basetemp D:\project\indiciumgrid\.tmp_
 
 ## What's next
 
+- **v0.11+ candidate:** production review generation (private A-share recipe); see [PRIVATE_ASHARE_RECIPE_TEMPLATE.md](docs/PRIVATE_ASHARE_RECIPE_TEMPLATE.md)
 - **v0.10+ candidate:** private TDX adapter + `lucerna data sync` (see [PRIVATE_DATA_ADAPTER_TEMPLATE.md](docs/PRIVATE_DATA_ADAPTER_TEMPLATE.md))
-- **v0.11+ candidate:** production review generation (private A-share recipe)
 - **Later:** intraday watch, factor tracking, account analysis per [MIGRATION_ROADMAP](docs/MIGRATION_ROADMAP.md)
 
 ## Install
@@ -196,7 +205,7 @@ Outputs are written under `artifact-root/workflows/{YYYYMMDD}/market_gate/` (7 a
 
 **In scope (implemented_v0.6):**
 
-- `lucerna_workflow.workflow_chain` — chain runner (`run_workflow_chain_skeleton`)
+- `lucerna_workflow.workflow_chain` — chain runner (`run_workflow_chain_skeleton`, `run_workflow_chain_recipe`)
 - `lucerna workflow chain` — DR -> post_close -> preopen -> market-gate -> audit -> summary
 - Stage state JSON: `post_close_review_state.json`, `preopen_review_state.json`
 - Summary: `workflows/{YYYYMMDD}/workflow_chain_summary.json` (`lucerna.workflow_chain_summary.v1`)

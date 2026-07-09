@@ -1,5 +1,40 @@
 # Lucerna Release Notes
 
+## v0.10.0 — A-share private recipe integration
+
+Lucerna 0.10.0 delivers **recipe wiring** for A-share daily workflow — ports, `RecipeRunner`,
+extension pack loading, and a fake private recipe extension for OSS CI — without production review
+semantics or TDX sync.
+
+### Highlights
+
+| Area | Delivered |
+| --- | --- |
+| ADR-0021 | A-share private recipe integration boundary |
+| Recipe layer | `lucerna_core.recipes` — ports, `RecipeRunner`, `StageInputResolver`, pack loader |
+| Fake extension | `tests/fixtures/fake_ashare_recipe/` + `recipe_extension_pack_demo.yaml` |
+| CLI | `lucerna workflow chain --recipe ... --recipe-extension-pack ...` |
+| Summary v4 | `workflow_chain_summary.v4` with recipe + extension provenance |
+| Template | [PRIVATE_ASHARE_RECIPE_TEMPLATE.md](docs/PRIVATE_ASHARE_RECIPE_TEMPLATE.md) |
+
+### Quick demo
+
+```bash
+lucerna workflow chain \
+  --trade-date 2026-06-23 \
+  --artifact-root /tmp/lucerna-recipe \
+  --recipe tests/fixtures/workflow/recipe_ashare_daily_v1.yaml \
+  --recipe-extension-pack tests/fixtures/recipe_extension_pack_demo.yaml \
+  --daily-review-fixture tests/fixtures/market_awareness/theme_sectors_demo.yaml
+```
+
+### Explicit non-goals (v0.10)
+
+- No real TDX adapter, `lucerna data sync`, or vipdoc defaults.
+- No IG `run_post_close_workflow` / `_build_workflow_review` in open core.
+- No production review builder or private golden parity gate.
+- No ResearchDossier runtime.
+
 ## v0.9.0 — session-aware data provider contract v2
 
 Lucerna 0.9.0 delivers the data adapter **boundary** for private packs — session-aware queries,
