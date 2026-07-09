@@ -2,6 +2,8 @@
 
 Lucerna is an evidence-first financial research workspace extracted from the frozen IndiciumGrid reference implementation.
 
+Lucerna v0.5-alpha (0.5.0) adds synthetic end-to-end workflow demo (`lucerna workflow synthetic-e2e`).
+
 Lucerna v0.4.1 adds daily-review CLI and manifest audit for `market_awareness/` stages.
 
 Lucerna v0.4 adds market daily-review upstream skeleton (`theme_state_ranking.csv` generation).
@@ -33,7 +35,7 @@ See [docs/MIGRATION_ROADMAP.md](docs/MIGRATION_ROADMAP.md) for original-plan rec
 
 ## What's next
 
-- **v0.5 candidate:** post-close -> preopen workflow chain
+- **v0.5+ candidate:** production post-close -> preopen workflow chain
 - **Later:** optional stub daily-review bundle, intraday watch, factor tracking, account analysis per [MIGRATION_ROADMAP](docs/MIGRATION_ROADMAP.md)
 
 ## Install
@@ -81,7 +83,7 @@ Test layers:
 | Golden | `tests/golden/` | Semantic parity vs exported IG artifacts (5 market-gate scenarios) |
 | Contract | `tests/contract/` | Artifact store, provider, factor detectors, daily-review skeleton |
 | Fixtures | `tests/fixtures/ohlcv/` | Hand-authored synthetic OHLCV including DEMO001/DEMO002 demo series |
-| CLI smoke | `tests/cli/` | Typer help + `workflow market-gate/daily-review` + `artifact list/audit` |
+| CLI smoke | `tests/cli/` | Typer help + `workflow market-gate/daily-review/synthetic-e2e` + `artifact list/audit` |
 
 ## CLI
 
@@ -90,6 +92,7 @@ lucerna --help
 lucerna workflow --help
 lucerna workflow market-gate --trade-date 2026-06-23 --artifact-root D:\path\to\artifact-root
 lucerna workflow daily-review --trade-date 2026-06-23 --artifact-root D:\path\to\artifact-root --fixture-path D:\path\to\theme_sectors_demo.yaml
+lucerna workflow synthetic-e2e --trade-date 2026-06-23 --artifact-root D:\path\to\artifact-root --daily-review-fixture D:\path\to\theme_sectors_demo.yaml --preopen-review-fixture D:\path\to\preopen_buy_point_review_demo.csv
 lucerna artifact --help
 lucerna artifact list --artifact-root D:\path\to\artifact-root
 lucerna artifact audit --artifact-root D:\path\to\artifact-root --trade-date 2026-06-23
@@ -108,6 +111,23 @@ artifact-root/
 ```
 
 Outputs are written under `artifact-root/workflows/{YYYYMMDD}/market_gate/` (7 artifact families: strict, observation, active_watch, rejected, calibration, summary, state).
+
+## v0.5-alpha boundaries
+
+**In scope (implemented_v0.5_alpha):**
+
+- `lucerna_workflow.e2e.synthetic` — orchestration runner (`run_synthetic_e2e`)
+- `lucerna workflow synthetic-e2e` — demo command wiring DR -> MG -> audit -> summary
+- Summary artifact: `workflows/{YYYYMMDD}/synthetic_e2e_summary.json` (`lucerna.synthetic_e2e_summary.v1`)
+- Fixtures: `tests/fixtures/market_awareness/theme_sectors_demo.yaml`, `tests/fixtures/workflow/preopen_buy_point_review_demo.csv`
+- ADR-0015 (proposed)
+
+**Explicitly not in v0.5-alpha:**
+
+- Production post-close -> preopen workflow chain
+- Live providers, TDX, `.indiciumgrid/`, `output/` copies
+- Full IG daily-review bundle
+- Factor scan integration, proprietary detectors, private packs
 
 ## v0.4 boundaries
 

@@ -7,6 +7,7 @@ Status values:
 - `implemented_v0.3`: implemented factor detector port slice for v0.3.
 - `implemented_v0.4`: implemented market daily-review upstream skeleton for v0.4.
 - `implemented_v0.4.1`: daily-review CLI + manifest audit for market_awareness stage.
+- `implemented_v0.5_alpha`: synthetic end-to-end workflow demo orchestration for v0.5-alpha.
 - `private_extension`: intentionally outside the open-source repository; implemented only by private packs/plugins.
 - `contract_only`: contract exists; production adapter or domain implementation is deferred.
 - `technical_reserve`: intentionally reserved for later.
@@ -27,10 +28,11 @@ Status values:
 | factor scan runner + artifact schema | `implemented_v0.3` | `FactorScanRunner`, factor_scan JSON/CSV writer; synthetic contract tests only. |
 | proprietary long-structure detectors | `private_extension` | Real IG detector rules; private factor packs only. |
 | market daily-review upstream | `implemented_v0.4.1` | Skeleton `theme_state_ranking` generation + `lucerna workflow daily-review` CLI; ADR-0013/0014; synthetic fixtures only. |
-| post-close / preopen workflow chain | `not_in_v0.3` | Review path chain across workflow stages; planned v0.4/v0.5 candidate. |
+| synthetic end-to-end workflow | `implemented_v0.5_alpha` | `lucerna workflow synthetic-e2e`; DR -> MG -> audit summary; ADR-0015; fixture-only demo. |
+| post-close / preopen workflow chain | `not_in_v0.3` | Production review path chain across workflow stages; planned v0.5+ candidate. |
 | factor tracking evidence audit | `not_in_v0.2.x` | Sample-out tracking evidence; distinct from factor-core; future ADR. |
 | factor trade-plan/evaluate/backtest adapter | `technical_reserve` | Trade-plan and evaluate outputs; defer past v0.3 core slice. |
-| constitution + ADR + CI | `implemented_v1` | Constitution, ADR-0001..0014 (0013/0014 proposed), ruff, pytest. |
+| constitution + ADR + CI | `implemented_v1` | Constitution, ADR-0001..0015 (0013/0014/0015 proposed), ruff, pytest. |
 | capture/evidence port | `contract_only` | No Firecrawl/Scrapling implementation in v0.1. |
 | research engine port | `contract_only` | No RQAlpha/Qlib/backtrader implementation in v0.1. |
 | execution port | `technical_reserve` | No broker order placement. |
@@ -73,6 +75,11 @@ Forward schedule and original-plan reconciliation:
 - v0.4.1 delivered: **daily-review CLI** (`lucerna workflow daily-review`) and **manifest audit**
   for `market_awareness/{YYYYMMDD}/daily_review/` (ADR-0014).
 
-## v0.5 forward candidate (planning only)
+## v0.5-alpha vertical slice (completed)
 
-- post-close -> preopen workflow chain; optional stub daily-review bundle artifacts.
+- v0.5.0 delivered: **synthetic end-to-end workflow** (`lucerna workflow synthetic-e2e`);
+  daily-review skeleton -> market-gate -> dual-stage audit -> summary JSON (ADR-0015).
+
+## v0.5+ forward candidate (planning only)
+
+- production post-close -> preopen workflow chain; optional stub daily-review bundle artifacts.

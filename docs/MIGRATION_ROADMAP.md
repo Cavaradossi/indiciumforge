@@ -26,6 +26,7 @@ indiciumgrid @ indiciumgrid-golden-v1
 | v0.3 | FactorDetectorPort + demo + loading | original v0.3 partial: port only, not workflow chain |
 | v0.4 | market daily-review upstream skeleton | original v0.2 daily-review (partial: ranking only) |
 | v0.4.1 | daily-review CLI + manifest audit | original v0.2 daily-review operator loop |
+| v0.5.0 (v0.5-alpha) | synthetic end-to-end workflow | demo DR -> MG -> audit summary |
 
 ---
 
@@ -34,7 +35,7 @@ indiciumgrid @ indiciumgrid-golden-v1
 | Capability | Original plan version | Actual status | Forward target |
 | --- | --- | --- | --- |
 | market daily-review (`theme_state_ranking`) | v0.2 | `implemented_v0.4.1` skeleton + CLI | optional stub bundle v0.5+ |
-| post-close -> preopen workflow chain | v0.3 | not started | **v0.5 candidate** |
+| post-close -> preopen workflow chain | v0.3 | not started | **v0.5+ production candidate** |
 | factor scan port (open source) | v0.3 (partial) | `implemented_v0.3` | done |
 | proprietary long-structure detectors | implicit IG migration | `private_extension` | private packs only |
 | intraday watch | v0.4 | not started | v0.5+ |
@@ -53,6 +54,7 @@ Lucerna remains on the migration main line:
   factor detector port) before upstream workflow generation
 - v0.4 implemented market daily-review upstream skeleton per ADR-0013
 - v0.4.1 added daily-review CLI and manifest audit for `market_awareness/` per ADR-0014
+- v0.5-alpha (0.5.0) added synthetic E2E demo orchestration per ADR-0015
 - Acceptable drifts: foundation-first reordering; ADR-0011 open-core insert; v0.3/v0.4 scope narrowing
   (port/demo only, no IG detector migration, no workflow chain)
 
@@ -75,7 +77,13 @@ See ADR-0013.
 Delivered in v0.4.1: `lucerna workflow daily-review`, unified `artifact list/audit` for
 `market_awareness/{YYYYMMDD}/daily_review/`. See ADR-0014. Full IG daily-review bundle deferred.
 
-### v0.5: post-close -> preopen workflow chain (candidate)
+### v0.5-alpha: synthetic end-to-end workflow (completed)
+
+Delivered in v0.5.0: `lucerna workflow synthetic-e2e` runs daily-review skeleton -> market-gate
+-> dual-stage audit -> `synthetic_e2e_summary.json` using open-source fixtures only.
+See ADR-0015. Demo orchestration only; not production workflow chain.
+
+### v0.5+: post-close -> preopen workflow chain (candidate)
 
 | Item | Detail |
 | --- | --- |
