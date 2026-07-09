@@ -8,6 +8,7 @@ from lucerna_workflow.market_gate.runner import run_market_gate
 
 from lucerna_cli.artifact import artifact_app
 from lucerna_cli.daily_review import workflow_daily_review
+from lucerna_cli.synthetic_e2e import workflow_synthetic_e2e
 
 app = typer.Typer(help="Lucerna reference CLI.")
 workflow_app = typer.Typer(help="Workflow commands.")
@@ -38,4 +39,22 @@ def workflow_daily_review_command(
         trade_date=trade_date,
         artifact_root=artifact_root,
         fixture_path=fixture_path,
+    )
+
+
+@workflow_app.command(
+    "synthetic-e2e",
+    help="Run synthetic end-to-end workflow: daily-review -> market-gate -> audit summary.",
+)
+def workflow_synthetic_e2e_command(
+    trade_date: str = TRADE_DATE_OPTION,
+    artifact_root: Path = ARTIFACT_ROOT_OPTION,
+    daily_review_fixture: Path = typer.Option(..., "--daily-review-fixture"),
+    preopen_review_fixture: Path = typer.Option(..., "--preopen-review-fixture"),
+) -> None:
+    workflow_synthetic_e2e(
+        trade_date=trade_date,
+        artifact_root=artifact_root,
+        daily_review_fixture=daily_review_fixture,
+        preopen_review_fixture=preopen_review_fixture,
     )

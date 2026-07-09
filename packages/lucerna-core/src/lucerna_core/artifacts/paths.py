@@ -19,3 +19,7 @@ def theme_state_ranking_path(artifact_root: Path, trade_date: date) -> Path:
 def daily_review_dir(artifact_root: Path, trade_date: date) -> Path:
     day = trade_date.strftime("%Y%m%d")
     return artifact_root / "market_awareness" / day / "daily_review"
+
+
+def synthetic_e2e_summary_path(artifact_root: Path, trade_date: date) -> Path:
+    return workflow_root(artifact_root, trade_date) / "synthetic_e2e_summary.json"
