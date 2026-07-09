@@ -1,6 +1,6 @@
 # ADR-0012: Factor Detector Port v0.3
 
-Status: proposed
+Status: accepted
 
 ## Context
 

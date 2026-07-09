@@ -1,0 +1,99 @@
+# Private Factor Pack Template
+
+Lucerna open core loads private factor packs through explicit configuration. This document
+describes a **local-only** private pack layout. Do not commit real detector logic or calibrated
+thresholds to the public Lucerna repository.
+
+## Layout
+
+```text
+my-lucerna-factor-pack/
+  pyproject.toml
+  pack.yaml
+  detectors.yaml
+  src/my_pack/
+    detectors/
+      my_detector.py
+  .gitignore
+```
+
+## pack.yaml
+
+```yaml
+schema: lucerna.factor_pack.v1
+pack_id: my-local-pack
+version: "0.1.0"
+load:
+  detectors_config: ./detectors.yaml
+  include_entry_points: true
+  entry_point_group: lucerna.factor_detectors
+```
+
+## detectors.yaml
+
+```yaml
+detectors:
+  - module: my_pack.detectors.my_detector
+    class: MyDetector
+```
+
+Alternatively, reference an entry point:
+
+```yaml
+detectors:
+  - entry_point: lucerna.factor_detectors:my_detector
+```
+
+## pyproject.toml entry points
+
+```toml
+[project.entry-points."lucerna.factor_detectors"]
+my_detector = "my_pack.detectors.my_detector:MyDetector"
+```
+
+## Install (local venv)
+
+```bash
+pip install -e ./my-lucerna-factor-pack
+pip install -e <lucerna-repo>/packages/lucerna-core
+pip install -e <lucerna-repo>/packages/lucerna-workflow
+pip install -e <lucerna-repo>/packages/lucerna-cli
+```
+
+## Run standalone scan
+
+```bash
+lucerna factor scan \
+  --trade-date 2026-05-10 \
+  --artifact-root /tmp/lucerna-factor \
+  --ohlcv-fixture-root <lucerna>/tests/fixtures/ohlcv \
+  --asset-fixture-list <lucerna>/tests/fixtures/factor_scan_assets.yaml \
+  --factor-pack ./pack.yaml
+```
+
+## Run workflow chain with factor stage
+
+```bash
+lucerna workflow chain \
+  --trade-date 2026-06-23 \
+  --artifact-root /tmp/lucerna-chain \
+  --daily-review-fixture <fixtures>/market_awareness/theme_sectors_demo.yaml \
+  --post-close-review-fixture <fixtures>/workflow/post_close_buy_point_review_demo.csv \
+  --preopen-review-fixture <fixtures>/workflow/preopen_buy_point_review_demo.csv \
+  --factor-pack ./pack.yaml \
+  --ohlcv-fixture-root <fixtures>/ohlcv \
+  --asset-fixture-list <fixtures>/factor_scan_assets.yaml
+```
+
+## .gitignore checklist (private pack repo)
+
+- `output/`, `.indiciumgrid/`, `tmp/`
+- TDX vipdoc/cache paths
+- calibrated threshold YAML
+- account exports, watchlists
+- historical factor scan trees with production tickers
+
+## Metrics responsibility
+
+Lucerna writers emit `metrics` as opaque JSON without redaction. Before sharing artifacts outside
+your local environment, ensure metrics do not expose proprietary alpha logic.

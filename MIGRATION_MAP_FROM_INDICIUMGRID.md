@@ -14,7 +14,7 @@ IndiciumGrid is frozen at `indiciumgrid-golden-v1`. This map records what Lucern
 | `THEME_STATE_RULES` | `lucerna_core.market.theme_rules` | metadata only | state/summary artifacts |
 | provider registry | `lucerna_core.providers.registry` + `DataProviderPort` | implement v0.2.1 | contract tests |
 | LocalFixtureProvider | `lucerna_core.providers.local_fixture` | implement v0.2.1 | `tests/fixtures/ohlcv` |
-| `run_factor_scan` | `lucerna_core.factors.scan.FactorScanRunner` | implemented v0.3; port/demo only | FACTOR_DEMO_MANIFEST |
+| `run_factor_scan` | `lucerna_core.factors.scan.FactorScanRunner` | implemented v0.7 integration | FACTOR_DEMO_MANIFEST |
 | `FACTOR_CASES` / `validate_factor_cases` | golden + contract (planned) | inventory v0.2.2; IG cases reference-only | FACTOR_GOLDEN_MANIFEST |
 | `evaluate_factor_parameters` | `lucerna_core.factors.evaluation` (planned) | inventory v0.2.2; calibrated params private-extension | defer v0.3+ |
 | `factors.trading` / `trading_core` | workflow slice (planned) | inventory v0.2.2; trade-plan deferred | trade-plan deferred |

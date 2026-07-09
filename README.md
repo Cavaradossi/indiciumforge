@@ -9,6 +9,8 @@ Lucerna is an evidence-first financial research workspace extracted from the fro
 
 Licensed under [Apache License 2.0](LICENSE). See [RELEASE_NOTES.md](RELEASE_NOTES.md) for release history.
 
+Lucerna v0.7 adds private factor pack loading integration (`lucerna factor scan`) and optional workflow chain `factor_scan` stage.
+
 Lucerna v0.6 adds workflow chain skeleton (`lucerna workflow chain`).
 
 Lucerna v0.5-alpha (0.5.0) adds synthetic end-to-end workflow demo (`lucerna workflow synthetic-e2e`).
@@ -72,6 +74,23 @@ lucerna workflow chain \
   --daily-review-fixture tests/fixtures/market_awareness/theme_sectors_demo.yaml \
   --post-close-review-fixture tests/fixtures/workflow/post_close_buy_point_review_demo.csv \
   --preopen-review-fixture tests/fixtures/workflow/preopen_buy_point_review_demo.csv
+
+lucerna factor scan \
+  --trade-date 2026-05-10 \
+  --artifact-root /tmp/lucerna-factor \
+  --ohlcv-fixture-root tests/fixtures/ohlcv \
+  --asset-fixture-list tests/fixtures/factor_scan_assets.yaml \
+  --factor-pack tests/fixtures/factor_pack_demo.yaml
+
+lucerna workflow chain \
+  --trade-date 2026-06-23 \
+  --artifact-root /tmp/lucerna-chain-factor \
+  --daily-review-fixture tests/fixtures/market_awareness/theme_sectors_demo.yaml \
+  --post-close-review-fixture tests/fixtures/workflow/post_close_buy_point_review_demo.csv \
+  --preopen-review-fixture tests/fixtures/workflow/preopen_buy_point_review_demo.csv \
+  --factor-pack tests/fixtures/factor_pack_demo.yaml \
+  --ohlcv-fixture-root tests/fixtures/ohlcv \
+  --asset-fixture-list tests/fixtures/factor_scan_assets.yaml
 ```
 
 On Windows, use a writable temp directory (for example `%TEMP%\lucerna-demo`) and backslashes
@@ -83,7 +102,7 @@ python -m pytest -p no:cacheprovider -q --basetemp D:\project\indiciumgrid\.tmp_
 
 ## What's next
 
-- **v0.7+ candidate:** production review generation; optional stub daily-review bundle
+- **v0.8+ candidate:** production review generation; optional stub daily-review bundle
 - **Later:** intraday watch, factor tracking, account analysis per [MIGRATION_ROADMAP](docs/MIGRATION_ROADMAP.md)
 
 ## Install

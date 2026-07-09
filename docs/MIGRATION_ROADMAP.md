@@ -91,7 +91,13 @@ Delivered in v0.6.0: `lucerna workflow chain` runs daily-review -> post_close ->
 market-gate -> dual-stage audit -> `workflow_chain_summary.json`. See ADR-0016.
 Skeleton only; not production IG review generation.
 
-### v0.7+: production review generation (candidate)
+### v0.7: private factor pack loading integration (completed)
+
+Delivered in v0.7.0: `load_factor_pack`, `lucerna factor scan`, optional workflow chain
+`factor_scan` stage, artifact schemas (`lucerna.factor_scan.v1`, summary v2). See ADR-0017.
+Integration boundary only; no IG detector migration.
+
+### v0.8+: production review generation (candidate)
 
 | Item | Detail |
 | --- | --- |

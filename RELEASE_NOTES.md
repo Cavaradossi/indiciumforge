@@ -1,5 +1,39 @@
 # Lucerna Release Notes
 
+## v0.7.0 — private factor pack loading integration
+
+Lucerna 0.7.0 closes the factor integration boundary between v0.3 factor port and v0.6 workflow chain.
+
+### Highlights
+
+| Area | Delivered |
+| --- | --- |
+| Pack loading | `load_factor_pack()` — pack YAML + detectors YAML + optional entry points |
+| Factor scan CLI | `lucerna factor scan` — standalone local pack development loop |
+| Chain stage | Optional `factor_scan` between daily_review and post_close (opt-in flags) |
+| Artifacts | `lucerna.factor_scan.v1`, `lucerna.factor_scan_state.v1`, summary `v2` |
+| Isolation | Factor scan does not feed market-gate strict gate; audit informational only |
+
+### Quick demo
+
+```bash
+lucerna factor scan \
+  --trade-date 2026-05-10 \
+  --artifact-root /tmp/lucerna-factor \
+  --ohlcv-fixture-root tests/fixtures/ohlcv \
+  --asset-fixture-list tests/fixtures/factor_scan_assets.yaml \
+  --factor-pack tests/fixtures/factor_pack_demo.yaml
+```
+
+### Explicit non-goals (v0.7)
+
+- No IG long-structure detector migration.
+- No metrics auto-redaction (pack owner responsibility).
+- No `sys.path` / module-path injection.
+- Factor scan audit does not affect `chain_ok`.
+
+See [docs/PRIVATE_FACTOR_PACK_TEMPLATE.md](docs/PRIVATE_FACTOR_PACK_TEMPLATE.md) and ADR-0017.
+
 ## v0.6.0 — workflow chain skeleton
 
 Lucerna 0.6.0 adds a **four-stage workflow chain skeleton** on top of the v0.5-alpha walking skeleton.
