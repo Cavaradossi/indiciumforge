@@ -1,6 +1,6 @@
 # ADR-0013: Market Daily-Review Upstream Skeleton v0.4
 
-Status: proposed
+Status: accepted
 
 ## Context
 

@@ -1,6 +1,13 @@
 # Lucerna
 
+> **Alpha research software.** Lucerna is evidence-first workflow tooling for research and
+> artifact audit. It is **not investment advice**, **not a trading system**, and **not an
+> execution platform**. Default workflows use **synthetic fixtures only**; live market data is
+> out of scope for this public alpha.
+
 Lucerna is an evidence-first financial research workspace extracted from the frozen IndiciumGrid reference implementation.
+
+Licensed under [Apache License 2.0](LICENSE). See [RELEASE_NOTES.md](RELEASE_NOTES.md) for v0.5.0 (v0.5-alpha).
 
 Lucerna v0.5-alpha (0.5.0) adds synthetic end-to-end workflow demo (`lucerna workflow synthetic-e2e`).
 
@@ -33,6 +40,38 @@ Lucerna preserves behavior where explicitly covered by golden artifacts. It does
 
 See [docs/MIGRATION_ROADMAP.md](docs/MIGRATION_ROADMAP.md) for original-plan reconciliation and forward schedule.
 
+## Quickstart (public alpha)
+
+Requirements: Python 3.10+.
+
+```bash
+cd <repo-root>
+python -m pip install -e packages/lucerna-core
+python -m pip install -e packages/lucerna-workflow
+python -m pip install -e packages/lucerna-cli
+python -m pip install -e ".[dev]"
+
+python -m ruff check .
+python -m pytest -q
+
+lucerna workflow synthetic-e2e \
+  --trade-date 2026-06-23 \
+  --artifact-root /tmp/lucerna-demo \
+  --daily-review-fixture tests/fixtures/market_awareness/theme_sectors_demo.yaml \
+  --preopen-review-fixture tests/fixtures/workflow/preopen_buy_point_review_demo.csv
+
+lucerna artifact list --artifact-root /tmp/lucerna-demo
+lucerna artifact audit --artifact-root /tmp/lucerna-demo --trade-date 2026-06-23 --stage-type daily_review
+lucerna artifact audit --artifact-root /tmp/lucerna-demo --trade-date 2026-06-23 --stage-type market_gate
+```
+
+On Windows, use a writable temp directory (for example `%TEMP%\lucerna-demo`) and backslashes
+in paths. If pytest fails with Temp/.pytest_cache permission errors:
+
+```powershell
+python -m pytest -p no:cacheprovider -q --basetemp D:\project\indiciumgrid\.tmp_lucerna_pytest\pytest-basetemp-<unique>
+```
+
 ## What's next
 
 - **v0.5+ candidate:** production post-close -> preopen workflow chain
@@ -44,8 +83,8 @@ Requirements: Python 3.10+.
 
 From the repository root:
 
-```powershell
-cd D:\project\Lucerna
+```bash
+cd <repo-root>
 python -m pip install -e packages/lucerna-core
 python -m pip install -e packages/lucerna-workflow
 python -m pip install -e packages/lucerna-cli
@@ -56,7 +95,7 @@ The CLI entry point is `lucerna` (from `lucerna-cli`).
 
 Golden export (optional, needs frozen IndiciumGrid checkout):
 
-```powershell
+```bash
 python scripts/export_golden_market_gate.py
 ```
 
@@ -64,9 +103,9 @@ python scripts/export_golden_market_gate.py
 
 Default:
 
-```powershell
-cd D:\project\Lucerna
-python -m pytest
+```bash
+cd <repo-root>
+python -m pytest -q
 python -m ruff check .
 ```
 
@@ -120,7 +159,7 @@ Outputs are written under `artifact-root/workflows/{YYYYMMDD}/market_gate/` (7 a
 - `lucerna workflow synthetic-e2e` — demo command wiring DR -> MG -> audit -> summary
 - Summary artifact: `workflows/{YYYYMMDD}/synthetic_e2e_summary.json` (`lucerna.synthetic_e2e_summary.v1`)
 - Fixtures: `tests/fixtures/market_awareness/theme_sectors_demo.yaml`, `tests/fixtures/workflow/preopen_buy_point_review_demo.csv`
-- ADR-0015 (proposed)
+- ADR-0015 (accepted)
 
 **Explicitly not in v0.5-alpha:**
 
@@ -139,7 +178,7 @@ Outputs are written under `artifact-root/workflows/{YYYYMMDD}/market_gate/` (7 a
 - `lucerna artifact list/audit` — market_gate + daily_review stages (v0.4.1)
 - Theme state classifier using `THEME_STATE_RULES` (skeleton semantics, not IG port)
 - Fixtures: `tests/fixtures/market_awareness/theme_sectors_*.yaml`
-- ADR-0013, ADR-0014 (proposed)
+- ADR-0013, ADR-0014 (accepted)
 
 **Explicitly not in v0.4:**
 
@@ -172,7 +211,7 @@ Outputs are written under `artifact-root/workflows/{YYYYMMDD}/market_gate/` (7 a
 - [docs/FACTOR_CORE_INVENTORY.md](docs/FACTOR_CORE_INVENTORY.md) — symbol/taxonomy/artifact inventory
 - [FACTOR_GOLDEN_MANIFEST.yaml](FACTOR_GOLDEN_MANIFEST.yaml) — five `private_reference` IG scenarios
 - [docs/FACTOR_GOLDEN_SCENARIO_PLAN.md](docs/FACTOR_GOLDEN_SCENARIO_PLAN.md) — v0.3 compare/export strategy
-- ADR-0010 (proposed) and ADR-0011 (proposed) — open-core/private-extension boundary
+- ADR-0010 (accepted) and ADR-0011 (accepted) — open-core/private-extension boundary
 
 Lucerna open-source core does not publish proprietary alpha logic; private factor detectors and
 calibrated policies live in private extension packs.
@@ -218,7 +257,7 @@ calibrated policies live in private extension packs.
 
 - `market-gate` decision kernel with golden parity
 - Local artifact I/O + semantic comparator
-- Constitution, ADR-0001..0013, ruff, pytest
+- Constitution, ADR-0001..0015, ruff, pytest
 - Thin reference CLI
 
 **Contract only (ports defined, no production adapters):**
@@ -239,8 +278,8 @@ See `CAPABILITY_REGISTER.md` for the full capability matrix and promotion rules.
 
 | Package | Role |
 | --- | --- |
-| `lucerna-core` | Domain, labels, ports, artifacts, providers, theme rules |
-| `lucerna-workflow` | `market_gate` kernel, resolver, runner |
-| `lucerna-cli` | Reference CLI (`lucerna workflow market-gate`, `lucerna artifact list/audit`) |
+| `lucerna-core` | Domain, labels, ports, artifacts, providers, theme rules, factor port |
+| `lucerna-workflow` | `market_gate` kernel; `market_awareness` daily-review skeleton; `e2e.synthetic` orchestration |
+| `lucerna-cli` | Reference CLI: `workflow market-gate`, `workflow daily-review`, `workflow synthetic-e2e`, `artifact list/audit` |
 
-Governance docs: `LUCERNA_CONSTITUTION.md`, `MIGRATION_MAP_FROM_INDICIUMGRID.md`, `docs/FACTOR_CORE_INVENTORY.md`, `docs/AGENT_WORKFLOW.md`.
+Governance docs: `LUCERNA_CONSTITUTION.md`, `RELEASE_NOTES.md`, `SECURITY.md`, `MIGRATION_MAP_FROM_INDICIUMGRID.md`, `docs/FACTOR_CORE_INVENTORY.md`, `docs/AGENT_WORKFLOW.md`.

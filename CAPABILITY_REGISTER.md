@@ -32,7 +32,7 @@ Status values:
 | post-close / preopen workflow chain | `not_in_v0.3` | Production review path chain across workflow stages; planned v0.5+ candidate. |
 | factor tracking evidence audit | `not_in_v0.2.x` | Sample-out tracking evidence; distinct from factor-core; future ADR. |
 | factor trade-plan/evaluate/backtest adapter | `technical_reserve` | Trade-plan and evaluate outputs; defer past v0.3 core slice. |
-| constitution + ADR + CI | `implemented_v1` | Constitution, ADR-0001..0015 (0013/0014/0015 proposed), ruff, pytest. |
+| constitution + ADR + CI | `implemented_v1` | Constitution, ADR-0001..0015, ruff, pytest, CI workflow. |
 | capture/evidence port | `contract_only` | No Firecrawl/Scrapling implementation in v0.1. |
 | research engine port | `contract_only` | No RQAlpha/Qlib/backtrader implementation in v0.1. |
 | execution port | `technical_reserve` | No broker order placement. |

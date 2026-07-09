@@ -1,6 +1,6 @@
 # ADR-0014: Daily-Review CLI + Manifest Audit v0.4.1
 
-Status: proposed
+Status: accepted
 
 ## Context
 

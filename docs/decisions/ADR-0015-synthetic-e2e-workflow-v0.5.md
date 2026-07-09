@@ -1,6 +1,6 @@
 # ADR-0015: Synthetic End-to-End Workflow v0.5-alpha
 
-Status: proposed
+Status: accepted
 
 ## Context
 
