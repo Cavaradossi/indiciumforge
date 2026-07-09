@@ -1,0 +1,6 @@
+schema: lucerna.factor_pack.v1
+pack_id: demo-pack
+version: "0.1.0"
+load:
+  detectors_config: factor_detectors.yaml
+  include_entry_points: false

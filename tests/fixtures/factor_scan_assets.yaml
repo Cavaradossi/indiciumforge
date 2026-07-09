@@ -1,0 +1,7 @@
+assets:
+  - code: DEMO001
+    exchange: sse
+    asset_type: stock
+  - code: DEMO002
+    exchange: sse
+    asset_type: stock

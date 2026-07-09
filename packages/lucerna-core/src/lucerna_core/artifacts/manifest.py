@@ -8,11 +8,15 @@ from pathlib import Path
 from typing import Any
 
 from lucerna_core.artifacts.comparator import GATE_ARTIFACTS, load_meta
-from lucerna_core.artifacts.paths import daily_review_dir, market_gate_stage_dir
+from lucerna_core.artifacts.paths import daily_review_dir, factor_scan_dir, market_gate_stage_dir
+from lucerna_core.factors.artifacts import FACTOR_SCAN_SCHEMA, FACTOR_SCAN_STATE_SCHEMA
 from lucerna_core.labels.market_gate import MARKET_DAILY, MARKET_ZH
 
 MARKET_GATE_STAGE = "market_gate"
 DAILY_REVIEW_STAGE = "daily_review"
+FACTOR_SCAN_STAGE = "factor_scan"
+
+FACTOR_SCAN_STATE_FILE = "factor_scan_state.json"
 
 DAILY_REVIEW_REQUIRED_FILES = (
     "theme_state_ranking.csv",
@@ -402,6 +406,154 @@ def resolve_daily_review_audit_target(
 
 def is_daily_review_stage_dir(stage_dir: Path) -> bool:
     return stage_dir.name == DAILY_REVIEW_STAGE
+
+
+def is_factor_scan_stage_dir(stage_dir: Path) -> bool:
+    return stage_dir.name == FACTOR_SCAN_STAGE
+
+
+def _factor_scan_stem(trade_date: str) -> str:
+    return f"factor_scan_{trade_date.replace('-', '')}"
+
+
+def validate_factor_scan_stage(
+    stage_dir: Path,
+    *,
+    expected_trade_date: str | None = None,
+) -> ArtifactManifest:
+    violations: list[AuditViolation] = []
+
+    if not stage_dir.is_dir():
+        violations.append(
+            AuditViolation("missing_dir", f"stage directory not found: {stage_dir}")
+        )
+        return ArtifactManifest(
+            stage=FACTOR_SCAN_STAGE,
+            stage_dir=stage_dir,
+            trade_date=expected_trade_date,
+            required_files=(),
+            present_files=(),
+            violations=violations,
+        )
+
+    present = sorted(name.name for name in stage_dir.iterdir() if name.is_file())
+    trade_dates: list[str] = []
+    if expected_trade_date:
+        trade_dates.append(expected_trade_date)
+
+    state_path = stage_dir / FACTOR_SCAN_STATE_FILE
+    if not state_path.is_file():
+        violations.append(
+            AuditViolation(
+                "missing_file",
+                f"missing required artifact: {FACTOR_SCAN_STATE_FILE}",
+                str(state_path),
+            )
+        )
+    else:
+        try:
+            state_payload = _load_json(state_path)
+        except json.JSONDecodeError as exc:
+            violations.append(
+                AuditViolation(
+                    "invalid_json",
+                    f"{FACTOR_SCAN_STATE_FILE}: {exc}",
+                    str(state_path),
+                )
+            )
+        else:
+            actual_schema = state_payload.get("schema")
+            if actual_schema != FACTOR_SCAN_STATE_SCHEMA:
+                violations.append(
+                    AuditViolation(
+                        "schema_mismatch",
+                        (
+                            f"{FACTOR_SCAN_STATE_FILE}: expected schema "
+                            f"{FACTOR_SCAN_STATE_SCHEMA!r}, got {actual_schema!r}"
+                        ),
+                        str(state_path),
+                    )
+                )
+            trade_date = _normalize_trade_date(state_payload.get("trade_date"))
+            if trade_date:
+                trade_dates.append(trade_date)
+
+    resolved_trade_date = expected_trade_date
+    if trade_dates:
+        unique_dates = {value for value in trade_dates if value}
+        if len(unique_dates) > 1:
+            violations.append(
+                AuditViolation(
+                    "trade_date_mismatch",
+                    f"inconsistent trade_date values: {sorted(unique_dates)}",
+                )
+            )
+        elif len(unique_dates) == 1:
+            resolved_trade_date = next(iter(unique_dates))
+
+    stem = _factor_scan_stem(resolved_trade_date or "unknown")
+    json_name = f"{stem}.json"
+    csv_name = f"{stem}.csv"
+    required_files = (FACTOR_SCAN_STATE_FILE, json_name, csv_name)
+
+    for name in (json_name, csv_name):
+        path = stage_dir / name
+        if not path.is_file():
+            violations.append(
+                AuditViolation(
+                    "missing_file",
+                    f"missing required artifact: {name}",
+                    str(path),
+                )
+            )
+
+    json_path = stage_dir / json_name
+    if json_path.is_file():
+        try:
+            scan_payload = _load_json(json_path)
+        except json.JSONDecodeError as exc:
+            violations.append(
+                AuditViolation(
+                    "invalid_json",
+                    f"{json_name}: {exc}",
+                    str(json_path),
+                )
+            )
+        else:
+            actual_schema = scan_payload.get("schema")
+            if actual_schema != FACTOR_SCAN_SCHEMA:
+                violations.append(
+                    AuditViolation(
+                        "schema_mismatch",
+                        (
+                            f"{json_name}: expected schema {FACTOR_SCAN_SCHEMA!r}, "
+                            f"got {actual_schema!r}"
+                        ),
+                        str(json_path),
+                    )
+                )
+
+    return ArtifactManifest(
+        stage=FACTOR_SCAN_STAGE,
+        stage_dir=stage_dir,
+        trade_date=resolved_trade_date,
+        required_files=required_files,
+        present_files=tuple(present),
+        violations=violations,
+    )
+
+
+def resolve_factor_scan_audit_target(
+    *,
+    artifact_root: Path | None,
+    trade_date: date | None,
+    stage_dir: Path | None,
+) -> tuple[Path, str | None]:
+    if stage_dir is not None:
+        return stage_dir, None
+    if artifact_root is None or trade_date is None:
+        raise ValueError("provide --stage-dir or both --artifact-root and --trade-date")
+    return factor_scan_dir(artifact_root, trade_date), trade_date.isoformat()
 
 
 def format_audit_report(manifest: ArtifactManifest) -> str:

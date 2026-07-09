@@ -1,0 +1,3 @@
+detectors:
+  - module: fake_private_detector.detector
+    class: FakePrivateHitDetector

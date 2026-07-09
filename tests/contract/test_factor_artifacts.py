@@ -45,6 +45,7 @@ def test_scan_result_payload_excludes_unstable_fields() -> None:
     payload = scan_result_to_payload(result)
 
     assert UNSTABLE_FIELDS.isdisjoint(payload.keys())
+    assert payload["schema"] == "lucerna.factor_scan.v1"
     assert payload["as_of"] == "2026-05-10"
     assert payload["signals"] == []
 

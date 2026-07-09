@@ -35,3 +35,7 @@ def preopen_review_dir(artifact_root: Path, trade_date: date) -> Path:
 
 def workflow_chain_summary_path(artifact_root: Path, trade_date: date) -> Path:
     return workflow_root(artifact_root, trade_date) / "workflow_chain_summary.json"
+
+
+def factor_scan_dir(artifact_root: Path, trade_date: date) -> Path:
+    return workflow_root(artifact_root, trade_date) / "factor_scan"

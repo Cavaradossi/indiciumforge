@@ -9,6 +9,9 @@ import pandas as pd
 
 from lucerna_core.factors.models import FactorScanResult, FactorSignal
 
+FACTOR_SCAN_SCHEMA = "lucerna.factor_scan.v1"
+FACTOR_SCAN_STATE_SCHEMA = "lucerna.factor_scan_state.v1"
+
 FACTOR_SCAN_COLUMNS: tuple[str, ...] = (
     "code",
     "factor",
@@ -41,6 +44,7 @@ def scan_result_to_frame(result: FactorScanResult) -> pd.DataFrame:
 
 def scan_result_to_payload(result: FactorScanResult) -> dict[str, Any]:
     return {
+        "schema": FACTOR_SCAN_SCHEMA,
         "as_of": result.as_of.isoformat(),
         "warnings": list(result.warnings),
         "detector_runs": list(result.detector_runs),
@@ -77,3 +81,31 @@ def write_factor_scan_bundle(
     )
     frame.to_csv(csv_path, index=False, encoding="utf-8-sig")
     return {"json": json_path, "csv": csv_path}
+
+
+def write_factor_scan_state(
+    stage_dir: Path,
+    *,
+    trade_date: date,
+    pack_id: str | None,
+    detector_names: tuple[str, ...],
+    asset_universe_source: str,
+    signal_count: int,
+    warning_count: int,
+) -> Path:
+    stage_dir.mkdir(parents=True, exist_ok=True)
+    state_path = stage_dir / "factor_scan_state.json"
+    payload: dict[str, Any] = {
+        "schema": FACTOR_SCAN_STATE_SCHEMA,
+        "trade_date": trade_date.isoformat(),
+        "pack_id": pack_id,
+        "detector_names": list(detector_names),
+        "asset_universe_source": asset_universe_source,
+        "signal_count": signal_count,
+        "warning_count": warning_count,
+    }
+    state_path.write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2),
+        encoding="utf-8-sig",
+    )
+    return state_path

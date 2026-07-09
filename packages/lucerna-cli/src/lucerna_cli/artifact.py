@@ -9,11 +9,14 @@ from lucerna_core.artifacts.manifest import (
     DAILY_REVIEW_REQUIRED_FILES,
     format_audit_report,
     is_daily_review_stage_dir,
+    is_factor_scan_stage_dir,
     list_daily_review_stages,
     list_market_gate_stages,
     resolve_daily_review_audit_target,
+    resolve_factor_scan_audit_target,
     resolve_market_gate_audit_target,
     validate_daily_review_stage,
+    validate_factor_scan_stage,
     validate_market_gate_stage,
 )
 
@@ -26,7 +29,7 @@ META_PATH_OPTION = typer.Option(None, "--meta-path")
 STAGE_TYPE_OPTION = typer.Option(
     "market_gate",
     "--stage-type",
-    help="Stage domain when resolving from --artifact-root and --trade-date.",
+    help="Stage domain: market_gate, daily_review, or factor_scan.",
 )
 
 
@@ -67,11 +70,26 @@ def artifact_audit(
         raise typer.Exit(code=2)
 
     use_daily_review = stage_dir is not None and is_daily_review_stage_dir(stage_dir)
+    use_factor_scan = stage_dir is not None and is_factor_scan_stage_dir(stage_dir)
     if stage_dir is None and stage_type == "daily_review":
         use_daily_review = True
+    if stage_dir is None and stage_type == "factor_scan":
+        use_factor_scan = True
 
     try:
-        if use_daily_review:
+        if use_factor_scan:
+            target_dir, expected_trade_date = resolve_factor_scan_audit_target(
+                artifact_root=artifact_root,
+                trade_date=parsed_trade_date,
+                stage_dir=stage_dir,
+            )
+            if stage_dir is not None and parsed_trade_date is not None:
+                expected_trade_date = parsed_trade_date.isoformat()
+            manifest = validate_factor_scan_stage(
+                target_dir,
+                expected_trade_date=expected_trade_date,
+            )
+        elif use_daily_review:
             target_dir, expected_trade_date = resolve_daily_review_audit_target(
                 artifact_root=artifact_root,
                 trade_date=parsed_trade_date,

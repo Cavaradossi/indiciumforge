@@ -8,6 +8,7 @@ from typing import Any
 
 from lucerna_core.artifacts.manifest import (
     validate_daily_review_stage,
+    validate_factor_scan_stage,
     validate_market_gate_stage,
 )
 from lucerna_core.artifacts.paths import (
@@ -18,11 +19,12 @@ from lucerna_core.artifacts.paths import (
     workflow_chain_summary_path,
 )
 
+from lucerna_workflow.factor_scan.runner import FactorScanStageConfig, run_factor_scan_stage
 from lucerna_workflow.market_awareness.runner import run_daily_review_skeleton
 from lucerna_workflow.market_gate.runner import run_market_gate
 from lucerna_workflow.workflow_chain.skeleton import seed_post_close_review, seed_preopen_review
 
-WORKFLOW_CHAIN_SUMMARY_SCHEMA = "lucerna.workflow_chain_summary.v1"
+WORKFLOW_CHAIN_SUMMARY_SCHEMA = "lucerna.workflow_chain_summary.v2"
 
 
 @dataclass(frozen=True)
@@ -39,6 +41,11 @@ class WorkflowChainResult:
     market_gate_audit_ok: bool
     chain_ok: bool
     warnings: tuple[str, ...]
+    factor_scan_enabled: bool = False
+    factor_scan_stage_dir: Path | None = None
+    factor_scan_audit_ok: bool | None = None
+    detector_count: int = 0
+    signal_count: int = 0
 
 
 def _write_chain_summary(
@@ -55,25 +62,41 @@ def _write_chain_summary(
     strict_count: int,
     fixtures: dict[str, str],
     warnings: list[str],
+    factor_scan_enabled: bool,
+    factor_scan_stage_dir: Path | None,
+    factor_scan_audit_ok: bool | None,
+    detector_count: int,
+    signal_count: int,
 ) -> None:
+    stages: dict[str, Any] = {
+        "daily_review": {
+            "dir": str(daily_review_stage_dir),
+            "audit_ok": daily_review_audit_ok,
+        },
+        "post_close": {"dir": str(post_close_stage_dir)},
+        "preopen": {"dir": str(preopen_stage_dir)},
+        "market_gate": {
+            "dir": str(market_gate_stage_dir),
+            "audit_ok": market_gate_audit_ok,
+        },
+    }
+    if factor_scan_enabled and factor_scan_stage_dir is not None:
+        stages["factor_scan"] = {
+            "dir": str(factor_scan_stage_dir),
+            "audit_ok": factor_scan_audit_ok,
+        }
+
     payload: dict[str, Any] = {
         "schema": WORKFLOW_CHAIN_SUMMARY_SCHEMA,
         "trade_date": trade_date.isoformat(),
         "provenance": {"mode": "workflow_chain_skeleton", "fixtures": fixtures},
-        "stages": {
-            "daily_review": {
-                "dir": str(daily_review_stage_dir),
-                "audit_ok": daily_review_audit_ok,
-            },
-            "post_close": {"dir": str(post_close_stage_dir)},
-            "preopen": {"dir": str(preopen_stage_dir)},
-            "market_gate": {
-                "dir": str(market_gate_stage_dir),
-                "audit_ok": market_gate_audit_ok,
-            },
-        },
+        "stages": stages,
         "workflow_review_source_stage": workflow_review_source_stage,
         "strict_count": strict_count,
+        "factor_scan_enabled": factor_scan_enabled,
+        "factor_scan_audit_ok": factor_scan_audit_ok,
+        "detector_count": detector_count,
+        "signal_count": signal_count,
         "chain_ok": daily_review_audit_ok and market_gate_audit_ok,
         "warnings": warnings,
     }
@@ -88,6 +111,7 @@ def run_workflow_chain_skeleton(
     daily_review_fixture: Path,
     post_close_review_fixture: Path,
     preopen_review_fixture: Path,
+    factor_scan_config: FactorScanStageConfig | None = None,
 ) -> WorkflowChainResult:
     if not daily_review_fixture.is_file():
         raise FileNotFoundError(f"missing daily-review fixture: {daily_review_fixture}")
@@ -105,6 +129,23 @@ def run_workflow_chain_skeleton(
         fixture_path=daily_review_fixture,
     )
     warnings.extend(daily_result.warnings)
+
+    factor_scan_enabled = factor_scan_config is not None
+    factor_scan_stage_dir: Path | None = None
+    factor_scan_audit_ok: bool | None = None
+    detector_count = 0
+    signal_count = 0
+
+    if factor_scan_config is not None:
+        factor_result = run_factor_scan_stage(
+            trade_date=trade_date,
+            artifact_root=artifact_root,
+            config=factor_scan_config,
+        )
+        factor_scan_stage_dir = factor_result.stage_dir
+        detector_count = factor_result.detector_count
+        signal_count = factor_result.signal_count
+        warnings.extend(factor_result.warnings)
 
     seed_post_close_review(artifact_root, trade_date, post_close_review_fixture)
     seed_preopen_review(artifact_root, trade_date, preopen_review_fixture)
@@ -126,6 +167,13 @@ def run_workflow_chain_skeleton(
         expected_trade_date=trade_date_iso,
     )
 
+    if factor_scan_enabled and factor_scan_stage_dir is not None:
+        factor_manifest = validate_factor_scan_stage(
+            factor_scan_stage_dir,
+            expected_trade_date=trade_date_iso,
+        )
+        factor_scan_audit_ok = factor_manifest.ok
+
     daily_review_audit_ok = daily_manifest.ok
     market_gate_audit_ok = gate_manifest.ok
     chain_ok = daily_review_audit_ok and market_gate_audit_ok
@@ -135,6 +183,19 @@ def run_workflow_chain_skeleton(
     )
     workflow_review_source_stage = str(summary_payload.get("workflow_review_source_stage", ""))
     strict_count = int(summary_payload.get("strict_count", 0))
+
+    fixtures = {
+        "daily_review": str(daily_review_fixture),
+        "post_close_review": str(post_close_review_fixture),
+        "preopen_review": str(preopen_review_fixture),
+    }
+    if factor_scan_config is not None:
+        if factor_scan_config.pack_config is not None:
+            fixtures["factor_pack"] = str(factor_scan_config.pack_config)
+        if factor_scan_config.detectors_config is not None:
+            fixtures["factor_detectors"] = str(factor_scan_config.detectors_config)
+        if factor_scan_config.asset_fixture_list is not None:
+            fixtures["factor_assets"] = str(factor_scan_config.asset_fixture_list)
 
     summary_path = workflow_chain_summary_path(artifact_root, trade_date)
     _write_chain_summary(
@@ -148,12 +209,13 @@ def run_workflow_chain_skeleton(
         market_gate_audit_ok=market_gate_audit_ok,
         workflow_review_source_stage=workflow_review_source_stage,
         strict_count=strict_count,
-        fixtures={
-            "daily_review": str(daily_review_fixture),
-            "post_close_review": str(post_close_review_fixture),
-            "preopen_review": str(preopen_review_fixture),
-        },
+        fixtures=fixtures,
         warnings=warnings,
+        factor_scan_enabled=factor_scan_enabled,
+        factor_scan_stage_dir=factor_scan_stage_dir,
+        factor_scan_audit_ok=factor_scan_audit_ok,
+        detector_count=detector_count,
+        signal_count=signal_count,
     )
 
     return WorkflowChainResult(
@@ -169,4 +231,9 @@ def run_workflow_chain_skeleton(
         market_gate_audit_ok=market_gate_audit_ok,
         chain_ok=chain_ok,
         warnings=tuple(warnings),
+        factor_scan_enabled=factor_scan_enabled,
+        factor_scan_stage_dir=factor_scan_stage_dir,
+        factor_scan_audit_ok=factor_scan_audit_ok,
+        detector_count=detector_count,
+        signal_count=signal_count,
     )
