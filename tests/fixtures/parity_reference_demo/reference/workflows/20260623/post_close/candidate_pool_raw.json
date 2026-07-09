@@ -1,0 +1,8 @@
+{
+  "schema": "lucerna.candidate_pool_raw.v1",
+  "trade_date": "2026-06-23",
+  "candidates": [],
+  "provenance": {
+    "source": "parity_reference_demo"
+  }
+}

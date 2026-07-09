@@ -9,6 +9,7 @@ from lucerna_workflow.market_gate.runner import run_market_gate
 from lucerna_cli.artifact import artifact_app
 from lucerna_cli.daily_review import workflow_daily_review
 from lucerna_cli.factor import factor_scan
+from lucerna_cli.parity import parity_report, parity_run
 from lucerna_cli.provider import provider_fetch, provider_inspect
 from lucerna_cli.synthetic_e2e import workflow_synthetic_e2e
 from lucerna_cli.workflow_chain import workflow_chain
@@ -17,10 +18,12 @@ app = typer.Typer(help="Lucerna reference CLI.")
 workflow_app = typer.Typer(help="Workflow commands.")
 factor_app = typer.Typer(help="Factor commands.")
 provider_app = typer.Typer(help="Data provider commands.")
+parity_app = typer.Typer(help="Private-local parity harness (research audit only).")
 app.add_typer(workflow_app, name="workflow")
 app.add_typer(artifact_app, name="artifact")
 app.add_typer(factor_app, name="factor")
 app.add_typer(provider_app, name="provider")
+app.add_typer(parity_app, name="parity")
 
 TRADE_DATE_OPTION = typer.Option(..., "--trade-date")
 ARTIFACT_ROOT_OPTION = typer.Option(..., "--artifact-root")
@@ -172,3 +175,22 @@ def factor_scan_command(
         detectors_config=detectors_config,
         include_entry_points=include_entry_points,
     )
+
+
+@parity_app.command(
+    "run",
+    help="Run recipe chain then compare against a local reference artifact root.",
+)
+def parity_run_command(
+    parity_config: Path = typer.Option(..., "--parity-config"),
+    artifact_root: Path | None = typer.Option(None, "--artifact-root"),
+) -> None:
+    parity_run(parity_config=parity_config, artifact_root=artifact_root)
+
+
+@parity_app.command("report", help="Summarize an existing parity_run_report.json.")
+def parity_report_command(
+    report: Path = typer.Option(..., "--report"),
+    output_format: str = typer.Option("table", "--format", help="table or json"),
+) -> None:
+    parity_report(report_path=report, output_format=output_format)

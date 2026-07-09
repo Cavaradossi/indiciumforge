@@ -12,6 +12,9 @@ FORBIDDEN_PATTERNS = (
     r"D:/new_tdx64",
     r"D:\\new_tdx64",
     r"output/",
+    r"watchlist",
+    r"secrets",
+    r"account/",
 )
 
 ALLOWLIST_PATHS = {
@@ -20,6 +23,8 @@ ALLOWLIST_PATHS = {
     ROOT / "docs" / "decisions" / "ADR-0020-session-aware-data-provider-v2-v0.9.md",
     ROOT / "docs" / "PRIVATE_DATA_ADAPTER_TEMPLATE.md",
     ROOT / "MIGRATION_MAP_FROM_INDICIUMGRID.md",
+    ROOT / "docs" / "PRIVATE_PARITY_HARNESS_TEMPLATE.md",
+    ROOT / "docs" / "decisions" / "ADR-0022-private-local-parity-harness-v0.11.md",
     ROOT / "tests" / "security" / "test_no_provider_path_leak.py",
 }
 

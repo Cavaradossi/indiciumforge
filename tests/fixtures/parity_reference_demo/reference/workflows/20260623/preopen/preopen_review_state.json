@@ -1,0 +1,11 @@
+{
+  "schema": "lucerna.preopen_review_state.v1",
+  "trade_date": "2026-06-23",
+  "stage": "preopen",
+  "paths": {
+    "buy_point_review_internal": "buy_point_review_internal.csv"
+  },
+  "provenance": {
+    "source": "parity_reference_demo"
+  }
+}

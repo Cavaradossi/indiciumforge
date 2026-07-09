@@ -1,0 +1,14 @@
+schema: lucerna.parity_local_config.v1
+reference_artifact_root: reference
+trade_date: 2026-06-23
+recipe:
+  path: ../workflow/recipe_ashare_daily_v1.yaml
+  extension_pack: ../recipe_extension_pack_demo.yaml
+  daily_review_fixture: ../market_awareness/theme_sectors_demo.yaml
+dimensions:
+  - daily_review_structure
+  - post_close_handoff_shape
+  - preopen_handoff_shape
+  - market_gate_strict_semantics
+  - workflow_chain_summary_v4
+disclaimer: research_audit_only

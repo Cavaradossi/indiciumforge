@@ -8,4 +8,5 @@ dist/
 build/
 .lucerna/
 output/
+parity_local.yaml
 tests/golden/**/_run/

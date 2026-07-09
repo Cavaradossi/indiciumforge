@@ -1,0 +1,12 @@
+{
+  "schema": "lucerna.post_close_review_state.v1",
+  "trade_date": "2026-06-23",
+  "stage": "post_close",
+  "paths": {
+    "buy_point_review_internal": "buy_point_review_internal.csv",
+    "candidate_pool_raw": "candidate_pool_raw.json"
+  },
+  "provenance": {
+    "source": "parity_reference_demo"
+  }
+}
