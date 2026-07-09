@@ -9,6 +9,8 @@ Lucerna is an evidence-first financial research workspace extracted from the fro
 
 Licensed under [Apache License 2.0](LICENSE). See [RELEASE_NOTES.md](RELEASE_NOTES.md) for release history.
 
+Lucerna v0.11 adds private-local parity harness (ADR-0022); `lucerna parity run` compares recipe-chain outputs against a local reference root (research audit only).
+
 Lucerna v0.10 adds A-share private recipe integration (ADR-0021); recipe-driven workflow chain via `--recipe` + fake extension pack.
 
 Lucerna v0.9 adds session-aware data provider contract v2 (ADR-0019/0020); `lucerna provider inspect/fetch` for fixture/fake smoke tests only.
@@ -97,6 +99,10 @@ lucerna workflow chain \
   --factor-pack tests/fixtures/factor_pack_demo.yaml \
   --ohlcv-fixture-root tests/fixtures/ohlcv \
   --asset-fixture-list tests/fixtures/factor_scan_assets.yaml
+
+lucerna parity run \
+  --parity-config tests/fixtures/parity_reference_demo/parity_config_demo.yaml \
+  --artifact-root /tmp/lucerna-parity-demo
 
 lucerna workflow chain \
   --trade-date 2026-06-23 \

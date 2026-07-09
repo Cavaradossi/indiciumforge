@@ -11,6 +11,15 @@
 - Lucerna does not self-develop a complete portfolio backtest engine; external engines may consume preserved signals through governed adapters.
 - Differences from IndiciumGrid golden behavior must be recorded as `match`, `intentional_change`, or `unsupported_gap`.
 
+## Text encoding
+
+- Repository text encoding is **UTF-8**.
+- Source identifiers, schema IDs, CLI option names, config keys, artifact filenames, command examples, and other machine-parsed operational surfaces should use **ASCII-stable** syntax.
+- Human-facing documentation may use Unicode, including Chinese text.
+- Domain labels and artifact payloads may use UTF-8 when the domain requires it.
+- Avoid decorative Unicode punctuation or symbols in CLI output, logs, config keys, schema IDs, and file paths unless there is a concrete domain reason.
+- This is not an ASCII-only project.
+
 ## License
 
 License: **Apache License 2.0** (Apache-2.0). See [LICENSE](LICENSE) and [ADR-0007](docs/decisions/ADR-0007-license-strategy.md).

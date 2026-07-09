@@ -1,5 +1,35 @@
 # Lucerna Release Notes
 
+## v0.11.0 — private local parity harness
+
+Lucerna 0.11.0 delivers a **config-driven parity harness** so operators can compare recipe-chain
+outputs against a local private reference artifact root — without IG Python runtime or committing
+private paths to Git.
+
+### Highlights
+
+| Area | Delivered |
+| --- | --- |
+| ADR-0022 | Private local parity harness boundary |
+| Parity layer | `lucerna_core.parity` — harness, reference provider, comparator |
+| CLI | `lucerna parity run`, `lucerna parity report` (research audit only) |
+| Demo | `tests/fixtures/parity_reference_demo/` synthetic reference tree |
+| Template | [PRIVATE_PARITY_HARNESS_TEMPLATE.md](docs/PRIVATE_PARITY_HARNESS_TEMPLATE.md) |
+
+### Quick demo
+
+```bash
+lucerna parity run \
+  --parity-config tests/fixtures/parity_reference_demo/parity_config_demo.yaml \
+  --artifact-root /tmp/lucerna-parity-demo
+```
+
+### Explicit non-goals (v0.11)
+
+- No IG runtime import, TDX sync, or real private detectors in OSS.
+- No committing private `output/` / `.indiciumgrid/` reference trees.
+- Parity mismatch is audit evidence only — not a trade signal.
+
 ## v0.10.0 — A-share private recipe integration
 
 Lucerna 0.10.0 delivers **recipe wiring** for A-share daily workflow — ports, `RecipeRunner`,

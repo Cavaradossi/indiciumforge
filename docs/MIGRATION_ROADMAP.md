@@ -123,6 +123,13 @@ Delivered in v0.10.0: `lucerna_core.recipes` (ports, `RecipeRunner`, `StageInput
 [PRIVATE_ASHARE_RECIPE_TEMPLATE.md](PRIVATE_ASHARE_RECIPE_TEMPLATE.md). Wiring + fake runtime only;
 production review builder deferred v0.11+.
 
+### v0.11: private local parity harness (completed)
+
+Delivered in v0.11.0: `lucerna_core.parity`, `lucerna parity run/report`, synthetic
+`parity_reference_demo/`. See ADR-0022 and
+[PRIVATE_PARITY_HARNESS_TEMPLATE.md](PRIVATE_PARITY_HARNESS_TEMPLATE.md). Local reference roots
+only; no IG runtime; v1.0 sign-off deferred.
+
 ### v0.10+: research dossier model (candidate, contract-only first)
 
 | Item | Detail |

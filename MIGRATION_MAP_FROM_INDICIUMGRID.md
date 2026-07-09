@@ -32,7 +32,7 @@ IndiciumGrid is frozen at `indiciumgrid-golden-v1`. This map records what Lucern
 | `run_post_close_workflow` | recipe stage `discovery_post_close` + `CandidatePoolBuilderPort` / `ReviewBuilderPort` | implemented v0.10 wiring; production builder private v0.11+ | fake extension OSS CI |
 | `run_preopen_workflow` | recipe stage `handoff_preopen` + `ReviewBuilderPort` / `MarketContextPort` | implemented v0.10 wiring; production builder private v0.11+ | fake extension OSS CI |
 | `_build_workflow_review` | `ReviewBuilderPort` (private extension) | port + fake stub v0.10 | not in OSS |
-| `run_quote_workflow_stage` | recipe stage `refresh_midday_quotes` | recipe mapping v0.8 | quote refresh (future Lucerna) |
+| IG `output/workflows/` golden slices | `lucerna_core.parity` + local `reference_artifact_root` | implemented v0.11 | private-local harness; ADR-0022 |
 
 Do not use line numbers as migration anchors. Use symbol names, scenario ids, and artifact names.
 

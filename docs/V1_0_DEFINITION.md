@@ -33,5 +33,5 @@ for **core A-share daily research workflow** without importing IG Python runtime
 | Version | Delivers toward v1.0 |
 | --- | --- |
 | v0.10 | Recipe wiring + fake private recipe (OSS) |
-| v0.11 | Private production review builder + private golden reference |
-| v0.12+ | Optional midday refresh, extended parity |
+| v0.11 | Private local parity harness (OSS) + local reference compare |
+| v0.12+ | Production private review builder + v1.0 sign-off |

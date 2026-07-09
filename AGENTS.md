@@ -17,6 +17,14 @@
 - Golden differences must be recorded as `intentional_change` or `unsupported_gap`.
 - Lucerna workflows consume ports, never vendors.
 
+## Text encoding (agents)
+
+- Treat the repo as UTF-8; do not assume a legacy code page for reads or writes.
+- Keep machine-parsed surfaces ASCII-stable: CLI flags, schema IDs, config keys, artifact filenames, and operational log lines.
+- Documentation and domain artifacts may use Unicode (including Chinese labels) where appropriate.
+- Do not use decorative Unicode punctuation in CLI output or logs; prefer ASCII hyphen/minus unless a domain rule requires otherwise.
+- Do not mass-normalize unrelated files to ASCII; fix only surfaces you touch or explicit policy violations.
+
 ## Roles
 
 - Cursor: primary implementer for Lucerna code, tests, and docs.
