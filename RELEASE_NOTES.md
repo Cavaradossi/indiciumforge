@@ -1,5 +1,39 @@
 # Lucerna Release Notes
 
+## v0.6.0 — workflow chain skeleton
+
+Lucerna 0.6.0 adds a **four-stage workflow chain skeleton** on top of the v0.5-alpha walking skeleton.
+
+### Highlights
+
+| Area | Delivered |
+| --- | --- |
+| Workflow chain | `lucerna workflow chain` — DR -> post_close -> preopen -> market-gate |
+| Stage artifacts | post_close/preopen review CSV + minimal state JSON per stage |
+| Chain summary | `workflow_chain_summary.json` with audit status and `strict_count` |
+| Tests | happy path, missing fixtures, empty strict, catalyst isolation |
+
+### Quick demo
+
+```bash
+lucerna workflow chain \
+  --trade-date 2026-06-23 \
+  --artifact-root /tmp/lucerna-chain \
+  --daily-review-fixture tests/fixtures/market_awareness/theme_sectors_demo.yaml \
+  --post-close-review-fixture tests/fixtures/workflow/post_close_buy_point_review_demo.csv \
+  --preopen-review-fixture tests/fixtures/workflow/preopen_buy_point_review_demo.csv
+```
+
+### Explicit non-goals (v0.6)
+
+- Not production IG review generation.
+- No live providers or TDX integration.
+- `synthetic-e2e` unchanged (still available as shorter demo).
+
+See [ADR-0016](docs/decisions/ADR-0016-workflow-chain-skeleton-v0.6.md).
+
+---
+
 ## v0.5.0 (v0.5-alpha) — public alpha
 
 Lucerna 0.5.0 is the first public open-source alpha. It packages a **synthetic research

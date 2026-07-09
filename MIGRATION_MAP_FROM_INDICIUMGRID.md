@@ -24,6 +24,7 @@ IndiciumGrid is frozen at `indiciumgrid-golden-v1`. This map records what Lucern
 | catalyst/research experimental branch | future capture/evidence capability | not in v0.1 | none |
 | `market_awareness` daily-review | `lucerna_workflow.market_awareness` + `lucerna workflow daily-review` | implemented v0.4.1 | `theme_state_ranking` + manifest audit |
 | synthetic E2E workflow | `lucerna_workflow.e2e.synthetic` + `lucerna workflow synthetic-e2e` | implemented v0.5-alpha | DR -> MG -> audit summary demo |
+| workflow chain skeleton | `lucerna_workflow.workflow_chain` + `lucerna workflow chain` | implemented v0.6 | DR -> post_close -> preopen -> MG |
 
 Do not use line numbers as migration anchors. Use symbol names, scenario ids, and artifact names.
 

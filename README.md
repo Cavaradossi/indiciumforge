@@ -7,7 +7,9 @@
 
 Lucerna is an evidence-first financial research workspace extracted from the frozen IndiciumGrid reference implementation.
 
-Licensed under [Apache License 2.0](LICENSE). See [RELEASE_NOTES.md](RELEASE_NOTES.md) for v0.5.0 (v0.5-alpha).
+Licensed under [Apache License 2.0](LICENSE). See [RELEASE_NOTES.md](RELEASE_NOTES.md) for release history.
+
+Lucerna v0.6 adds workflow chain skeleton (`lucerna workflow chain`).
 
 Lucerna v0.5-alpha (0.5.0) adds synthetic end-to-end workflow demo (`lucerna workflow synthetic-e2e`).
 
@@ -63,6 +65,13 @@ lucerna workflow synthetic-e2e \
 lucerna artifact list --artifact-root /tmp/lucerna-demo
 lucerna artifact audit --artifact-root /tmp/lucerna-demo --trade-date 2026-06-23 --stage-type daily_review
 lucerna artifact audit --artifact-root /tmp/lucerna-demo --trade-date 2026-06-23 --stage-type market_gate
+
+lucerna workflow chain \
+  --trade-date 2026-06-23 \
+  --artifact-root /tmp/lucerna-chain \
+  --daily-review-fixture tests/fixtures/market_awareness/theme_sectors_demo.yaml \
+  --post-close-review-fixture tests/fixtures/workflow/post_close_buy_point_review_demo.csv \
+  --preopen-review-fixture tests/fixtures/workflow/preopen_buy_point_review_demo.csv
 ```
 
 On Windows, use a writable temp directory (for example `%TEMP%\lucerna-demo`) and backslashes
@@ -74,8 +83,8 @@ python -m pytest -p no:cacheprovider -q --basetemp D:\project\indiciumgrid\.tmp_
 
 ## What's next
 
-- **v0.5+ candidate:** production post-close -> preopen workflow chain
-- **Later:** optional stub daily-review bundle, intraday watch, factor tracking, account analysis per [MIGRATION_ROADMAP](docs/MIGRATION_ROADMAP.md)
+- **v0.7+ candidate:** production review generation; optional stub daily-review bundle
+- **Later:** intraday watch, factor tracking, account analysis per [MIGRATION_ROADMAP](docs/MIGRATION_ROADMAP.md)
 
 ## Install
 
@@ -122,7 +131,7 @@ Test layers:
 | Golden | `tests/golden/` | Semantic parity vs exported IG artifacts (5 market-gate scenarios) |
 | Contract | `tests/contract/` | Artifact store, provider, factor detectors, daily-review skeleton |
 | Fixtures | `tests/fixtures/ohlcv/` | Hand-authored synthetic OHLCV including DEMO001/DEMO002 demo series |
-| CLI smoke | `tests/cli/` | Typer help + `workflow market-gate/daily-review/synthetic-e2e` + `artifact list/audit` |
+| CLI smoke | `tests/cli/` | Typer help + `workflow market-gate/daily-review/synthetic-e2e/chain` + `artifact list/audit` |
 
 ## CLI
 
@@ -132,6 +141,7 @@ lucerna workflow --help
 lucerna workflow market-gate --trade-date 2026-06-23 --artifact-root D:\path\to\artifact-root
 lucerna workflow daily-review --trade-date 2026-06-23 --artifact-root D:\path\to\artifact-root --fixture-path D:\path\to\theme_sectors_demo.yaml
 lucerna workflow synthetic-e2e --trade-date 2026-06-23 --artifact-root D:\path\to\artifact-root --daily-review-fixture D:\path\to\theme_sectors_demo.yaml --preopen-review-fixture D:\path\to\preopen_buy_point_review_demo.csv
+lucerna workflow chain --trade-date 2026-06-23 --artifact-root D:\path\to\artifact-root --daily-review-fixture D:\path\to\theme_sectors_demo.yaml --post-close-review-fixture D:\path\to\post_close_buy_point_review_demo.csv --preopen-review-fixture D:\path\to\preopen_buy_point_review_demo.csv
 lucerna artifact --help
 lucerna artifact list --artifact-root D:\path\to\artifact-root
 lucerna artifact audit --artifact-root D:\path\to\artifact-root --trade-date 2026-06-23
@@ -150,6 +160,24 @@ artifact-root/
 ```
 
 Outputs are written under `artifact-root/workflows/{YYYYMMDD}/market_gate/` (7 artifact families: strict, observation, active_watch, rejected, calibration, summary, state).
+
+## v0.6 boundaries
+
+**In scope (implemented_v0.6):**
+
+- `lucerna_workflow.workflow_chain` — chain runner (`run_workflow_chain_skeleton`)
+- `lucerna workflow chain` — DR -> post_close -> preopen -> market-gate -> audit -> summary
+- Stage state JSON: `post_close_review_state.json`, `preopen_review_state.json`
+- Summary: `workflows/{YYYYMMDD}/workflow_chain_summary.json` (`lucerna.workflow_chain_summary.v1`)
+- Fixtures: `theme_sectors_demo.yaml`, `post_close_buy_point_review_demo.csv`, `preopen_buy_point_review_demo.csv`
+- ADR-0016 (accepted)
+
+**Explicitly not in v0.6:**
+
+- IG production review generation
+- Live providers, TDX, account data
+- Manifest audit for post_close/preopen stages
+- Factor scan integration; catalyst/KOL in strict gate
 
 ## v0.5-alpha boundaries
 
@@ -279,7 +307,7 @@ See `CAPABILITY_REGISTER.md` for the full capability matrix and promotion rules.
 | Package | Role |
 | --- | --- |
 | `lucerna-core` | Domain, labels, ports, artifacts, providers, theme rules, factor port |
-| `lucerna-workflow` | `market_gate` kernel; `market_awareness` daily-review skeleton; `e2e.synthetic` orchestration |
-| `lucerna-cli` | Reference CLI: `workflow market-gate`, `workflow daily-review`, `workflow synthetic-e2e`, `artifact list/audit` |
+| `lucerna-workflow` | `market_gate` kernel; `market_awareness` daily-review; `e2e.synthetic`; `workflow_chain` |
+| `lucerna-cli` | `workflow market-gate`, `daily-review`, `synthetic-e2e`, `chain`, `artifact list/audit` |
 
 Governance docs: `LUCERNA_CONSTITUTION.md`, `RELEASE_NOTES.md`, `SECURITY.md`, `MIGRATION_MAP_FROM_INDICIUMGRID.md`, `docs/FACTOR_CORE_INVENTORY.md`, `docs/AGENT_WORKFLOW.md`.
