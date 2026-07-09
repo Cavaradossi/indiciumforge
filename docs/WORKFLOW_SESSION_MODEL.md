@@ -91,13 +91,21 @@ Artifact layout (future): `workflows/{domain}/{cycle_id}/checkpoints/{checkpoint
 
 ## Data adapter dependency (v0.9)
 
+Delivered in v0.9.0: `DataQuery` / `ProviderResult` carry session fields from checkpoints.
+See [ADR-0020](decisions/ADR-0020-session-aware-data-provider-v2-v0.9.md).
+
 Provider outputs should declare:
 
 - `asset_domain`
-- `checkpoint_id` / `recipe_stage_id`
+- `checkpoint_id` / `recipe_stage_id` (via query/provenance)
 - `cycle_id`
 - `as_of`
+- `ProviderAuthorityLevel` (fallback is not primary authority)
 - compatible `HandoffArtifact` kind
+
+Open-core CI uses fixture/fake providers only (`lucerna provider fetch`). Real adapters load via
+private `lucerna.data_providers` entry points — see
+[PRIVATE_DATA_ADAPTER_TEMPLATE.md](PRIVATE_DATA_ADAPTER_TEMPLATE.md).
 
 ## Golden test scope
 

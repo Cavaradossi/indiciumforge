@@ -1,5 +1,38 @@
 # Lucerna Release Notes
 
+## v0.9.0 — session-aware data provider contract v2
+
+Lucerna 0.9.0 delivers the data adapter **boundary** for private packs — session-aware queries,
+authority-tagged provenance, and pack loading — without TDX sync or network providers.
+
+### Highlights
+
+| Area | Delivered |
+| --- | --- |
+| Anti-inheritance | ADR-0019 + [DESIGN_DEFECT_MIGRATION_AUDIT.md](docs/DESIGN_DEFECT_MIGRATION_AUDIT.md) |
+| Provider v2 | `DataQuery`, `ProviderResult`, `DataProviderPortV2`, `ProviderRegistryV2` |
+| Pack loading | `load_provider_pack()` — `lucerna.provider_pack.v1` + entry points |
+| CLI | `lucerna provider inspect`, `lucerna provider fetch` (fixture/fake only) |
+| Compatibility | v1 `DataProviderPort` unchanged |
+
+### Quick demo
+
+```bash
+lucerna provider inspect --ohlcv-fixture-root tests/fixtures/ohlcv
+
+lucerna provider fetch \
+  --trade-date 2026-04-30 \
+  --code 600000 \
+  --ohlcv-fixture-root tests/fixtures/ohlcv
+```
+
+### Explicit non-goals (v0.9)
+
+- No real TDX sync / vipdoc / `.indiciumgrid` paths in open core.
+- No network providers in public CI.
+- No workflow chain or market_gate integration.
+- Provider output does not feed strict gate.
+
 ## v0.8.0 — session-cyclic workflow model
 
 Lucerna 0.8.0 introduces session-cyclic workflow **contracts** before data adapter work. IG folder

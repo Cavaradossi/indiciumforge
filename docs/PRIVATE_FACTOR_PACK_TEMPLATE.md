@@ -104,3 +104,10 @@ In the A-share recipe (`lucerna.recipe.ashare_daily_research.v1`), factor scan a
 optional evidence stage `evidence_factor_scan`. Production discovery still belongs to the
 `discovery_post_close` recipe stage in IndiciumGrid; Lucerna v0.7 chain integration treats factor
 scan as a sidecar only. See [WORKFLOW_SESSION_MODEL.md](WORKFLOW_SESSION_MODEL.md).
+
+## Data provider at discovery (v0.9)
+
+Factor scan and future discovery stages consume OHLCV via `DataProviderPortV2` in private packs.
+Open-core boundary: [ADR-0020](decisions/ADR-0020-session-aware-data-provider-v2-v0.9.md) and
+[PRIVATE_DATA_ADAPTER_TEMPLATE.md](PRIVATE_DATA_ADAPTER_TEMPLATE.md). v0.7 `FactorScanRunner` still
+uses v1 registry by default; migrate adapters to v2 when wiring session-aware queries.

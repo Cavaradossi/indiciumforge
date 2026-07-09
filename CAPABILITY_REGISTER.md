@@ -9,6 +9,7 @@ Status values:
 - `implemented_v0.4.1`: daily-review CLI + manifest audit for market_awareness stage.
 - `implemented_v0.5_alpha`: synthetic end-to-end workflow demo orchestration for v0.5-alpha.
 - `implemented_v0.8`: session-cyclic workflow model contracts (ADR-0018).
+- `implemented_v0.9`: session-aware data provider contract v2 (ADR-0019/0020).
 - `implemented_v0.7`: private factor pack loading integration + workflow chain factor_scan stage.
 - `implemented_v0.6`: workflow chain skeleton (post_close -> preopen -> market_gate).
 - `private_extension`: intentionally outside the open-source repository; implemented only by private packs/plugins.
@@ -25,6 +26,7 @@ Status values:
 | artifact store + golden compare | `implemented_v1` | Local artifact I/O, semantic comparator, five golden scenarios. |
 | artifact manifest / audit CLI | `implemented_v0.4.1` | Scan + validate market_gate and daily_review stage dirs; `lucerna artifact list/audit`; ADR-0008, ADR-0014. |
 | data provider port | `implemented_v1` | `DataProviderPort` v1, `ProviderRegistry`, `LocalFixtureProvider`; synthetic fixtures only; ADR-0009. |
+| session-aware data provider v2 | `implemented_v0.9` | `DataProviderPortV2`, `ProviderRegistryV2`, pack loader, `lucerna provider inspect/fetch`; ADR-0019/0020. |
 | open-core/private-extension boundary | `implemented_v0.2.2` | ADR-0011; authoritative split between open core and private packs. |
 | factor-core inventory + golden planning | `implemented_v0.2.2` | FACTOR_CORE_INVENTORY, FACTOR_GOLDEN_MANIFEST, scenario plan; ADR-0010. |
 | factor detector port + demo detector | `implemented_v0.3` | `FactorDetectorPort`, demo detectors, registry, loading boundary; ADR-0010/0011/0012. |
@@ -38,7 +40,7 @@ Status values:
 | post-close / preopen workflow chain | `implemented_v0.6` | Skeleton chain: DR -> post_close -> preopen -> MG; `lucerna workflow chain`; ADR-0016; synthetic fixtures. |
 | factor tracking evidence audit | `not_in_v0.2.x` | Sample-out tracking evidence; distinct from factor-core; future ADR. |
 | factor trade-plan/evaluate/backtest adapter | `technical_reserve` | Trade-plan and evaluate outputs; defer past v0.3 core slice. |
-| constitution + ADR + CI | `implemented_v1` | Constitution, ADR-0001..0018, ruff, pytest, CI workflow. |
+| constitution + ADR + CI | `implemented_v1` | Constitution, ADR-0001..0020, ruff, pytest, CI workflow. |
 | capture/evidence port | `contract_only` | No Firecrawl/Scrapling implementation in v0.1. |
 | research engine port | `contract_only` | No RQAlpha/Qlib/backtrader implementation in v0.1. |
 | execution port | `technical_reserve` | No broker order placement. |
@@ -101,6 +103,12 @@ Forward schedule and original-plan reconciliation:
 - v0.8.0 delivered: **session-cyclic workflow model** — recipe/checkpoint/handoff contracts,
   `lucerna.workflow_recipe.v1`, A-share recipe fixture, summary v3 session metadata (ADR-0018).
 
-## v0.9+ forward candidate (planning only)
+## v0.9 vertical slice (completed)
 
-- data adapter slice(s) with checkpoint-scoped provenance; production review generation (private recipe).
+- v0.9.0 delivered: **session-aware data provider contract v2** — `DataProviderPortV2`,
+  `ProviderRegistryV2`, provider pack loading, `lucerna provider inspect/fetch`, fake private
+  adapter fixture (ADR-0019/0020). v1 provider port retained for compatibility.
+
+## v0.10+ forward candidate (planning only)
+
+- private TDX adapter + `lucerna data sync`; production review generation (private recipe).

@@ -9,6 +9,8 @@ Lucerna is an evidence-first financial research workspace extracted from the fro
 
 Licensed under [Apache License 2.0](LICENSE). See [RELEASE_NOTES.md](RELEASE_NOTES.md) for release history.
 
+Lucerna v0.9 adds session-aware data provider contract v2 (ADR-0019/0020); `lucerna provider inspect/fetch` for fixture/fake smoke tests only.
+
 Lucerna v0.8 adds session-cyclic workflow model contracts (ADR-0018); `post_close`/`preopen` are A-share recipe stages, not universal lifecycle.
 
 Lucerna v0.7 adds private factor pack loading integration (`lucerna factor scan`) and optional workflow chain `factor_scan` stage.
@@ -93,6 +95,13 @@ lucerna workflow chain \
   --factor-pack tests/fixtures/factor_pack_demo.yaml \
   --ohlcv-fixture-root tests/fixtures/ohlcv \
   --asset-fixture-list tests/fixtures/factor_scan_assets.yaml
+
+lucerna provider inspect --ohlcv-fixture-root tests/fixtures/ohlcv
+
+lucerna provider fetch \
+  --trade-date 2026-04-30 \
+  --code 600000 \
+  --ohlcv-fixture-root tests/fixtures/ohlcv
 ```
 
 On Windows, use a writable temp directory (for example `%TEMP%\lucerna-demo`) and backslashes
@@ -104,8 +113,8 @@ python -m pytest -p no:cacheprovider -q --basetemp D:\project\indiciumgrid\.tmp_
 
 ## What's next
 
-- **v0.9+ candidate:** data adapter slice(s) depending on v0.8 session contracts
-- **v0.8+ candidate:** production review generation deferred; see session model first
+- **v0.10+ candidate:** private TDX adapter + `lucerna data sync` (see [PRIVATE_DATA_ADAPTER_TEMPLATE.md](docs/PRIVATE_DATA_ADAPTER_TEMPLATE.md))
+- **v0.11+ candidate:** production review generation (private A-share recipe)
 - **Later:** intraday watch, factor tracking, account analysis per [MIGRATION_ROADMAP](docs/MIGRATION_ROADMAP.md)
 
 ## Install

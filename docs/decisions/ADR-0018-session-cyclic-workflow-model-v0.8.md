@@ -61,5 +61,6 @@ naming/metadata correction only; it does not remove v0.6/v0.7 CLI commands or ar
 ## Consequences
 
 - CAPABILITY_REGISTER: session-cyclic workflow model -> `implemented_v0.8`
-- MIGRATION_ROADMAP: v0.8 = session model; v0.9 = data adapter
+- MIGRATION_ROADMAP: v0.8 = session model; v0.9 = data adapter (see ADR-0020)
+- v0.9 provider provenance carries `asset_domain`, `cycle_id`, `checkpoint_id`, `session_model`
 - Golden tests prove A-share compatibility only, not universal workflow design

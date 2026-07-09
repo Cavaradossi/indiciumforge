@@ -104,16 +104,23 @@ Delivered in v0.8.0: `lucerna_core.workflow` contracts (`AssetDomain`, `SessionM
 A-share recipe fixture, `workflow_chain_summary.v3` session metadata. See ADR-0018 and
 [WORKFLOW_SESSION_MODEL.md](WORKFLOW_SESSION_MODEL.md). No global/crypto execution; no data adapter.
 
-### v0.9+: data adapter (candidate)
+### v0.9: session-aware data provider contract v2 (completed)
+
+Delivered in v0.9.0: `DataProviderPortV2`, `ProviderRegistryV2`, `load_provider_pack`,
+`lucerna provider inspect/fetch`, fake private provider fixture. See ADR-0019, ADR-0020,
+[DESIGN_DEFECT_MIGRATION_AUDIT.md](DESIGN_DEFECT_MIGRATION_AUDIT.md), and
+[PRIVATE_DATA_ADAPTER_TEMPLATE.md](PRIVATE_DATA_ADAPTER_TEMPLATE.md). Contract-only; no TDX sync,
+network providers, or workflow/gate coupling.
+
+### v0.10+: private TDX adapter (candidate)
 
 | Item | Detail |
 | --- | --- |
-| Scope | Provider adapter slice(s) with checkpoint-scoped provenance per v0.8 contracts |
-| Prerequisites | v0.8 session model; artifact handoff kinds |
-| ADR | Data adapter ADR (TBD); depends on ADR-0018 |
-| Open-core | Port contracts + synthetic fixtures; no TDX migration |
+| Scope | Real TDX private adapter via `lucerna.data_providers` entry points |
+| Prerequisites | v0.9 provider v2 contracts + pack loader |
+| Open-core | Template docs only; no vipdoc paths in repo |
 
-### v0.9+: production review generation (candidate, private recipe)
+### v0.11+: production review generation (candidate, private recipe)
 
 | Item | Detail |
 | --- | --- |
