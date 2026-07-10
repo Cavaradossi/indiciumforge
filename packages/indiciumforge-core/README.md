@@ -6,7 +6,13 @@ IndiciumForge produces **research audit artifacts** and parity evidence. It is *
 
 ## Install
 
-PyPI publish is pending. Install from the monorepo:
+Published on PyPI:
+
+```bash
+pip install indiciumforge-core==2.0.0
+```
+
+For monorepo development:
 
 ```bash
 pip install -e packages/indiciumforge-core

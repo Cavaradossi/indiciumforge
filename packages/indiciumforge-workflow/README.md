@@ -6,7 +6,13 @@ Research audit workflows only — not investment advice, not live trading.
 
 ## Install
 
-PyPI publish is pending. Install from the monorepo (requires `indiciumforge-core`):
+Published on PyPI (requires `indiciumforge-core`):
+
+```bash
+pip install indiciumforge-workflow==2.0.0
+```
+
+For monorepo development:
 
 ```bash
 pip install -e packages/indiciumforge-core -e packages/indiciumforge-workflow

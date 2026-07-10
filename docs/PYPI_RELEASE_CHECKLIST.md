@@ -1,6 +1,6 @@
 # PyPI release checklist
 
-**Status:** ready for TestPyPI dry-run; **not** published to production PyPI.
+**Status:** `indiciumforge-core`, `indiciumforge-workflow`, and `indiciumforge-cli` **v2.0.0** are published on production PyPI. This checklist is retained for future releases.
 
 IndiciumForge ships three installable packages from this monorepo. They are **real packages** with working code — not empty placeholders.
 
@@ -62,9 +62,9 @@ IndiciumForge is a **contract-first open core for evidence-first financial resea
 
 ## Post-publish verification
 
-- [ ] `pip install indiciumforge-cli` resolves all three packages
-- [ ] `indiciumforge --help` works in a clean venv
-- [ ] PyPI project pages show correct URLs and license
+- [x] `pip install indiciumforge-cli==2.0.0` resolves all three packages (v2.0.0)
+- [x] `indiciumforge --help` works in a clean venv (v2.0.0)
+- [x] PyPI project pages show correct URLs and license (v2.0.0)
 - [ ] GitHub Release tag matches published versions
 
 ## Related docs

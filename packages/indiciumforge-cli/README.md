@@ -8,7 +8,13 @@ Research audit only — not investment advice, not broker execution.
 
 ## Install
 
-PyPI publish is pending. Install from the monorepo:
+Published on PyPI:
+
+```bash
+pip install indiciumforge-cli==2.0.0
+```
+
+For monorepo development:
 
 ```bash
 pip install -e packages/indiciumforge-core -e packages/indiciumforge-workflow -e packages/indiciumforge-cli

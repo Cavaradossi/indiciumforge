@@ -2,6 +2,8 @@
 
 Dry-run procedure for validating IndiciumForge wheels **before** production PyPI. Do not upload to `pypi.org` until the operator explicitly approves.
 
+**Note:** v2.0.0 completed production PyPI publish. Keep this runbook for pre-release validation on future versions.
+
 ## Prerequisites
 
 - Python 3.10+

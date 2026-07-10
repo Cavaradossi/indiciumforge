@@ -170,15 +170,27 @@ Naming registry: [docs/FUTURE_SURFACES.md](docs/FUTURE_SURFACES.md).
 
 ## Install
 
-### PyPI status
+### PyPI (production)
 
-| Package | PyPI | Install today |
+Published on PyPI at **v2.0.0** (research audit CLI — not a trading system):
+
+```bash
+pip install indiciumforge-cli==2.0.0
+```
+
+Install sibling packages explicitly if needed:
+
+```bash
+pip install indiciumforge-core==2.0.0 indiciumforge-workflow==2.0.0 indiciumforge-cli==2.0.0
+```
+
+| Package | PyPI | Install |
 | --- | --- | --- |
-| `indiciumforge-core` | **pending** (not published) | editable from source |
-| `indiciumforge-workflow` | **pending** | editable from source |
-| `indiciumforge-cli` | **pending** | editable from source |
+| `indiciumforge-core` | [Published](https://pypi.org/project/indiciumforge-core/2.0.0/) | `pip install indiciumforge-core==2.0.0` |
+| `indiciumforge-workflow` | [Published](https://pypi.org/project/indiciumforge-workflow/2.0.0/) | `pip install indiciumforge-workflow==2.0.0` |
+| `indiciumforge-cli` | [Published](https://pypi.org/project/indiciumforge-cli/2.0.0/) | `pip install indiciumforge-cli==2.0.0` |
 
-PyPI metadata is validated (`python -m build`, `twine check`) — see [docs/PYPI_RELEASE_CHECKLIST.md](docs/PYPI_RELEASE_CHECKLIST.md) and [docs/TESTPYPI_RELEASE_RUNBOOK.md](docs/TESTPYPI_RELEASE_RUNBOOK.md). **No production PyPI upload yet.**
+Release procedure and dry-run steps: [docs/PYPI_RELEASE_CHECKLIST.md](docs/PYPI_RELEASE_CHECKLIST.md), [docs/TESTPYPI_RELEASE_RUNBOOK.md](docs/TESTPYPI_RELEASE_RUNBOOK.md).
 
 ### Install from source
 

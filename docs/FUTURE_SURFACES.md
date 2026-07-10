@@ -1,15 +1,17 @@
 # Future surfaces — IndiciumForge naming registry
 
-**Status:** pre-publish checklist (v2.0.0+). No packages published yet.
+**Status:** naming registry (v2.0.0+). PyPI packages published at **2.0.0**.
 
-## PyPI (reserve before announcement)
+## PyPI
 
-| Package | Purpose | Action |
+| Package | Purpose | Status |
 | --- | --- | --- |
-| `indiciumforge-core` | Core contracts and artifacts | `twine upload` on v2.0.0 tag |
-| `indiciumforge-workflow` | Workflow services | depends on `-core` |
-| `indiciumforge-cli` | Reference CLI (`indiciumforge` command) | depends on `-workflow` |
-| `indiciumforge-workspace` | Monorepo meta (optional) | dev-only |
+| `indiciumforge-core` | Core contracts and artifacts | Published — [pypi.org/project/indiciumforge-core](https://pypi.org/project/indiciumforge-core/) |
+| `indiciumforge-workflow` | Workflow services | Published — depends on `-core` |
+| `indiciumforge-cli` | Reference CLI (`indiciumforge` command) | Published — depends on `-workflow` |
+| `indiciumforge-workspace` | Monorepo meta (optional) | dev-only (not on PyPI) |
+
+Install: `pip install indiciumforge-cli==2.0.0`
 
 **Do not** publish under `lucerna` — PyPI name taken by unrelated AI orchestration.
 
