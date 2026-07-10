@@ -1,4 +1,4 @@
-# Lucerna Agent Rules
+# IndiciumForge Agent Rules
 
 ## Frozen reference
 
@@ -15,7 +15,7 @@
 - Do not connect KOL/news/catalyst/Agent inputs to strict gate logic.
 - Do not expand v0.1 scope beyond CAPABILITY_REGISTER `implemented_v1` items.
 - Golden differences must be recorded as `intentional_change` or `unsupported_gap`.
-- Lucerna workflows consume ports, never vendors.
+- IndiciumForge workflows consume ports, never vendors.
 
 ## Text encoding (agents)
 
@@ -27,7 +27,7 @@
 
 ## Roles
 
-- Cursor: primary implementer for Lucerna code, tests, and docs.
+- Cursor: primary implementer for IndiciumForge code, tests, and docs.
 - Codex: independent reviewer for golden parity and ADR consistency.
 
 ## Allowed project agent files

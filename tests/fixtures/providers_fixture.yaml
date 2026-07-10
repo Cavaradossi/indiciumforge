@@ -1,5 +1,5 @@
 providers:
-  - module: lucerna_core.providers.local_fixture_v2
+  - module: indiciumforge_core.providers.local_fixture_v2
     class: LocalFixtureProviderV2
     kwargs:
       fixture_root: ohlcv

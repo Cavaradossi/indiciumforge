@@ -4,10 +4,10 @@ from datetime import date
 from pathlib import Path
 
 import pytest
-from lucerna_core.recipes.models import StageRunResult
-from lucerna_core.recipes.pack import load_recipe_extension_pack
-from lucerna_core.recipes.runner import RecipeRunError, RecipeRunner
-from lucerna_core.workflow.recipe_schema import load_workflow_recipe
+from indiciumforge_core.recipes.models import StageRunResult
+from indiciumforge_core.recipes.pack import load_recipe_extension_pack
+from indiciumforge_core.recipes.runner import RecipeRunError, RecipeRunner
+from indiciumforge_core.workflow.recipe_schema import load_workflow_recipe
 
 ROOT = Path(__file__).resolve().parents[2]
 RECIPE_PATH = ROOT / "tests" / "fixtures" / "workflow" / "recipe_ashare_daily_v1.yaml"

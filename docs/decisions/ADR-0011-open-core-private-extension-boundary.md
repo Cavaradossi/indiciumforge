@@ -4,14 +4,14 @@ Status: accepted
 
 ## Context
 
-- Lucerna is an open-source core decoupled from the frozen IndiciumGrid reference implementation.
+- IndiciumForge is an open-source core decoupled from the frozen IndiciumGrid reference implementation.
 - IndiciumGrid contains local private alpha logic, account evidence, watchlists, source lists,
   calibrated thresholds, historical outputs, and proprietary long-structure detector rules.
 - The open-source repository must not leak proprietary alpha logic or local evidence.
 
 ## Decision
 
-Lucerna open-source core exposes:
+IndiciumForge open-source core exposes:
 
 - ports and schemas,
 - artifact contracts,

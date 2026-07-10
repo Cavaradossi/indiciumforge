@@ -1,5 +1,5 @@
 {
-  "schema": "lucerna.market_daily_review_state.v1",
+  "schema": "indiciumforge.market_daily_review_state.v1",
   "trade_date": "2026-06-23",
   "paths": {
     "theme_state_ranking": "theme_state_ranking.csv"

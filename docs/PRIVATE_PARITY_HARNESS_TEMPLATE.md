@@ -1,13 +1,13 @@
 # Private Local Parity Harness Template (v0.11)
 
-Use this template to compare Lucerna recipe-chain outputs against a **local private reference**
+Use this template to compare IndiciumForge recipe-chain outputs against a **local private reference**
 artifact root. Open core ships the harness + synthetic demo only.
 
 ## Layout (operator machine)
 
 ```
 my-parity-workspace/
-  parity_local.yaml              # gitignored — lucerna.parity_local_config.v1
+  parity_local.yaml              # gitignored — indiciumforge.parity_local_config.v1
   reference/                     # curated IG export or output slice (gitignored)
     market_awareness/YYYYMMDD/daily_review/
     workflows/YYYYMMDD/post_close|preopen|market_gate/
@@ -24,7 +24,7 @@ reference/
 ## Config (`parity_local.yaml`)
 
 ```yaml
-schema: lucerna.parity_local_config.v1
+schema: indiciumforge.parity_local_config.v1
 reference_artifact_root: ./reference
 trade_date: 2026-06-23
 artifact_root: ./run_artifacts
@@ -50,9 +50,9 @@ Rules:
 ## CLI
 
 ```bash
-lucerna parity run --parity-config parity_local.yaml
+indiciumforge parity run --parity-config parity_local.yaml
 
-lucerna parity report --report ./run_artifacts/parity_run_report.json
+indiciumforge parity report --report ./run_artifacts/parity_run_report.json
 ```
 
 Exit codes: `0` all match; `1` mismatches; `2` config/runtime errors.
@@ -60,9 +60,9 @@ Exit codes: `0` all match; `1` mismatches; `2` config/runtime errors.
 ## OSS demo (CI)
 
 ```bash
-lucerna parity run \
+indiciumforge parity run \
   --parity-config tests/fixtures/parity_reference_demo/parity_config_demo.yaml \
-  --artifact-root /tmp/lucerna-parity-demo
+  --artifact-root /tmp/indiciumforge-parity-demo
 ```
 
 Demo reference: [`tests/fixtures/parity_reference_demo/reference/`](../tests/fixtures/parity_reference_demo/reference/)

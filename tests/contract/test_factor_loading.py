@@ -3,7 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 
 import pytest
-from lucerna_core.factors.loading import DetectorLoadError, load_detectors_from_config
+from indiciumforge_core.factors.loading import DetectorLoadError, load_detectors_from_config
 
 ROOT = Path(__file__).resolve().parents[2]
 CONFIG_PATH = ROOT / "tests" / "fixtures" / "factor_detectors.yaml"
@@ -18,7 +18,7 @@ def test_load_detectors_from_config_registers_demo_detectors() -> None:
 def test_load_detectors_from_config_rejects_invalid_module(tmp_path: Path) -> None:
     config = tmp_path / "bad.yaml"
     config.write_text(
-        "detectors:\n  - module: lucerna_core.factors.missing\n    class: Missing\n",
+        "detectors:\n  - module: indiciumforge_core.factors.missing\n    class: Missing\n",
         encoding="utf-8",
     )
 

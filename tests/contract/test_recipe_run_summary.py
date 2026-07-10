@@ -4,8 +4,8 @@ import json
 from datetime import date
 from pathlib import Path
 
-from lucerna_core.recipes.models import RECIPE_RUN_SUMMARY_SCHEMA
-from lucerna_workflow.workflow_chain.runner import (
+from indiciumforge_core.recipes.models import RECIPE_RUN_SUMMARY_SCHEMA
+from indiciumforge_workflow.workflow_chain.runner import (
     WORKFLOW_CHAIN_SUMMARY_SCHEMA_V4,
     WorkflowChainRecipeConfig,
     run_workflow_chain_recipe,
@@ -33,12 +33,12 @@ def test_recipe_run_summary_and_chain_summary_v4(tmp_path: Path) -> None:
     assert result.recipe_run_summary_path is not None
     recipe_summary = json.loads(result.recipe_run_summary_path.read_text(encoding="utf-8-sig"))
     assert recipe_summary["schema"] == RECIPE_RUN_SUMMARY_SCHEMA
-    assert recipe_summary["recipe_id"] == "lucerna.recipe.ashare_daily_research.v1"
+    assert recipe_summary["recipe_id"] == "indiciumforge.recipe.ashare_daily_research.v1"
     assert "fake_ashare_recipe" in recipe_summary["extension_ids"]
 
     chain_summary = json.loads(result.summary_path.read_text(encoding="utf-8-sig"))
     assert chain_summary["schema"] == WORKFLOW_CHAIN_SUMMARY_SCHEMA_V4
-    recipe_id = "lucerna.recipe.ashare_daily_research.v1"
+    recipe_id = "indiciumforge.recipe.ashare_daily_research.v1"
     assert chain_summary["workflow_session"]["recipe_id"] == recipe_id
     assert chain_summary["provenance"]["extension_pack"]["pack_id"] == "demo-recipe-extension-pack"
     assert "discovery_post_close" in {

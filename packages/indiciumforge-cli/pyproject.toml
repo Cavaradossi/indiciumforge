@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "indiciumforge-cli"
+version = "2.0.0"
+description = "Reference CLI for IndiciumForge."
+requires-python = ">=3.10"
+dependencies = ["indiciumforge-workflow", "typer>=0.9"]
+
+[project.scripts]
+indiciumforge = "indiciumforge_cli.main:app"
+
+[tool.setuptools.packages.find]
+where = ["src"]

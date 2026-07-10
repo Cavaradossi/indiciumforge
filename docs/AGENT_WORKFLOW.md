@@ -2,7 +2,7 @@
 
 ## Cursor implementer flow
 
-1. Read `LUCERNA_CONSTITUTION.md`, relevant ADR, and `CAPABILITY_REGISTER.md`.
+1. Read `INDICIUMFORGE_CONSTITUTION.md`, relevant ADR, and `CAPABILITY_REGISTER.md`.
 2. Implement only the requested capability slice.
 3. Update `MIGRATION_MAP_FROM_INDICIUMGRID.md` checkboxes when a mapping is complete.
 4. Run `ruff check .` and `pytest -q`.
@@ -18,9 +18,9 @@
 ## Golden export flow
 
 ```powershell
-# Requires a local frozen reference checkout (indiciumgrid-golden-v1) — not part of Lucerna OSS.
+# Requires a local frozen reference checkout (indiciumgrid-golden-v1) — not part of IndiciumForge OSS.
 pip install -e <path-to-frozen-reference-checkout>
 python scripts/export_golden_market_gate.py
 ```
 
-Golden fixtures are the reference for semantic parity. Lucerna must not depend on IndiciumGrid at runtime.
+Golden fixtures are the reference for semantic parity. IndiciumForge must not depend on IndiciumGrid at runtime.

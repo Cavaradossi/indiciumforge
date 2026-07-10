@@ -4,7 +4,7 @@ import json
 from datetime import date
 from pathlib import Path
 
-from lucerna_workflow.workflow_chain.runner import (
+from indiciumforge_workflow.workflow_chain.runner import (
     WorkflowChainRecipeConfig,
     run_workflow_chain_recipe,
 )

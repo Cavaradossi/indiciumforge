@@ -3,11 +3,11 @@ from __future__ import annotations
 from datetime import date
 from pathlib import Path
 
-from lucerna_core.parity.comparator import CandidateComparator
-from lucerna_core.parity.harness import build_parity_context
-from lucerna_core.parity.models import ParityDimension, ParityVerdict
-from lucerna_core.parity.reference import ReferenceArtifactProvider
-from lucerna_workflow.workflow_chain.runner import (
+from indiciumforge_core.parity.comparator import CandidateComparator
+from indiciumforge_core.parity.harness import build_parity_context
+from indiciumforge_core.parity.models import ParityDimension, ParityVerdict
+from indiciumforge_core.parity.reference import ReferenceArtifactProvider
+from indiciumforge_workflow.workflow_chain.runner import (
     WorkflowChainRecipeConfig,
     run_workflow_chain_recipe,
 )

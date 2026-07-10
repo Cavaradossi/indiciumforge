@@ -2,9 +2,9 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from lucerna_core.parity.config import load_parity_config
-from lucerna_core.parity.models import ParityDimension
-from lucerna_workflow.parity.runner import run_parity_after_recipe_chain
+from indiciumforge_core.parity.config import load_parity_config
+from indiciumforge_core.parity.models import ParityDimension
+from indiciumforge_workflow.parity.runner import run_parity_after_recipe_chain
 
 ROOT = Path(__file__).resolve().parents[2]
 CONFIG = ROOT / "tests" / "fixtures" / "parity_reference_demo" / "parity_config_demo.yaml"

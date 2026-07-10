@@ -3,7 +3,7 @@ from __future__ import annotations
 from datetime import date
 from pathlib import Path
 
-from lucerna_core.parity.reference import ReferenceArtifactProvider
+from indiciumforge_core.parity.reference import ReferenceArtifactProvider
 
 ROOT = Path(__file__).resolve().parents[2]
 REFERENCE_ROOT = ROOT / "tests" / "fixtures" / "parity_reference_demo" / "reference"

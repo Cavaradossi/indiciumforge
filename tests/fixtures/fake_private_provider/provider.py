@@ -4,20 +4,20 @@ from datetime import date
 from pathlib import Path
 
 import pandas as pd
-from lucerna_core.providers.capabilities import (
+from indiciumforge_core.providers.capabilities import (
     DataKind,
     LatencyProfile,
     ProviderAuthorityLevel,
     ProviderCapability,
 )
-from lucerna_core.providers.query import DataQuery
-from lucerna_core.providers.result import (
+from indiciumforge_core.providers.query import DataQuery
+from indiciumforge_core.providers.result import (
     ProviderFailureStatus,
     ProviderProvenance,
     ProviderResult,
     utc_now_iso,
 )
-from lucerna_core.workflow.model import AssetDomain
+from indiciumforge_core.workflow.model import AssetDomain
 
 
 class FakePrivateOhlcvProvider:

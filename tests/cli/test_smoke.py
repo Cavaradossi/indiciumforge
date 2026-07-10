@@ -3,7 +3,7 @@ from __future__ import annotations
 import shutil
 from pathlib import Path
 
-from lucerna_cli.main import app
+from indiciumforge_cli.main import app
 from typer.testing import CliRunner
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -24,7 +24,7 @@ def test_cli_help() -> None:
     result = runner.invoke(app, ["--help"])
 
     assert result.exit_code == 0
-    assert "Lucerna reference CLI" in result.stdout
+    assert "IndiciumForge reference CLI" in result.stdout
 
 
 def test_cli_workflow_help() -> None:

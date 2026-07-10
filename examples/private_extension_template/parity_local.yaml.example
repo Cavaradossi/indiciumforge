@@ -1,6 +1,6 @@
 # Copy to parity_local.yaml (gitignored) — operator-local only.
 
-schema: lucerna.parity_local_config.v1
+schema: indiciumforge.parity_local_config.v1
 reference_artifact_root: <operator-local-reference-root>
 trade_date: <YYYYMMDD>
 artifact_root: <writable-local-temp>

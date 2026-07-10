@@ -2,4 +2,4 @@
 
 Status: accepted
 
-Lucerna computes and persists structured evidence. Human decisions and LLM interpretation are downstream.
+IndiciumForge computes and persists structured evidence. Human decisions and LLM interpretation are downstream.

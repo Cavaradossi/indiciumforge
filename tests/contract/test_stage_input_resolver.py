@@ -4,10 +4,10 @@ from datetime import date
 from pathlib import Path
 
 import pytest
-from lucerna_core.recipes.models import RecipeStageContext
-from lucerna_core.recipes.resolver import StageInputResolver
-from lucerna_core.workflow.handoff import HandoffArtifactKind
-from lucerna_core.workflow.model import (
+from indiciumforge_core.recipes.models import RecipeStageContext
+from indiciumforge_core.recipes.resolver import StageInputResolver
+from indiciumforge_core.workflow.handoff import HandoffArtifactKind
+from indiciumforge_core.workflow.model import (
     AssetDomain,
     RecipeStageKind,
     RecipeStageSpec,
@@ -21,7 +21,7 @@ TRADE_DATE = date(2026, 6, 23)
 
 def _recipe() -> WorkflowRecipe:
     return WorkflowRecipe(
-        recipe_id="lucerna.recipe.ashare_daily_research.v1",
+        recipe_id="indiciumforge.recipe.ashare_daily_research.v1",
         asset_domain=AssetDomain.CHINA_A_SHARE,
         session_model=SessionModel.CALENDAR_DAY_CYCLE,
         version="1.0.0",

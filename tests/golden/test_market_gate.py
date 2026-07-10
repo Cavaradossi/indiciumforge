@@ -7,8 +7,8 @@ from pathlib import Path
 
 import pytest
 import yaml
-from lucerna_core.artifacts.comparator import compare_semantic_market_gate, load_meta
-from lucerna_workflow.market_gate.runner import run_market_gate
+from indiciumforge_core.artifacts.comparator import compare_semantic_market_gate, load_meta
+from indiciumforge_workflow.market_gate.runner import run_market_gate
 
 ROOT = Path(__file__).resolve().parents[2]
 GOLDEN_ROOT = ROOT / "tests" / "golden" / "market_gate"

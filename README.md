@@ -1,18 +1,18 @@
-# Lucerna
+# IndiciumForge
 
 **Contract-first open core for evidence-first financial research workflows.**
 
 Licensed under [Apache License 2.0](LICENSE). **v1.0.0 signed** — open-core semantics frozen at v0.11.0; see [RELEASE_NOTES.md](RELEASE_NOTES.md).
 
-> Lucerna produces **research audit artifacts** and parity evidence. It is **not investment advice**, **not a trading system**, and **not a broker execution platform**. Default workflows use **synthetic fixtures only**.
+> IndiciumForge produces **research audit artifacts** and parity evidence. It is **not investment advice**, **not a trading system**, and **not a broker execution platform**. Default workflows use **synthetic fixtures only**.
 
-## What Lucerna is
+## What IndiciumForge is
 
 - A **port-and-contract** workspace for daily research workflows: recipes, artifact stores, manifest audit, and golden parity.
 - An **open-core + private extension** model: OSS ships ports, schemas, demo fixtures, and harnesses; operators plug in private data, factors, and recipes locally.
 - A **migration harness** against a frozen legacy reference (`indiciumgrid-golden-v1`) — preserves behavior where golden-covered, not module structure.
 
-## What Lucerna is not
+## What IndiciumForge is not
 
 - Not live trading, order routing, or portfolio management.
 - Not a substitute for compliance, disclosure, or investment research opinions.
@@ -33,19 +33,19 @@ Requirements: Python 3.10+.
 
 ```bash
 cd <repo-root>
-python -m pip install -e packages/lucerna-core -e packages/lucerna-workflow -e packages/lucerna-cli -e ".[dev]"
-lucerna --help
-lucerna workflow synthetic-e2e \
+python -m pip install -e packages/indiciumforge-core -e packages/indiciumforge-workflow -e packages/indiciumforge-cli -e ".[dev]"
+indiciumforge --help
+indiciumforge workflow synthetic-e2e \
   --trade-date 2026-06-23 \
-  --artifact-root /tmp/lucerna-demo \
+  --artifact-root /tmp/indiciumforge-demo \
   --daily-review-fixture tests/fixtures/market_awareness/theme_sectors_demo.yaml \
   --preopen-review-fixture tests/fixtures/workflow/preopen_buy_point_review_demo.csv
-lucerna parity run \
+indiciumforge parity run \
   --parity-config tests/fixtures/parity_reference_demo/parity_config_demo.yaml \
-  --artifact-root /tmp/lucerna-parity-demo
+  --artifact-root /tmp/indiciumforge-parity-demo
 ```
 
-On Windows, use a writable temp directory (for example `%TEMP%\lucerna-demo`).
+On Windows, use a writable temp directory (for example `%TEMP%\indiciumforge-demo`).
 
 ## Architecture
 
@@ -53,10 +53,10 @@ On Windows, use a writable temp directory (for example `%TEMP%\lucerna-demo`).
 
 ```mermaid
 flowchart TB
-  subgraph openCore [Lucerna_OpenCore]
-    Core[lucerna_core]
-    Workflow[lucerna_workflow]
-    CLI[lucerna_cli]
+  subgraph openCore [IndiciumForge_OpenCore]
+    Core[indiciumforge_core]
+    Workflow[indiciumforge_workflow]
+    CLI[indiciumforge_cli]
   end
   subgraph privateExt [Private_Extensions_OperatorLocal]
     DataPack[DataProvider_pack]
@@ -86,10 +86,10 @@ flowchart LR
 
 ```mermaid
 flowchart TB
-  Root[Lucerna_repo]
-  Root --> CorePkg[packages/lucerna_core]
-  Root --> WfPkg[packages/lucerna_workflow]
-  Root --> CliPkg[packages/lucerna_cli]
+  Root[IndiciumForge_repo]
+  Root --> CorePkg[packages/indiciumforge_core]
+  Root --> WfPkg[packages/indiciumforge_workflow]
+  Root --> CliPkg[packages/indiciumforge_cli]
   Root --> Tests[tests]
   Root --> Docs[docs]
 ```
@@ -102,11 +102,11 @@ Deeper diagrams: [docs/SYSTEM_MAP.md](docs/SYSTEM_MAP.md), [docs/diagrams/contex
 | --- | --- | --- |
 | Market-gate decision kernel | `implemented_v1` | Golden-tested strict/observation/active_watch semantics |
 | Artifact store + golden compare | `implemented_v1` | Local I/O, semantic comparator, five scenarios |
-| Artifact manifest / audit CLI | `implemented_v0.4.1` | `lucerna artifact list/audit` |
+| Artifact manifest / audit CLI | `implemented_v0.4.1` | `indiciumforge artifact list/audit` |
 | Data provider ports v1 + v2 | `implemented_v1` / `implemented_v0.9` | Fixtures in OSS; live adapters in private packs |
 | Factor detector port + pack loading | `implemented_v0.3` / `implemented_v0.7` | Demo detectors only in OSS |
 | Workflow chain + recipe integration | `implemented_v0.6` / `implemented_v0.10` | `--recipe` + extension pack wiring |
-| Private-local parity harness | `implemented_v0.11` | `lucerna parity run` — research audit only |
+| Private-local parity harness | `implemented_v0.11` | `indiciumforge parity run` — research audit only |
 | Open-core sign-off | `signed_v1.0` | Gaps accepted in private register |
 
 Full matrix: [CAPABILITY_REGISTER.md](CAPABILITY_REGISTER.md).
@@ -129,7 +129,7 @@ To build your own extensions, start at [docs/EXTENSION_AUTHOR_GUIDE.md](docs/EXT
 | Extension author guide | [docs/EXTENSION_AUTHOR_GUIDE.md](docs/EXTENSION_AUTHOR_GUIDE.md) |
 | Agent onboarding | [docs/AGENT_QUICKSTART.md](docs/AGENT_QUICKSTART.md) |
 | System map | [docs/SYSTEM_MAP.md](docs/SYSTEM_MAP.md) |
-| Constitution + ADRs | [LUCERNA_CONSTITUTION.md](LUCERNA_CONSTITUTION.md), [docs/decisions/](docs/decisions/) |
+| Constitution + ADRs | [INDICIUMFORGE_CONSTITUTION.md](INDICIUMFORGE_CONSTITUTION.md), [docs/decisions/](docs/decisions/) |
 | Security | [SECURITY.md](SECURITY.md) |
 
 For AI agents: start at [docs/AGENT_QUICKSTART.md](docs/AGENT_QUICKSTART.md) (rules in [AGENTS.md](AGENTS.md)).
@@ -138,13 +138,13 @@ For AI agents: start at [docs/AGENT_QUICKSTART.md](docs/AGENT_QUICKSTART.md) (ru
 
 ```bash
 cd <repo-root>
-python -m pip install -e packages/lucerna-core
-python -m pip install -e packages/lucerna-workflow
-python -m pip install -e packages/lucerna-cli
+python -m pip install -e packages/indiciumforge-core
+python -m pip install -e packages/indiciumforge-workflow
+python -m pip install -e packages/indiciumforge-cli
 python -m pip install -e ".[dev]"
 ```
 
-The CLI entry point is `lucerna` (from `lucerna-cli`).
+The CLI entry point is `indiciumforge` (from `indiciumforge-cli`).
 
 Golden export (optional, needs a local frozen reference checkout):
 
@@ -163,7 +163,7 @@ python -m ruff check .
 On Windows, if pytest fails with Temp/.pytest_cache permission errors:
 
 ```powershell
-python -m pytest -p no:cacheprovider -q --basetemp "$env:TEMP\lucerna_pytest\pytest-basetemp-<unique>"
+python -m pytest -p no:cacheprovider -q --basetemp "$env:TEMP\indiciumforge_pytest\pytest-basetemp-<unique>"
 ```
 
 | Layer | Path | Purpose |
@@ -176,14 +176,14 @@ python -m pytest -p no:cacheprovider -q --basetemp "$env:TEMP\lucerna_pytest\pyt
 ## CLI reference
 
 ```powershell
-lucerna --help
-lucerna workflow market-gate --trade-date 2026-06-23 --artifact-root <artifact-root>
-lucerna workflow chain --trade-date 2026-06-23 --artifact-root <artifact-root> \
+indiciumforge --help
+indiciumforge workflow market-gate --trade-date 2026-06-23 --artifact-root <artifact-root>
+indiciumforge workflow chain --trade-date 2026-06-23 --artifact-root <artifact-root> \
   --daily-review-fixture tests/fixtures/market_awareness/theme_sectors_demo.yaml \
   --post-close-review-fixture tests/fixtures/workflow/post_close_buy_point_review_demo.csv \
   --preopen-review-fixture tests/fixtures/workflow/preopen_buy_point_review_demo.csv
-lucerna artifact audit --artifact-root <artifact-root> --trade-date 2026-06-23 --stage-type market_gate
-lucerna parity run --parity-config tests/fixtures/parity_reference_demo/parity_config_demo.yaml --artifact-root <artifact-root>
+indiciumforge artifact audit --artifact-root <artifact-root> --trade-date 2026-06-23 --stage-type market_gate
+indiciumforge parity run --parity-config tests/fixtures/parity_reference_demo/parity_config_demo.yaml --artifact-root <artifact-root>
 ```
 
 `artifact audit` checks structural completeness (required files, schema IDs, trade_date consistency). Semantic parity remains the golden comparator's job.
@@ -203,37 +203,37 @@ Outputs: `artifact-root/workflows/{YYYYMMDD}/market_gate/` (strict, observation,
 Full command walkthrough (chain, factor scan, recipe, provider):
 
 ```bash
-lucerna workflow chain \
+indiciumforge workflow chain \
   --trade-date 2026-06-23 \
-  --artifact-root /tmp/lucerna-chain \
+  --artifact-root /tmp/indiciumforge-chain \
   --daily-review-fixture tests/fixtures/market_awareness/theme_sectors_demo.yaml \
   --post-close-review-fixture tests/fixtures/workflow/post_close_buy_point_review_demo.csv \
   --preopen-review-fixture tests/fixtures/workflow/preopen_buy_point_review_demo.csv
 
-lucerna factor scan \
+indiciumforge factor scan \
   --trade-date 2026-05-10 \
-  --artifact-root /tmp/lucerna-factor \
+  --artifact-root /tmp/indiciumforge-factor \
   --ohlcv-fixture-root tests/fixtures/ohlcv \
   --asset-fixture-list tests/fixtures/factor_scan_assets.yaml \
   --factor-pack tests/fixtures/factor_pack_demo.yaml
 
-lucerna workflow chain \
+indiciumforge workflow chain \
   --trade-date 2026-06-23 \
-  --artifact-root /tmp/lucerna-recipe \
+  --artifact-root /tmp/indiciumforge-recipe \
   --recipe tests/fixtures/workflow/recipe_ashare_daily_v1.yaml \
   --recipe-extension-pack tests/fixtures/recipe_extension_pack_demo.yaml \
   --daily-review-fixture tests/fixtures/market_awareness/theme_sectors_demo.yaml
 
-lucerna provider inspect --ohlcv-fixture-root tests/fixtures/ohlcv
+indiciumforge provider inspect --ohlcv-fixture-root tests/fixtures/ohlcv
 ```
 
 ## Packages
 
 | Package | Role |
 | --- | --- |
-| `lucerna-core` | Domain, labels, ports, artifacts, providers, recipes, parity |
-| `lucerna-workflow` | `market_gate` kernel; daily-review; e2e; workflow chain |
-| `lucerna-cli` | `workflow`, `artifact`, `factor`, `provider`, `parity` commands |
+| `indiciumforge-core` | Domain, labels, ports, artifacts, providers, recipes, parity |
+| `indiciumforge-workflow` | `market_gate` kernel; daily-review; e2e; workflow chain |
+| `indiciumforge-cli` | `workflow`, `artifact`, `factor`, `provider`, `parity` commands |
 
 ## Version boundaries
 

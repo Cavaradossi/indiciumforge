@@ -5,23 +5,23 @@ Status: accepted
 ## Context
 
 - v0.10 delivered recipe wiring (`RecipeRunner`, fake extension, `workflow_chain_summary.v4`).
-- Lucerna market-gate kernel has public golden parity; post_close/preopen production semantics
+- IndiciumForge market-gate kernel has public golden parity; post_close/preopen production semantics
   remain private.
-- Operators need a **local** way to compare Lucerna recipe-chain outputs against IndiciumGrid
+- Operators need a **local** way to compare IndiciumForge recipe-chain outputs against IndiciumGrid
   reference artifacts without importing IG Python runtime or committing private paths to Git.
 
 ## Decision
 
-Lucerna v0.11.0 delivers a **private-local parity harness**:
+IndiciumForge v0.11.0 delivers a **private-local parity harness**:
 
 ### Open core
 
-- `lucerna_core.parity` — `ParityHarnessPort`, `ReferenceArtifactProviderPort`,
+- `indiciumforge_core.parity` — `ParityHarnessPort`, `ReferenceArtifactProviderPort`,
   `CandidateComparatorPort`
-- Config schema `lucerna.parity_local_config.v1` (operator-local YAML; not committed with real paths)
+- Config schema `indiciumforge.parity_local_config.v1` (operator-local YAML; not committed with real paths)
 - Synthetic demo reference tree `tests/fixtures/parity_reference_demo/`
-- CLI: `lucerna parity run`, `lucerna parity report` (research audit only)
-- Report schema `lucerna.parity_run_report.v1`
+- CLI: `indiciumforge parity run`, `indiciumforge parity report` (research audit only)
+- Report schema `indiciumforge.parity_run_report.v1`
 
 ### Private local (outside Git)
 

@@ -2,4 +2,4 @@
 
 Status: accepted
 
-Lucerna does not self-develop broker order placement. Future execution integrations must be audited adapters.
+IndiciumForge does not self-develop broker order placement. Future execution integrations must be audited adapters.

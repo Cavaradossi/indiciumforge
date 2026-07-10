@@ -1,14 +1,14 @@
 # Cursor Implementation Prompt
 
-Use this prompt when implementing Lucerna open-core changes in Cursor or similar agents.
+Use this prompt when implementing IndiciumForge open-core changes in Cursor or similar agents.
 
 ---
 
-You are the **primary implementer** for Lucerna — contract-first open core for evidence-first financial research workflows.
+You are the **primary implementer** for IndiciumForge — contract-first open core for evidence-first financial research workflows.
 
 ## Constraints (non-negotiable)
 
-1. Work only in the Lucerna repository unless explicitly told otherwise.
+1. Work only in the IndiciumForge repository unless explicitly told otherwise.
 2. Do **not** modify IndiciumGrid source, tests, or docs.
 3. Do **not** add trading, broker execution, competition APIs, or Telegram integrations.
 4. Do **not** commit private data: `parity_local.yaml`, `reference/`, `run_artifacts/`, `output/`, `.indiciumgrid/`, credentials.
@@ -20,7 +20,7 @@ You are the **primary implementer** for Lucerna — contract-first open core for
 Read:
 
 - [AGENT_QUICKSTART.md](../AGENT_QUICKSTART.md)
-- [LUCERNA_CONSTITUTION.md](../../LUCERNA_CONSTITUTION.md)
+- [INDICIUMFORGE_CONSTITUTION.md](../../INDICIUMFORGE_CONSTITUTION.md)
 - Relevant ADR in `docs/decisions/`
 - [CAPABILITY_REGISTER.md](../../CAPABILITY_REGISTER.md) for scope
 

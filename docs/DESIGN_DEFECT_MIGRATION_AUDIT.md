@@ -1,12 +1,12 @@
 # Design Defect Migration Audit
 
-Read-only audit: IndiciumGrid patterns that informed Lucerna and defects we intentionally do **not**
+Read-only audit: IndiciumGrid patterns that informed IndiciumForge and defects we intentionally do **not**
 migrate. Reference: frozen `indiciumgrid @ indiciumgrid-golden-v1`. See
 [ADR-0019](decisions/ADR-0019-anti-inheritance-from-indiciumgrid-v0.9.md).
 
 ## Workflow naming defects
 
-| IG pattern | Defect | Lucerna mitigation |
+| IG pattern | Defect | IndiciumForge mitigation |
 | --- | --- | --- |
 | `post_close` / `preopen` same `trade_date` folder | Hides session boundary (close vs next open) | v0.8: recipe stage ids + `cycle_id`; folder names = compatibility only |
 | Shared `_build_workflow_review` for post_close and preopen | Stage names overstate semantic difference | Recipe kinds: `discovery` vs `handoff` |
@@ -14,7 +14,7 @@ migrate. Reference: frozen `indiciumgrid @ indiciumgrid-golden-v1`. See
 
 ## Data layer defects
 
-| IG pattern | Defect | Lucerna mitigation |
+| IG pattern | Defect | IndiciumForge mitigation |
 | --- | --- | --- |
 | `vipdoc -> .indiciumgrid/tdx -> pytdx` resolution | A-share-specific chain treated as default | v0.9: explicit adapter pack; no default path chain |
 | `D:/new_tdx64/vipdoc` in docs/runbooks | Hardcoded operator path leaks into mental model | Private adapter config only; no open-core default |
@@ -24,7 +24,7 @@ migrate. Reference: frozen `indiciumgrid @ indiciumgrid-golden-v1`. See
 
 ## Provider policy defects
 
-| IG pattern | Defect | Lucerna mitigation |
+| IG pattern | Defect | IndiciumForge mitigation |
 | --- | --- | --- |
 | Paid/local tier names without authority enum | Ambiguous trust level | `ProviderAuthorityLevel` enum |
 | Empty frame + `provider=none` as silent outcome | Loses structured failure | `ProviderFailureStatus.empty` with attempt trace |
@@ -33,9 +33,9 @@ migrate. Reference: frozen `indiciumgrid @ indiciumgrid-golden-v1`. See
 ## Research report builder defects
 
 IG `indiciumgrid/report/builder.py` — `build_research_report()` is a single-stock A-share package
-builder. Do **not** migrate as Lucerna core research abstraction.
+builder. Do **not** migrate as IndiciumForge core research abstraction.
 
-| IG assumption | Defect | Lucerna mitigation |
+| IG assumption | Defect | IndiciumForge mitigation |
 | --- | --- | --- |
 | `code.zfill(6)` / 6-digit normalization | A-share TDX convention baked into identity | Universal `ResearchSubject`; domain-specific normalization in private adapters |
 | TDX stock names / board info | China equity metadata path | Private adapter or recipe layer only |
@@ -47,7 +47,7 @@ builder. Do **not** migrate as Lucerna core research abstraction.
 | CSRC industry, theme exposure, chip distribution, accounting risk | A-share modules folded into one builder | Recipe/private extension modules; not universal core |
 | `ResearchReport` dataclass shape | Subject locked to single A-share stock | Forward `ResearchDossier` / `EvidenceDossier`; not `StockResearchReport` |
 
-### Forward Lucerna model (v0.10+, not implemented in v0.9)
+### Forward IndiciumForge model (v0.10+, not implemented in v0.9)
 
 Recommended core concepts for a future dossier ADR:
 
@@ -68,7 +68,7 @@ Recommended core concepts for a future dossier ADR:
 | Capability | Target version |
 | --- | --- |
 | Real TDX private adapter | v0.10 |
-| `lucerna data sync` | v0.10+ |
+| `indiciumforge data sync` | v0.10+ |
 | Production post_close/preopen review generation | v0.11+ |
 | Intraday watch / quote refresh execution | v0.12+ |
 | Crypto live snapshot adapter | later |

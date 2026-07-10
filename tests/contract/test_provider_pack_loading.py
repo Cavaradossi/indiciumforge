@@ -3,8 +3,8 @@ from __future__ import annotations
 from pathlib import Path
 
 import pytest
-from lucerna_core.providers.config import ProviderLoadError, load_provider_pack
-from lucerna_core.providers.pack import PROVIDER_PACK_SCHEMA
+from indiciumforge_core.providers.config import ProviderLoadError, load_provider_pack
+from indiciumforge_core.providers.pack import PROVIDER_PACK_SCHEMA
 
 ROOT = Path(__file__).resolve().parents[2]
 FIXTURE_ROOT = ROOT / "tests" / "fixtures"
@@ -52,8 +52,8 @@ def test_load_provider_pack_merges_entry_points(monkeypatch: pytest.MonkeyPatch)
             return FakePrivateOhlcvProvider()
 
     monkeypatch.setattr(
-        "lucerna_core.providers.config.entry_points",
-        lambda group: [FakeEntryPoint()] if group == "lucerna.data_providers" else [],
+        "indiciumforge_core.providers.config.entry_points",
+        lambda group: [FakeEntryPoint()] if group == "indiciumforge.data_providers" else [],
     )
 
     loaded = load_provider_pack(include_entry_points=True)

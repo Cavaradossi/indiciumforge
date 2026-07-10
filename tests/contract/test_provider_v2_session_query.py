@@ -2,10 +2,10 @@ from __future__ import annotations
 
 from datetime import date
 
-from lucerna_core.domain.models import AssetID, AssetType, Exchange
-from lucerna_core.providers.capabilities import DataKind
-from lucerna_core.providers.query import DataQuery
-from lucerna_core.workflow.model import (
+from indiciumforge_core.domain.models import AssetID, AssetType, Exchange
+from indiciumforge_core.providers.capabilities import DataKind
+from indiciumforge_core.providers.query import DataQuery
+from indiciumforge_core.workflow.model import (
     AssetDomain,
     SessionModel,
     WorkflowCheckpoint,
@@ -17,7 +17,7 @@ ASSET = AssetID("600000", Exchange.SSE, AssetType.STOCK)
 
 def test_data_query_from_session_populates_session_fields() -> None:
     session = WorkflowSessionMetadata(
-        recipe_id="lucerna.recipe.ashare_daily_research.v1",
+        recipe_id="indiciumforge.recipe.ashare_daily_research.v1",
         asset_domain=AssetDomain.CHINA_A_SHARE,
         session_model=SessionModel.CALENDAR_DAY_CYCLE,
         cycle_id="2026-04-30",
@@ -39,7 +39,7 @@ def test_data_query_from_session_populates_session_fields() -> None:
 def test_data_query_from_checkpoint_populates_fields() -> None:
     checkpoint = WorkflowCheckpoint(
         checkpoint_id="cp-preopen",
-        recipe_id="lucerna.recipe.ashare_daily_research.v1",
+        recipe_id="indiciumforge.recipe.ashare_daily_research.v1",
         recipe_stage_id="preopen",
         asset_domain=AssetDomain.CHINA_A_SHARE,
         cycle_id="2026-04-30",
@@ -59,8 +59,8 @@ def test_data_query_from_checkpoint_populates_fields() -> None:
 
 
 def test_provenance_payload_round_trip_session_fields() -> None:
-    from lucerna_core.providers.capabilities import ProviderAuthorityLevel
-    from lucerna_core.providers.result import ProviderProvenance, utc_now_iso
+    from indiciumforge_core.providers.capabilities import ProviderAuthorityLevel
+    from indiciumforge_core.providers.result import ProviderProvenance, utc_now_iso
 
     provenance = ProviderProvenance(
         provider_id="local_fixture",

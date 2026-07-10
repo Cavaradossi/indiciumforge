@@ -3,9 +3,9 @@ from __future__ import annotations
 from pathlib import Path
 
 import pytest
-from lucerna_core.factors.loading import DetectorLoadError
-from lucerna_core.factors.pack import FACTOR_PACK_SCHEMA, load_factor_pack
-from lucerna_core.factors.registry import DuplicateDetectorError
+from indiciumforge_core.factors.loading import DetectorLoadError
+from indiciumforge_core.factors.pack import FACTOR_PACK_SCHEMA, load_factor_pack
+from indiciumforge_core.factors.registry import DuplicateDetectorError
 
 ROOT = Path(__file__).resolve().parents[2]
 FIXTURE_ROOT = ROOT / "tests" / "fixtures"
@@ -50,9 +50,9 @@ def test_load_factor_pack_rejects_duplicate_detector_names(tmp_path: Path) -> No
     config = tmp_path / "dup.yaml"
     config.write_text(
         "detectors:\n"
-        "  - module: lucerna_core.factors.demo.volume_breakout\n"
+        "  - module: indiciumforge_core.factors.demo.volume_breakout\n"
         "    class: DemoVolumeBreakoutDetector\n"
-        "  - module: lucerna_core.factors.demo.volume_breakout\n"
+        "  - module: indiciumforge_core.factors.demo.volume_breakout\n"
         "    class: DemoVolumeBreakoutDetector\n",
         encoding="utf-8",
     )
@@ -71,8 +71,8 @@ def test_load_factor_pack_merges_entry_points(monkeypatch: pytest.MonkeyPatch) -
             return FakePrivateHitDetector()
 
     monkeypatch.setattr(
-        "lucerna_core.factors.loading.entry_points",
-        lambda group: [FakeEntryPoint()] if group == "lucerna.factor_detectors" else [],
+        "indiciumforge_core.factors.loading.entry_points",
+        lambda group: [FakeEntryPoint()] if group == "indiciumforge.factor_detectors" else [],
     )
 
     loaded = load_factor_pack(include_entry_points=True)

@@ -5,8 +5,8 @@ Status: accepted
 ## Context
 
 - IndiciumGrid factor-core (`factors.mining`, `case_library`) is distinct from `factor_tracking` and market-gate.
-- IG ignored paths (`output/factors/`, `.indiciumgrid/tdx/`) inform schema and scenario seeds but must not enter Lucerna Git as raw data.
-- Lucerna v0.2.1 delivered provider contract v1; v0.3 delivered open-source factor detector port and demo detectors.
+- IG ignored paths (`output/factors/`, `.indiciumgrid/tdx/`) inform schema and scenario seeds but must not enter IndiciumForge Git as raw data.
+- IndiciumForge v0.2.1 delivered provider contract v1; v0.3 delivered open-source factor detector port and demo detectors.
 
 ## Decision
 
@@ -19,7 +19,7 @@ Status: accepted
 
 - v0.2.2 inventory records IndiciumGrid private/reference factor surface; it is not an
   open-source implementation promise.
-- Lucerna open-source factor-core may include taxonomy compatibility, factor signal artifact
+- IndiciumForge open-source factor-core may include taxonomy compatibility, factor signal artifact
   schema, `FactorDetectorPort`, synthetic/demo detectors, and golden comparison tools.
 - Proprietary long-structure detector rules remain in private factor packs. See ADR-0011.
 - v0.3 must not directly migrate real detector internals. It should first define the detector
@@ -33,13 +33,13 @@ Status: accepted
 
 ## Scope (v0.3)
 
-- `lucerna_core.factors` models, port, registry, scan runner, artifact schema.
+- `indiciumforge_core.factors` models, port, registry, scan runner, artifact schema.
 - Demo detectors and contract tests on synthetic fixtures.
 - Private-pack loading via config and entry points. See ADR-0012.
 
 ## Out of scope (v0.2.2)
 
-- `lucerna_core.factors` implementation.
+- `indiciumforge_core.factors` implementation.
 - `scripts/export_golden_factor.py`.
 - `tests/golden/factor_core/` exported trees.
 - Factor CLI, workflow wiring, trade-plan, factor-tracking.

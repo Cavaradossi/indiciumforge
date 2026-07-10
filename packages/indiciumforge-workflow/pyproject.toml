@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "indiciumforge-workflow"
+version = "2.0.0"
+description = "Workflow services for IndiciumForge."
+requires-python = ">=3.10"
+dependencies = ["indiciumforge-core", "pandas>=2.0", "pyyaml>=6.0", "tabulate>=0.9"]
+
+[tool.setuptools.packages.find]
+where = ["src"]

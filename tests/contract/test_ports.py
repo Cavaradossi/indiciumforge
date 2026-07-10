@@ -3,9 +3,9 @@ from __future__ import annotations
 from pathlib import Path
 
 import pandas as pd
-from lucerna_core.artifacts.local_store import LocalArtifactStore
-from lucerna_core.domain.models import AssetID, AssetType, Exchange
-from lucerna_core.providers.registry import ProviderRegistry
+from indiciumforge_core.artifacts.local_store import LocalArtifactStore
+from indiciumforge_core.domain.models import AssetID, AssetType, Exchange
+from indiciumforge_core.providers.registry import ProviderRegistry
 from provider_stubs import EmptyProvider, FailingProvider, SuccessProvider
 
 

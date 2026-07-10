@@ -4,17 +4,17 @@ Status: accepted
 
 ## Context
 
-- Lucerna began as a private scaffold extracted from the frozen IndiciumGrid reference.
+- IndiciumForge began as a private scaffold extracted from the frozen IndiciumGrid reference.
 - Public open-source alpha requires an explicit, SPDX-identifiable license.
 - ADR-0011 separates open-core from private-extension packs; the open-source repository
   needs a permissive license compatible with ports, schemas, and demo implementations.
 
 ## Decision
 
-Lucerna open-source repository is licensed under **Apache License 2.0** (Apache-2.0).
+IndiciumForge open-source repository is licensed under **Apache License 2.0** (Apache-2.0).
 
 - Root `LICENSE` file carries the standard Apache-2.0 text.
-- `LUCERNA_CONSTITUTION.md` records Apache-2.0 as the project license.
+- `INDICIUMFORGE_CONSTITUTION.md` records Apache-2.0 as the project license.
 - Private extension packs may use separate licenses; they are not part of this repository.
 
 ## Rationale

@@ -1,10 +1,10 @@
 # Review Audit Prompt
 
-Use this prompt for pre-merge audit of Lucerna pull requests or local patches.
+Use this prompt for pre-merge audit of IndiciumForge pull requests or local patches.
 
 ---
 
-Audit this Lucerna change set before merge. Lucerna is **alpha research software** — not investment advice, not a trading system.
+Audit this IndiciumForge change set before merge. IndiciumForge is **alpha research software** — not investment advice, not a trading system.
 
 ## Security and leakage
 

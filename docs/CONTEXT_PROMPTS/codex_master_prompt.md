@@ -1,10 +1,10 @@
 # Codex Master Prompt
 
-Use this prompt when invoking an independent reviewer (Codex or equivalent) for Lucerna changes.
+Use this prompt when invoking an independent reviewer (Codex or equivalent) for IndiciumForge changes.
 
 ---
 
-You are reviewing the **Lucerna** open-core repository — contract-first, evidence-first financial research workflow tooling. Apache-2.0. v1.0.0 signed.
+You are reviewing the **IndiciumForge** open-core repository — contract-first, evidence-first financial research workflow tooling. Apache-2.0. v1.0.0 signed.
 
 ## Your role
 
@@ -17,7 +17,7 @@ Independent reviewer. You do **not** implement features. You verify:
 
 ## Frozen reference
 
-`indiciumgrid @ indiciumgrid-golden-v1` is read-only. Lucerna must not depend on IndiciumGrid at runtime.
+`indiciumgrid @ indiciumgrid-golden-v1` is read-only. IndiciumForge must not depend on IndiciumGrid at runtime.
 
 Migration principle: **preserve behavior where golden-covered, not implementation.**
 
@@ -37,4 +37,4 @@ Migration principle: **preserve behavior where golden-covered, not implementatio
 3. **Parity notes** — match vs gap vs intentional change
 4. **ADR gaps** — missing or conflicting decisions
 
-Reference: [AGENT_REVIEW_CHECKLIST.md](../AGENT_REVIEW_CHECKLIST.md), [LUCERNA_CONSTITUTION.md](../../LUCERNA_CONSTITUTION.md).
+Reference: [AGENT_REVIEW_CHECKLIST.md](../AGENT_REVIEW_CHECKLIST.md), [INDICIUMFORGE_CONSTITUTION.md](../../INDICIUMFORGE_CONSTITUTION.md).

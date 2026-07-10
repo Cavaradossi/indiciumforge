@@ -8,27 +8,27 @@ Status: accepted
   audit in one demo command (ADR-0015).
 - CAPABILITY_REGISTER deferred **production** post-close → preopen workflow chain to v0.5+.
 - Market-gate resolver already supports preopen-first with post_close fallback
-  ([resolver.py](../../packages/lucerna-workflow/src/lucerna_workflow/market_gate/resolver.py)).
+  ([resolver.py](../../packages/indiciumforge-workflow/src/indiciumforge_workflow/market_gate/resolver.py)).
 - ADR-0011 requires open-core chain orchestration to use synthetic fixtures only.
 
 ## Decision
 
-Lucerna v0.6.0 delivers a **workflow chain skeleton** in `lucerna_workflow.workflow_chain`:
+IndiciumForge v0.6.0 delivers a **workflow chain skeleton** in `indiciumforge_workflow.workflow_chain`:
 
 1. `run_daily_review_skeleton` — theme ranking upstream
 2. `seed_post_close_review` — synthetic post_close CSV + `post_close_review_state.json`
 3. `seed_preopen_review` — synthetic preopen CSV + `preopen_review_state.json`
 4. `run_market_gate` — consumes preopen review (preopen takes precedence)
 5. `validate_daily_review_stage` + `validate_market_gate_stage`
-6. `workflow_chain_summary.json` (`lucerna.workflow_chain_summary.v1`)
+6. `workflow_chain_summary.json` (`indiciumforge.workflow_chain_summary.v1`)
 
-CLI: `lucerna workflow chain` with three required fixture paths.
+CLI: `indiciumforge workflow chain` with three required fixture paths.
 
 ## Stage state schemas
 
-- `lucerna.post_close_review_state.v1`
-- `lucerna.preopen_review_state.v1`
-- `lucerna.workflow_chain_summary.v1`
+- `indiciumforge.post_close_review_state.v1`
+- `indiciumforge.preopen_review_state.v1`
+- `indiciumforge.workflow_chain_summary.v1`
 
 ## chain_ok semantics
 
@@ -43,7 +43,7 @@ post_close and preopen stage boundaries for chain testing.
 ## Relationship to ADR-0018 (v0.8)
 
 v0.8 clarifies that `post_close` and `preopen` folder names are **A-share recipe stage labels**,
-not universal Lucerna lifecycle enums. This ADR's skeleton behavior is unchanged; see
+not universal IndiciumForge lifecycle enums. This ADR's skeleton behavior is unchanged; see
 [ADR-0018](ADR-0018-session-cyclic-workflow-model-v0.8.md).
 
 ## Out of scope (v0.6)

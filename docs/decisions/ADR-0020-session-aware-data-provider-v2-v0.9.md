@@ -11,9 +11,9 @@ Status: accepted
 
 ## Decision
 
-Lucerna v0.9.0 delivers **Session-Aware Data Provider Contract v2**:
+IndiciumForge v0.9.0 delivers **Session-Aware Data Provider Contract v2**:
 
-### New modules (`lucerna_core.providers`)
+### New modules (`indiciumforge_core.providers`)
 
 - `capabilities.py` — `DataKind`, `LatencyProfile`, `ProviderAuthorityLevel`, `ProviderCapability`
 - `query.py` — `DataQuery` with session/checkpoint fields; `from_checkpoint()` helper
@@ -25,13 +25,13 @@ Lucerna v0.9.0 delivers **Session-Aware Data Provider Contract v2**:
 
 ### Entry points
 
-- Group: `lucerna.data_providers`
+- Group: `indiciumforge.data_providers`
 - No `sys.path` injection; editable install for private packs
 
 ### CLI
 
-- `lucerna provider inspect` — list providers and capabilities
-- `lucerna provider fetch` — single-query smoke (fixture/fake only in open core)
+- `indiciumforge provider inspect` — list providers and capabilities
+- `indiciumforge provider fetch` — single-query smoke (fixture/fake only in open core)
 
 ### v1 compatibility
 
@@ -47,7 +47,7 @@ Lucerna v0.9.0 delivers **Session-Aware Data Provider Contract v2**:
 
 - Real TDX sync, vipdoc, `.indiciumgrid` cache
 - Network providers (OpenBB, yfinance, pytdx)
-- `lucerna data sync`
+- `indiciumforge data sync`
 - Workflow chain / market_gate integration
 - Crypto trading or derivatives execution
 

@@ -2,4 +2,4 @@
 
 Status: accepted
 
-Lucerna preserves evidence and signals. Complete portfolio backtesting belongs behind external engine adapters.
+IndiciumForge preserves evidence and signals. Complete portfolio backtesting belongs behind external engine adapters.

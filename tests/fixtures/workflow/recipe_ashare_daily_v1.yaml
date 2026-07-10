@@ -1,5 +1,5 @@
-schema: lucerna.workflow_recipe.v1
-recipe_id: lucerna.recipe.ashare_daily_research.v1
+schema: indiciumforge.workflow_recipe.v1
+recipe_id: indiciumforge.recipe.ashare_daily_research.v1
 asset_domain: china_a_share
 session_model: calendar_day_cycle
 version: "1.0.0"

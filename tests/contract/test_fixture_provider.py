@@ -4,9 +4,9 @@ from datetime import date
 from pathlib import Path
 
 import pytest
-from lucerna_core.domain.models import AssetID, AssetType, Exchange, MissingData
-from lucerna_core.providers.local_fixture import LocalFixtureProvider
-from lucerna_core.providers.registry import ProviderRegistry
+from indiciumforge_core.domain.models import AssetID, AssetType, Exchange, MissingData
+from indiciumforge_core.providers.local_fixture import LocalFixtureProvider
+from indiciumforge_core.providers.registry import ProviderRegistry
 from provider_stubs import FailingProvider, SuccessProvider
 
 ROOT = Path(__file__).resolve().parents[2]

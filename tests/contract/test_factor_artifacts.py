@@ -3,15 +3,15 @@ from __future__ import annotations
 from datetime import date
 from pathlib import Path
 
-from lucerna_core.domain.models import AssetID, AssetType, Exchange
-from lucerna_core.factors.artifacts import (
+from indiciumforge_core.domain.models import AssetID, AssetType, Exchange
+from indiciumforge_core.factors.artifacts import (
     FACTOR_SCAN_COLUMNS,
     UNSTABLE_FIELDS,
     scan_result_to_frame,
     scan_result_to_payload,
     write_factor_scan_bundle,
 )
-from lucerna_core.factors.models import FactorScanResult, FactorSignal
+from indiciumforge_core.factors.models import FactorScanResult, FactorSignal
 
 AS_OF = date(2026, 5, 10)
 ASSET = AssetID("DEMO001", Exchange.SSE, AssetType.STOCK)
@@ -45,7 +45,7 @@ def test_scan_result_payload_excludes_unstable_fields() -> None:
     payload = scan_result_to_payload(result)
 
     assert UNSTABLE_FIELDS.isdisjoint(payload.keys())
-    assert payload["schema"] == "lucerna.factor_scan.v1"
+    assert payload["schema"] == "indiciumforge.factor_scan.v1"
     assert payload["as_of"] == "2026-05-10"
     assert payload["signals"] == []
 

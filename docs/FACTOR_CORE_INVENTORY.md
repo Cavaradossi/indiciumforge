@@ -2,15 +2,15 @@
 
 Reference: frozen `indiciumgrid @ indiciumgrid-golden-v1`
 
-Lucerna v0.3 delivered the open-source factor detector port and demo detectors; proprietary IG
+IndiciumForge v0.3 delivered the open-source factor detector port and demo detectors; proprietary IG
 detectors remain `private_extension`. See [FACTOR_GOLDEN_MANIFEST.yaml](../FACTOR_GOLDEN_MANIFEST.yaml) and
 [ADR-0010](decisions/ADR-0010-factor-core-inventory.md), [ADR-0011](decisions/ADR-0011-open-core-private-extension-boundary.md), and [ADR-0012](decisions/ADR-0012-factor-detector-port-v0.3.md).
 
 ## Scope boundary
 
-| Domain | IG entry | Lucerna v0.2.2 | Lucerna v0.3 target |
+| Domain | IG entry | IndiciumForge v0.2.2 | IndiciumForge v0.3 target |
 | --- | --- | --- | --- |
-| Factor core | `indiciumgrid.factors.mining`, `case_library` | inventory + golden plan | `lucerna_core.factors` (TBD) |
+| Factor core | `indiciumgrid.factors.mining`, `case_library` | inventory + golden plan | `indiciumforge_core.factors` (TBD) |
 | Factor tracking | `indiciumgrid.factor_tracking` | out of scope | separate capability / ADR later |
 | Market gate | `workflow.run_market_gate_workflow` | implemented_v1 | unchanged |
 
@@ -21,9 +21,9 @@ automatically, or replace factor-tracking sample-out monitoring.
 
 - The 10 IndiciumGrid long-structure factors listed here are private/reference inventory for
   migration planning.
-- Listing factor names and compatibility labels does not mean Lucerna will publish their detector
+- Listing factor names and compatibility labels does not mean IndiciumForge will publish their detector
   internals.
-- Open-source Lucerna should define detector ports, signal schemas, artifact contracts, synthetic
+- Open-source IndiciumForge should define detector ports, signal schemas, artifact contracts, synthetic
   examples, and comparison rules.
 - Real detector implementations and calibrated thresholds remain in private factor packs.
 - If public release requires hiding factor names too, replace private factor names with neutral
@@ -33,13 +33,13 @@ automatically, or replace factor-tracking sample-out monitoring.
 
 | Module | Purpose |
 | --- | --- |
-| `lucerna_core.factors.models` | `FactorSignal`, `FactorScanResult` |
-| `lucerna_core.factors.ports` | `FactorDetectorPort` |
-| `lucerna_core.factors.registry` | `FactorDetectorRegistry` |
-| `lucerna_core.factors.loading` | config/entry-point private-pack loading boundary |
-| `lucerna_core.factors.scan` | `FactorScanRunner` |
-| `lucerna_core.factors.artifacts` | factor_scan JSON/CSV schema and writer |
-| `lucerna_core.factors.demo.*` | neutral demo detectors only |
+| `indiciumforge_core.factors.models` | `FactorSignal`, `FactorScanResult` |
+| `indiciumforge_core.factors.ports` | `FactorDetectorPort` |
+| `indiciumforge_core.factors.registry` | `FactorDetectorRegistry` |
+| `indiciumforge_core.factors.loading` | config/entry-point private-pack loading boundary |
+| `indiciumforge_core.factors.scan` | `FactorScanRunner` |
+| `indiciumforge_core.factors.artifacts` | factor_scan JSON/CSV schema and writer |
+| `indiciumforge_core.factors.demo.*` | neutral demo detectors only |
 
 Demo scenarios: [FACTOR_DEMO_MANIFEST.yaml](../FACTOR_DEMO_MANIFEST.yaml).
 IG private/reference scenarios: [FACTOR_GOLDEN_MANIFEST.yaml](../FACTOR_GOLDEN_MANIFEST.yaml).
@@ -74,12 +74,12 @@ Source: `indiciumgrid.factors.mining` (`FactorName`, taxonomy dicts).
 - `FACTOR_SIGNAL_EMISSION_RULE` in IG defines per-factor last-bar emission semantics; preserve in v0.3.
 - Chinese labels are a temporary compat layer (same pattern as market-gate column names).
 
-## IG source to Lucerna target
+## IG source to IndiciumForge target
 
-| IndiciumGrid source | Future Lucerna target | v0.2.2 | Golden / test anchor |
+| IndiciumGrid source | Future IndiciumForge target | v0.2.2 | Golden / test anchor |
 | --- | --- | --- | --- |
-| `run_factor_scan` | `lucerna_core.factors.scan` | implemented v0.3 | FACTOR_DEMO_MANIFEST |
-| `evaluate_factor_parameters` | `lucerna_core.factors.evaluation` | inventory | defer to v0.3+ |
+| `run_factor_scan` | `indiciumforge_core.factors.scan` | implemented v0.3 | FACTOR_DEMO_MANIFEST |
+| `evaluate_factor_parameters` | `indiciumforge_core.factors.evaluation` | inventory | defer to v0.3+ |
 | `FACTOR_CASES` / `validate_factor_cases` | golden + contract | inventory | case-library scenarios |
 | `factors.trading` / `trading_core` | workflow slice | inventory | trade-plan deferred |
 | `factor_tracking` | separate capability | not in v0.2.2 | `output/factor_tracking/` local only |
@@ -120,7 +120,7 @@ Migration Inventory:
 | --- | --- |
 | `output/factors/` | Reference artifact shape and scenario selection only; no raw full outputs in Git |
 | `output/factor_tracking/` | Factor-tracking domain only; not factor-core v0.2.2 |
-| `.indiciumgrid/tdx/` | Schema/provenance reference; do not copy into Lucerna |
+| `.indiciumgrid/tdx/` | Schema/provenance reference; do not copy into IndiciumForge |
 | `.indiciumgrid/cache/` | Fixture design reference; do not copy raw cache |
 | `tmp/` | Manual triage only; no automated migration |
 
@@ -129,7 +129,7 @@ not verbatim TDX or case-cache exports.
 
 ## Explicit non-goals (v0.2.2)
 
-- No `lucerna_core.factors` Python package
+- No `indiciumforge_core.factors` Python package
 - No `scripts/export_golden_factor.py`
 - No `tests/golden/factor_core/` exported tree
 - No factor CLI or workflow wiring

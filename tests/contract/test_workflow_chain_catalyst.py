@@ -5,7 +5,7 @@ import shutil
 from datetime import date
 from pathlib import Path
 
-from lucerna_workflow.workflow_chain.runner import run_workflow_chain_skeleton
+from indiciumforge_workflow.workflow_chain.runner import run_workflow_chain_skeleton
 
 ROOT = Path(__file__).resolve().parents[2]
 FIXTURE_ROOT = ROOT / "tests" / "fixtures"

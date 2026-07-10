@@ -4,14 +4,14 @@ Status: accepted
 
 ## Context
 
-- Lucerna decouples from frozen IndiciumGrid while learning from its production A-share workflow.
+- IndiciumForge decouples from frozen IndiciumGrid while learning from its production A-share workflow.
 - v0.8 established session-cyclic workflow contracts; v0.9 extends the data adapter boundary.
 - IG data and workflow layers embed China A-share / Tongdaxin assumptions that must not become
-  universal Lucerna core semantics.
+  universal IndiciumForge core semantics.
 
 ## Decision
 
-Lucerna open core MUST NOT inherit the following from IndiciumGrid:
+IndiciumForge open core MUST NOT inherit the following from IndiciumGrid:
 
 1. **No universal A-share/TDX path model** — do not treat `vipdoc`, `.indiciumgrid/tdx`, or
    `D:/new_tdx64` as default data roots.
@@ -34,13 +34,13 @@ Lucerna open core MUST NOT inherit the following from IndiciumGrid:
 10. **No crypto/derivatives crammed into A-share daily provider model** — reserve capabilities;
     separate domains and evidence stages.
 11. **No single-stock research report builder as core abstraction** — do not migrate IG
-    `build_research_report()` / `ResearchReport` as Lucerna core research model. Lucerna targets
+    `build_research_report()` / `ResearchReport` as IndiciumForge core research model. IndiciumForge targets
     `ResearchDossier` / `EvidenceDossier` (subject-agnostic, domain-scoped), not
     `StockResearchReport`. A-share single-stock dossier is a recipe/private extension only.
 
 ## Applies to
 
-- `lucerna_core.providers` v2 design and implementation
+- `indiciumforge_core.providers` v2 design and implementation
 - Private adapter templates and pack loading
 - CLI commands (`provider inspect`, `provider fetch`)
 - Contract tests and no-leak regression tests
@@ -54,4 +54,4 @@ Lucerna open core MUST NOT inherit the following from IndiciumGrid:
 - Research dossier model deferred to v0.10+ (contract-only first); prerequisites: v0.8 session
   contracts + v0.9 provider provenance.
 - [`docs/DESIGN_DEFECT_MIGRATION_AUDIT.md`](../DESIGN_DEFECT_MIGRATION_AUDIT.md) records IG defects
-  vs Lucerna mitigations, including `indiciumgrid/report/builder.py` coupling inventory.
+  vs IndiciumForge mitigations, including `indiciumgrid/report/builder.py` coupling inventory.

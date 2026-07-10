@@ -4,14 +4,14 @@ import json
 from datetime import date
 from pathlib import Path
 
-from lucerna_core.labels.market_gate import MARKET_DAILY, MARKET_ZH
-from lucerna_workflow.market_awareness.artifacts import (
+from indiciumforge_core.labels.market_gate import MARKET_DAILY, MARKET_ZH
+from indiciumforge_workflow.market_awareness.artifacts import (
     THEME_STATE_RANKING_COLUMNS,
     theme_state_rows_to_frame,
     write_daily_review_state,
     write_theme_state_ranking,
 )
-from lucerna_workflow.market_awareness.models import ThemeStateRow
+from indiciumforge_workflow.market_awareness.models import ThemeStateRow
 
 STRONG = "\u5f3a\u65b9\u5411"
 
@@ -32,7 +32,7 @@ def test_theme_state_rows_to_frame_has_gate_columns() -> None:
     assert frame.iloc[0][MARKET_ZH["theme_name"]] == STRONG
 
 
-def test_write_daily_review_state_uses_lucerna_schema(tmp_path: Path) -> None:
+def test_write_daily_review_state_uses_indiciumforge_schema(tmp_path: Path) -> None:
     ranking = tmp_path / "theme_state_ranking.csv"
     ranking.write_text("x", encoding="utf-8")
     state_path = tmp_path / "market_daily_review_state.json"
@@ -45,7 +45,7 @@ def test_write_daily_review_state_uses_lucerna_schema(tmp_path: Path) -> None:
     )
 
     payload = json.loads(state_path.read_text(encoding="utf-8-sig"))
-    assert payload["schema"] == "lucerna.market_daily_review_state.v1"
+    assert payload["schema"] == "indiciumforge.market_daily_review_state.v1"
     assert payload["provenance"]["source"] == "synthetic_fixture"
 
 

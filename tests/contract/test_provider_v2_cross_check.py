@@ -2,11 +2,11 @@ from __future__ import annotations
 
 from datetime import date
 
-from lucerna_core.domain.models import AssetID, AssetType, Exchange
-from lucerna_core.providers.capabilities import DataKind
-from lucerna_core.providers.query import DataQuery
-from lucerna_core.providers.registry_v2 import ProviderRegistryV2
-from lucerna_core.workflow.model import AssetDomain
+from indiciumforge_core.domain.models import AssetID, AssetType, Exchange
+from indiciumforge_core.providers.capabilities import DataKind
+from indiciumforge_core.providers.query import DataQuery
+from indiciumforge_core.providers.registry_v2 import ProviderRegistryV2
+from indiciumforge_core.workflow.model import AssetDomain
 from provider_stubs_v2 import MismatchCrossCheckProvider, SuccessV2Provider
 
 ASSET = AssetID("600000", Exchange.SSE, AssetType.STOCK)

@@ -5,8 +5,8 @@ from datetime import date
 from pathlib import Path
 
 import pytest
-from lucerna_core.artifacts.paths import synthetic_e2e_summary_path
-from lucerna_workflow.e2e.synthetic import (
+from indiciumforge_core.artifacts.paths import synthetic_e2e_summary_path
+from indiciumforge_workflow.e2e.synthetic import (
     SYNTHETIC_E2E_SUMMARY_SCHEMA,
     run_synthetic_e2e,
 )

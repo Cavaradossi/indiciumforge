@@ -4,9 +4,9 @@ import json
 from datetime import date
 from pathlib import Path
 
-from lucerna_core.artifacts.manifest import validate_factor_scan_stage
-from lucerna_core.factors.artifacts import FACTOR_SCAN_SCHEMA, FACTOR_SCAN_STATE_SCHEMA
-from lucerna_workflow.factor_scan.runner import FactorScanStageConfig, run_factor_scan_stage
+from indiciumforge_core.artifacts.manifest import validate_factor_scan_stage
+from indiciumforge_core.factors.artifacts import FACTOR_SCAN_SCHEMA, FACTOR_SCAN_STATE_SCHEMA
+from indiciumforge_workflow.factor_scan.runner import FactorScanStageConfig, run_factor_scan_stage
 
 ROOT = Path(__file__).resolve().parents[2]
 FIXTURE_ROOT = ROOT / "tests" / "fixtures"
@@ -17,7 +17,7 @@ TRADE_DATE = date(2026, 5, 10)
 
 
 def test_run_factor_scan_stage_writes_artifacts(tmp_path: Path) -> None:
-    from lucerna_core.factors.universe import load_assets_from_fixture_list
+    from indiciumforge_core.factors.universe import load_assets_from_fixture_list
 
     assets = tuple(load_assets_from_fixture_list(ASSET_LIST))
     result = run_factor_scan_stage(

@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "indiciumforge-core"
+version = "2.0.0"
+description = "Core contracts and artifacts for IndiciumForge."
+requires-python = ">=3.10"
+dependencies = ["pandas>=2.0", "tabulate>=0.9"]
+
+[tool.setuptools.packages.find]
+where = ["src"]

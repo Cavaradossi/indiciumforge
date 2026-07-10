@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from lucerna_cli.main import app
+from indiciumforge_cli.main import app
 from typer.testing import CliRunner
 
 ROOT = Path(__file__).resolve().parents[2]

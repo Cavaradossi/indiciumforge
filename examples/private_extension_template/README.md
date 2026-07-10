@@ -1,13 +1,13 @@
 # Private Extension Template
 
-Minimal **non-functional** skeleton for operator-local Lucerna extension packs.
+Minimal **non-functional** skeleton for operator-local IndiciumForge extension packs.
 
-Copy this directory outside the Lucerna OSS repo. Replace placeholders. Do not commit real paths or credentials to public Git.
+Copy this directory outside the IndiciumForge OSS repo. Replace placeholders. Do not commit real paths or credentials to public Git.
 
 ## Layout
 
 ```text
-my-lucerna-extensions/
+my-indiciumforge-extensions/
   README.md
   pyproject.toml              # entry points for providers, factors, recipes
   provider_pack.yaml.example
@@ -25,8 +25,8 @@ my-lucerna-extensions/
 
 1. Copy `*.example` files to active names (without `.example`).
 2. Fill `<placeholder>` values with operator-local paths.
-3. `pip install -e ./my-lucerna-extensions` in your private environment.
-4. Run Lucerna CLI pointing at your pack YAML files.
+3. `pip install -e ./my-indiciumforge-extensions` in your private environment.
+4. Run IndiciumForge CLI pointing at your pack YAML files.
 
 ## Guides
 
@@ -39,9 +39,9 @@ my-lucerna-extensions/
 ## OSS demo parity (no private packs)
 
 ```bash
-lucerna parity run \
+indiciumforge parity run \
   --parity-config tests/fixtures/parity_reference_demo/parity_config_demo.yaml \
-  --artifact-root /tmp/lucerna-parity-demo
+  --artifact-root /tmp/indiciumforge-parity-demo
 ```
 
-Run from Lucerna repo root after installing packages.
+Run from IndiciumForge repo root after installing packages.

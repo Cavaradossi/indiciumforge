@@ -13,15 +13,15 @@ Status: accepted
 
 ## Decision
 
-Lucerna v0.5-alpha (pyproject version `0.5.0`) adds:
+IndiciumForge v0.5-alpha (pyproject version `0.5.0`) adds:
 
-1. **Runner** `lucerna_workflow.e2e.synthetic.run_synthetic_e2e` — orchestrates:
+1. **Runner** `indiciumforge_workflow.e2e.synthetic.run_synthetic_e2e` — orchestrates:
    - seed preopen review CSV from fixture
    - `run_daily_review_skeleton`
    - `run_market_gate`
    - `validate_daily_review_stage` + `validate_market_gate_stage`
    - write `workflows/{YYYYMMDD}/synthetic_e2e_summary.json`
-2. **CLI** `lucerna workflow synthetic-e2e` with required fixture paths (no bundled defaults).
+2. **CLI** `indiciumforge workflow synthetic-e2e` with required fixture paths (no bundled defaults).
 3. **Open-source fixtures** under `tests/fixtures/`:
    - `market_awareness/theme_sectors_demo.yaml` (existing)
    - `workflow/preopen_buy_point_review_demo.csv` (curated from golden `strict_pass_mixed`
@@ -29,7 +29,7 @@ Lucerna v0.5-alpha (pyproject version `0.5.0`) adds:
 
 ## Summary schema
 
-`synthetic_e2e_summary.json` uses schema `lucerna.synthetic_e2e_summary.v1` with per-stage
+`synthetic_e2e_summary.json` uses schema `indiciumforge.synthetic_e2e_summary.v1` with per-stage
 audit status, fixture provenance, and merged warnings.
 
 ## Boundaries

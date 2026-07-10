@@ -9,16 +9,16 @@ Status: accepted
 - v0.6–v0.7 chain skeleton seeds post_close/preopen from CSV fixtures; recipe YAML is not
   runtime-wired.
 - IndiciumGrid production post_close/preopen embed A-share/TDX/private-factor semantics that
-  must not become Lucerna open-core logic.
+  must not become IndiciumForge open-core logic.
 
 ## Decision
 
-Lucerna v0.10.0 delivers **A-share Private Recipe Integration** as open-core **recipe wiring**:
+IndiciumForge v0.10.0 delivers **A-share Private Recipe Integration** as open-core **recipe wiring**:
 
 ### Open core
 
-- `lucerna_core.recipes` — ports, `RecipeRunner`, `StageInputResolver`, extension pack loader
-- Entry point group: `lucerna.recipe_extensions`
+- `indiciumforge_core.recipes` — ports, `RecipeRunner`, `StageInputResolver`, extension pack loader
+- Entry point group: `indiciumforge.recipe_extensions`
 - Fake A-share recipe extension in OSS CI (deterministic synthetic outputs)
 - Recipe-driven workflow chain CLI (`--recipe`, `--recipe-extension-pack`)
 - `workflow_chain_summary.v4` with recipe + extension provenance
@@ -41,7 +41,7 @@ Lucerna v0.10.0 delivers **A-share Private Recipe Integration** as open-core **r
 
 ## Out of scope (v0.10)
 
-- Real TDX adapter, `lucerna data sync`, vipdoc defaults
+- Real TDX adapter, `indiciumforge data sync`, vipdoc defaults
 - Real private factor detectors or IG factor slugs in OSS
 - Copying IG `run_post_close_workflow` / `_build_workflow_review` into open core
 - intraday-watch, factor_tracking, account analysis, midday/late execution

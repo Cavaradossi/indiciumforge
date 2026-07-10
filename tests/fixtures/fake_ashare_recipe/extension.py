@@ -6,27 +6,27 @@ from datetime import date
 from pathlib import Path
 from typing import Any
 
-from lucerna_core.artifacts.paths import post_close_review_dir, preopen_review_dir
-from lucerna_core.domain.models import AssetID
-from lucerna_core.factors.pack import load_factor_pack
-from lucerna_core.factors.scan import FactorScanRunner
-from lucerna_core.factors.universe import load_assets_from_fixture_list
-from lucerna_core.labels.market_gate import REVIEW_COLUMNS
-from lucerna_core.providers.local_fixture import LocalFixtureProvider
-from lucerna_core.providers.registry import ProviderRegistry
-from lucerna_core.recipes.models import RecipeStageContext, StageRunResult
-from lucerna_core.workflow.handoff import HandoffArtifactKind
+from indiciumforge_core.artifacts.paths import post_close_review_dir, preopen_review_dir
+from indiciumforge_core.domain.models import AssetID
+from indiciumforge_core.factors.pack import load_factor_pack
+from indiciumforge_core.factors.scan import FactorScanRunner
+from indiciumforge_core.factors.universe import load_assets_from_fixture_list
+from indiciumforge_core.labels.market_gate import REVIEW_COLUMNS
+from indiciumforge_core.providers.local_fixture import LocalFixtureProvider
+from indiciumforge_core.providers.registry import ProviderRegistry
+from indiciumforge_core.recipes.models import RecipeStageContext, StageRunResult
+from indiciumforge_core.workflow.handoff import HandoffArtifactKind
 
-POST_CLOSE_REVIEW_STATE_SCHEMA = "lucerna.post_close_review_state.v1"
-PREOPEN_REVIEW_STATE_SCHEMA = "lucerna.preopen_review_state.v1"
-CANDIDATE_POOL_RAW_SCHEMA = "lucerna.candidate_pool_raw.v1"
+POST_CLOSE_REVIEW_STATE_SCHEMA = "indiciumforge.post_close_review_state.v1"
+PREOPEN_REVIEW_STATE_SCHEMA = "indiciumforge.preopen_review_state.v1"
+CANDIDATE_POOL_RAW_SCHEMA = "indiciumforge.candidate_pool_raw.v1"
 
 
 class FakeAshareRecipeExtension:
     """Synthetic A-share recipe extension for OSS contract tests."""
 
     extension_id = "fake_ashare_recipe"
-    recipe_ids = ("lucerna.recipe.ashare_daily_research.v1",)
+    recipe_ids = ("indiciumforge.recipe.ashare_daily_research.v1",)
 
     def __init__(
         self,

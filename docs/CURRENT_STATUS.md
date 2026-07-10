@@ -1,6 +1,6 @@
 # Current Status
 
-Snapshot for open-source readers and agents. Last aligned with **Lucerna v1.0.0** sign-off.
+Snapshot for open-source readers and agents. Last aligned with **IndiciumForge v1.0.0** sign-off.
 
 ## Release state
 
@@ -29,11 +29,11 @@ OSS readers should treat private sign-off reports as **operator evidence**, not 
 
 Private sign-off documents gaps such as:
 
-- IG-shaped `daily_review` manifest vs Lucerna manifest (informational audit mismatch)
+- IG-shaped `daily_review` manifest vs IndiciumForge manifest (informational audit mismatch)
 - Blocked frozen trade dates where reference layout is incomplete
 - `strict_count > 0` not available in frozen reference for some dates
 
-All gaps are **accepted for v1.0** in the private gap register. Lucerna does not claim full legacy replacement.
+All gaps are **accepted for v1.0** in the private gap register. IndiciumForge does not claim full legacy replacement.
 
 Details: [V1_0_DEFINITION.md](V1_0_DEFINITION.md), [RELEASE_NOTES.md](../RELEASE_NOTES.md).
 
@@ -52,11 +52,11 @@ Re-scan before each release with patterns in [EXTENSION_AUTHOR_GUIDE.md](EXTENSI
 
 ## What works in OSS without private packs
 
-- `lucerna workflow synthetic-e2e`, `chain`, `market-gate`, `daily-review`
-- `lucerna artifact list/audit`
-- `lucerna factor scan` with demo pack
-- `lucerna provider inspect/fetch` with fixtures
-- `lucerna parity run` with `parity_reference_demo`
+- `indiciumforge workflow synthetic-e2e`, `chain`, `market-gate`, `daily-review`
+- `indiciumforge artifact list/audit`
+- `indiciumforge factor scan` with demo pack
+- `indiciumforge provider inspect/fetch` with fixtures
+- `indiciumforge parity run` with `parity_reference_demo`
 
 ## What requires private extensions
 

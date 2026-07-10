@@ -1,9 +1,9 @@
 # Copy to recipe_extension_pack.yaml — operator-local only.
 
-schema: lucerna.recipe_extension_pack.v1
+schema: indiciumforge.recipe_extension_pack.v1
 pack_id: <your-recipe-pack-id>
 version: "0.1.0"
 recipe_ids:
-  - lucerna.recipe.ashare_daily_research.v1
+  - indiciumforge.recipe.ashare_daily_research.v1
 load:
   extensions_config: <path-to-recipe-extensions.yaml>

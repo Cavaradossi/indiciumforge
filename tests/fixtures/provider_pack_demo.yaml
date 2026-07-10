@@ -1,4 +1,4 @@
-schema: lucerna.provider_pack.v1
+schema: indiciumforge.provider_pack.v1
 pack_id: demo-provider-pack
 version: "0.1.0"
 load:

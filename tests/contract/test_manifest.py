@@ -7,15 +7,15 @@ from pathlib import Path
 
 import pytest
 import yaml
-from lucerna_core.artifacts.comparator import GATE_ARTIFACTS
-from lucerna_core.artifacts.manifest import (
+from indiciumforge_core.artifacts.comparator import GATE_ARTIFACTS
+from indiciumforge_core.artifacts.manifest import (
     DAILY_REVIEW_REQUIRED_FILES,
     list_daily_review_stages,
     list_market_gate_stages,
     validate_daily_review_stage,
     validate_market_gate_stage,
 )
-from lucerna_workflow.market_awareness.runner import run_daily_review_skeleton
+from indiciumforge_workflow.market_awareness.runner import run_daily_review_skeleton
 
 ROOT = Path(__file__).resolve().parents[2]
 GOLDEN_ROOT = ROOT / "tests" / "golden" / "market_gate"

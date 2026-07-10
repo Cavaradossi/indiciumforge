@@ -4,20 +4,20 @@ Status: accepted
 
 ## Context
 
-- v0.1 writes 7 market-gate artifact families (`GATE_ARTIFACTS` in `lucerna_core.artifacts.comparator`).
+- v0.1 writes 7 market-gate artifact families (`GATE_ARTIFACTS` in `indiciumforge_core.artifacts.comparator`).
 - Golden scenarios are listed in `GOLDEN_MANIFEST.yaml` but there is no standalone audit path.
 - Evidence-first requires validating artifact roots without re-running workflows.
 
 ## Decision
 
-- Introduce an `ArtifactManifest` contract in `lucerna-core` that describes required files, schema IDs, and `trade_date` for a workflow stage directory.
-- Add read-only CLI: `lucerna artifact audit` and `lucerna artifact list`.
+- Introduce an `ArtifactManifest` contract in `indiciumforge-core` that describes required files, schema IDs, and `trade_date` for a workflow stage directory.
+- Add read-only CLI: `indiciumforge artifact audit` and `indiciumforge artifact list`.
 - Audit reports structural violations (missing files, schema mismatch, meta inconsistency); semantic parity remains the golden comparator's job.
 
 ## Scope (v0.2)
 
 - market-gate stage only (`workflows/{YYYYMMDD}/market_gate/`).
-- Reuse `GATE_ARTIFACTS` from `lucerna_core.artifacts.comparator` as the v0.2 manifest source of truth.
+- Reuse `GATE_ARTIFACTS` from `indiciumforge_core.artifacts.comparator` as the v0.2 manifest source of truth.
 
 ## Out of scope (v0.2)
 
@@ -29,5 +29,5 @@ Status: accepted
 
 - CAPABILITY_REGISTER: artifact manifest / audit CLI -> `implemented_v1`.
 - Tests: contract tests on golden `expected/` dirs; negative cases for missing artifacts.
-- README: document `lucerna artifact` commands when implemented.
+- README: document `indiciumforge artifact` commands when implemented.
 - Forward: market daily-review upstream deferred to v0.4 candidate; see docs/MIGRATION_ROADMAP.md.

@@ -4,8 +4,8 @@ import shutil
 from datetime import date
 from pathlib import Path
 
-from lucerna_workflow.market_awareness.runner import run_daily_review_skeleton
-from lucerna_workflow.market_gate.runner import run_market_gate
+from indiciumforge_workflow.market_awareness.runner import run_daily_review_skeleton
+from indiciumforge_workflow.market_gate.runner import run_market_gate
 
 ROOT = Path(__file__).resolve().parents[2]
 DEMO_FIXTURE = ROOT / "tests" / "fixtures" / "market_awareness" / "theme_sectors_demo.yaml"

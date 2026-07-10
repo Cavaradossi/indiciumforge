@@ -1,4 +1,4 @@
-reference: lucerna@v0.3.0
+reference: indiciumforge@v0.3.0
 domain: factor_core_demo
 scenarios:
   - id: demo_volume_breakout_hit

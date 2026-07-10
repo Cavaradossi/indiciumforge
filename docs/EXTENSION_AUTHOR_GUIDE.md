@@ -1,8 +1,8 @@
 # Extension Author Guide
 
-How to build **private extensions** for Lucerna without forking open-core contracts.
+How to build **private extensions** for IndiciumForge without forking open-core contracts.
 
-Lucerna OSS ships ports, schemas, demo fixtures, and harnesses. Your proprietary logic lives in **operator-local packs** installed via editable installs and YAML configuration.
+IndiciumForge OSS ships ports, schemas, demo fixtures, and harnesses. Your proprietary logic lives in **operator-local packs** installed via editable installs and YAML configuration.
 
 ## Open core vs private extension
 
@@ -15,26 +15,26 @@ Lucerna OSS ships ports, schemas, demo fixtures, and harnesses. Your proprietary
 | Parity harness and comparator | Legacy `output/` reference trees |
 | ADRs and capability register | Calibrated policies, account evidence |
 
-Authoritative ADR: [ADR-0011](decisions/ADR-0011-open-core-private-extension-boundary.md). Constitution: [LUCERNA_CONSTITUTION.md](../LUCERNA_CONSTITUTION.md).
+Authoritative ADR: [ADR-0011](decisions/ADR-0011-open-core-private-extension-boundary.md). Constitution: [INDICIUMFORGE_CONSTITUTION.md](../INDICIUMFORGE_CONSTITUTION.md).
 
 Starter skeleton: [examples/private_extension_template/](../examples/private_extension_template/).
 
 ## DataProvider extension
 
-Session-aware contract v2 (`DataProviderPortV2`) supports pack loading via `lucerna.provider_pack.v1`.
+Session-aware contract v2 (`DataProviderPortV2`) supports pack loading via `indiciumforge.provider_pack.v1`.
 
 **OSS smoke:**
 
 ```bash
-lucerna provider inspect --ohlcv-fixture-root tests/fixtures/ohlcv
-lucerna provider fetch --trade-date 2026-04-30 --code 600000 --ohlcv-fixture-root tests/fixtures/ohlcv
+indiciumforge provider inspect --ohlcv-fixture-root tests/fixtures/ohlcv
+indiciumforge provider fetch --trade-date 2026-04-30 --code 600000 --ohlcv-fixture-root tests/fixtures/ohlcv
 ```
 
 **Private pack:**
 
 1. Implement `DataProviderPortV2` in your private package.
-2. Register entry point `lucerna.data_providers`.
-3. Ship `provider_pack.yaml` with `schema: lucerna.provider_pack.v1`.
+2. Register entry point `indiciumforge.data_providers`.
+3. Ship `provider_pack.yaml` with `schema: indiciumforge.provider_pack.v1`.
 
 Template: [PRIVATE_DATA_ADAPTER_TEMPLATE.md](PRIVATE_DATA_ADAPTER_TEMPLATE.md).
 
@@ -46,13 +46,13 @@ Template: [PRIVATE_DATA_ADAPTER_TEMPLATE.md](PRIVATE_DATA_ADAPTER_TEMPLATE.md).
 
 ## FactorDetector extension
 
-OSS exposes `FactorDetectorPort`, `FactorScanRunner`, and `lucerna factor scan`.
+OSS exposes `FactorDetectorPort`, `FactorScanRunner`, and `indiciumforge factor scan`.
 
 **Private pack:**
 
 1. Implement detectors returning `FactorSignal` / `FactorScanResult`.
-2. Register `lucerna.factor_detectors` entry points.
-3. Ship `pack.yaml` (`lucerna.factor_pack.v1`) + `detectors.yaml`.
+2. Register `indiciumforge.factor_detectors` entry points.
+3. Ship `pack.yaml` (`indiciumforge.factor_pack.v1`) + `detectors.yaml`.
 
 Template: [PRIVATE_FACTOR_PACK_TEMPLATE.md](PRIVATE_FACTOR_PACK_TEMPLATE.md).
 
@@ -69,8 +69,8 @@ OSS runs `RecipeRunner` with fake A-share extension in fixtures.
 **Private pack:**
 
 1. Implement recipe stage handlers for your `recipe_ids`.
-2. Ship `recipe_extension_pack.yaml` (`lucerna.recipe_extension_pack.v1`).
-3. Wire CLI: `lucerna workflow chain --recipe ... --recipe-extension-pack ...`.
+2. Ship `recipe_extension_pack.yaml` (`indiciumforge.recipe_extension_pack.v1`).
+3. Wire CLI: `indiciumforge workflow chain --recipe ... --recipe-extension-pack ...`.
 
 Template: [PRIVATE_ASHARE_RECIPE_TEMPLATE.md](PRIVATE_ASHARE_RECIPE_TEMPLATE.md).
 
@@ -86,14 +86,14 @@ To compare against a legacy system without importing its runtime:
 
 1. Export or copy reference artifacts to an **operator-local read-only root**.
 2. Point parity config `reference_artifact_root` at that root.
-3. Run Lucerna recipe chain to a writable `artifact_root`.
-4. Compare via `lucerna parity run`.
+3. Run IndiciumForge recipe chain to a writable `artifact_root`.
+4. Compare via `indiciumforge parity run`.
 
 Do not commit reference trees. Use `parity_local.yaml` (gitignored) copied from `parity_local.yaml.example`.
 
 ## Parity harness
 
-Config schema: `lucerna.parity_local_config.v1`.
+Config schema: `indiciumforge.parity_local_config.v1`.
 
 **Dimensions:**
 
@@ -108,9 +108,9 @@ Config schema: `lucerna.parity_local_config.v1`.
 OSS demo:
 
 ```bash
-lucerna parity run \
+indiciumforge parity run \
   --parity-config tests/fixtures/parity_reference_demo/parity_config_demo.yaml \
-  --artifact-root /tmp/lucerna-parity-demo
+  --artifact-root /tmp/indiciumforge-parity-demo
 ```
 
 Template: [PRIVATE_PARITY_HARNESS_TEMPLATE.md](PRIVATE_PARITY_HARNESS_TEMPLATE.md).
@@ -127,7 +127,7 @@ Before publishing or sharing a private pack:
 - [ ] Pack does not phone home with operator data unless explicitly documented
 - [ ] Dependencies pinned and scanned in your environment
 
-Before contributing to Lucerna OSS:
+Before contributing to IndiciumForge OSS:
 
 - [ ] Run leak scan (see below)
 - [ ] Only `.example` configs with placeholders
@@ -142,7 +142,7 @@ Before contributing to Lucerna OSS:
 
 ## Do-not-commit list
 
-Never commit to Lucerna OSS (or share in public pack repos):
+Never commit to IndiciumForge OSS (or share in public pack repos):
 
 | Item | Reason |
 | --- | --- |

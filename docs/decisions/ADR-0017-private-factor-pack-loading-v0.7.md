@@ -12,14 +12,14 @@ Status: accepted
 
 ## Decision
 
-Lucerna v0.7.0 delivers private factor pack loading integration:
+IndiciumForge v0.7.0 delivers private factor pack loading integration:
 
-1. **`load_factor_pack()`** — composes pack YAML (`lucerna.factor_pack.v1`), detectors YAML,
-   and optional `lucerna.factor_detectors` entry points (union merge; duplicate names fail).
-2. **Factor scan artifacts** — `lucerna.factor_scan.v1` JSON/CSV + `lucerna.factor_scan_state.v1`.
-3. **CLI** — `lucerna factor scan` for standalone local pack development.
+1. **`load_factor_pack()`** — composes pack YAML (`indiciumforge.factor_pack.v1`), detectors YAML,
+   and optional `indiciumforge.factor_detectors` entry points (union merge; duplicate names fail).
+2. **Factor scan artifacts** — `indiciumforge.factor_scan.v1` JSON/CSV + `indiciumforge.factor_scan_state.v1`.
+3. **CLI** — `indiciumforge factor scan` for standalone local pack development.
 4. **Workflow chain optional stage** — `factor_scan` after daily_review, before post_close seed.
-5. **Summary schema** — `lucerna.workflow_chain_summary.v2` with informational factor fields.
+5. **Summary schema** — `indiciumforge.workflow_chain_summary.v2` with informational factor fields.
 
 Loading mechanisms (no `sys.path` injection):
 

@@ -4,26 +4,26 @@ Status: accepted
 
 ## Context
 
-- Lucerna v0.6/v0.7 implemented an A-share-compatible workflow chain skeleton using IG folder
+- IndiciumForge v0.6/v0.7 implemented an A-share-compatible workflow chain skeleton using IG folder
   names (`post_close`, `preopen`, `market_gate`) for fixture seeding and golden compatibility.
 - IndiciumGrid production workflow is China A-share shaped; `post_close` and `preopen` differ
   mainly in discovery vs handoff semantics, not in universal lifecycle type.
 - IG ARCHITECTURE and ASSET_UNIVERSE_ROADMAP already state global workflows must be **cyclic
   session handoffs**, not a linear `post-close -> preopen -> midday` universal clock.
 - Prior roadmap slot v0.8 ("production review generation") would cement IG linear naming into
-  Lucerna core before multi-asset/crypto support is modeled.
+  IndiciumForge core before multi-asset/crypto support is modeled.
 
 ## Decision
 
-Lucerna v0.8.0 introduces a **session-cyclic workflow contract layer**:
+IndiciumForge v0.8.0 introduces a **session-cyclic workflow contract layer**:
 
-1. **Core abstractions** in `lucerna_core.workflow`:
+1. **Core abstractions** in `indiciumforge_core.workflow`:
    - `AssetDomain`, `SessionModel`, `WorkflowRecipe`, `WorkflowCheckpoint`, `EvidenceStageRef`
    - `HandoffArtifact` kinds and schema ids
-2. **Recipe declaration** schema `lucerna.workflow_recipe.v1` with synthetic A-share fixture
+2. **Recipe declaration** schema `indiciumforge.workflow_recipe.v1` with synthetic A-share fixture
    `recipe_ashare_daily_research.v1`.
 3. **IG folder names** (`post_close`, `preopen`, `midday`) are **recipe stage compatibility
-   labels**, not universal Lucerna lifecycle enums.
+   labels**, not universal IndiciumForge lifecycle enums.
 4. **`workflow_chain_summary.v3`** adds `workflow_session` metadata (`recipe_id`,
    `asset_domain`, `session_model`, `cycle_id`) while preserving v0.6/v0.7 chain fields and CLI.
 5. **Data adapter deferred to v0.9**; adapters must emit checkpoint-scoped evidence using v0.8

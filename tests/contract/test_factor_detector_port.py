@@ -4,9 +4,12 @@ from datetime import date
 from pathlib import Path
 
 import pandas as pd
-from lucerna_core.domain.models import AssetID, AssetType, Exchange
-from lucerna_core.factors.demo import DemoQuietAccumulationDetector, DemoVolumeBreakoutDetector
-from lucerna_core.providers.local_fixture import LocalFixtureProvider
+from indiciumforge_core.domain.models import AssetID, AssetType, Exchange
+from indiciumforge_core.factors.demo import (
+    DemoQuietAccumulationDetector,
+    DemoVolumeBreakoutDetector,
+)
+from indiciumforge_core.providers.local_fixture import LocalFixtureProvider
 
 ROOT = Path(__file__).resolve().parents[2]
 FIXTURE_ROOT = ROOT / "tests" / "fixtures" / "ohlcv"

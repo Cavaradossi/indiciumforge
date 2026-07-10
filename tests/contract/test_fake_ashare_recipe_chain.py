@@ -4,8 +4,11 @@ import json
 from datetime import date
 from pathlib import Path
 
-from lucerna_core.artifacts.manifest import validate_daily_review_stage, validate_market_gate_stage
-from lucerna_workflow.workflow_chain.runner import (
+from indiciumforge_core.artifacts.manifest import (
+    validate_daily_review_stage,
+    validate_market_gate_stage,
+)
+from indiciumforge_workflow.workflow_chain.runner import (
     WORKFLOW_CHAIN_SUMMARY_SCHEMA_V4,
     WorkflowChainRecipeConfig,
     run_workflow_chain_recipe,
@@ -31,7 +34,7 @@ def test_fake_ashare_recipe_chain_produces_auditable_artifacts(tmp_path: Path) -
     )
 
     assert result.chain_ok
-    assert result.recipe_id == "lucerna.recipe.ashare_daily_research.v1"
+    assert result.recipe_id == "indiciumforge.recipe.ashare_daily_research.v1"
     assert result.extension_pack_id == "demo-recipe-extension-pack"
     assert (result.post_close_stage_dir / "candidate_pool_raw.json").is_file()
     assert (result.post_close_stage_dir / "buy_point_review_internal.csv").is_file()

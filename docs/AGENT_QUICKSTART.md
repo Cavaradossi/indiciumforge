@@ -1,17 +1,17 @@
 # Agent Quickstart
 
-Five-minute onboarding for AI agents working in the Lucerna open-core repository.
+Five-minute onboarding for AI agents working in the IndiciumForge open-core repository.
 
 ## What you are editing
 
-Lucerna is a **contract-first open core** for evidence-first financial research workflows. Your job is to preserve ports, artifact contracts, and golden parity — not to add trading, live brokers, or competition features.
+IndiciumForge is a **contract-first open core** for evidence-first financial research workflows. Your job is to preserve ports, artifact contracts, and golden parity — not to add trading, live brokers, or competition features.
 
 ## Repository layout
 
 ```text
-packages/lucerna_core/     # ports, artifacts, recipes, parity, providers
-packages/lucerna_workflow/ # market_gate, daily_review, chain runners
-packages/lucerna_cli/      # Typer CLI
+packages/indiciumforge_core/     # ports, artifacts, recipes, parity, providers
+packages/indiciumforge_workflow/ # market_gate, daily_review, chain runners
+packages/indiciumforge_cli/      # Typer CLI
 tests/golden/              # semantic parity vs reference artifacts
 tests/fixtures/            # synthetic demo data only
 docs/                      # ADRs, templates, agent docs
@@ -51,12 +51,12 @@ python -m pytest tests/golden -k market_gate
 On Windows with temp permission issues:
 
 ```powershell
-python -m pytest -p no:cacheprovider -q --basetemp "$env:TEMP\lucerna_pytest\pytest-basetemp-<unique>"
+python -m pytest -p no:cacheprovider -q --basetemp "$env:TEMP\indiciumforge_pytest\pytest-basetemp-<unique>"
 ```
 
 ## Typical implementer flow
 
-1. Read [LUCERNA_CONSTITUTION.md](../LUCERNA_CONSTITUTION.md), relevant ADR, and [CAPABILITY_REGISTER.md](../CAPABILITY_REGISTER.md).
+1. Read [INDICIUMFORGE_CONSTITUTION.md](../INDICIUMFORGE_CONSTITUTION.md), relevant ADR, and [CAPABILITY_REGISTER.md](../CAPABILITY_REGISTER.md).
 2. Implement only the requested capability slice.
 3. Update [MIGRATION_MAP_FROM_INDICIUMGRID.md](../MIGRATION_MAP_FROM_INDICIUMGRID.md) when a mapping completes.
 4. Run quality gates.

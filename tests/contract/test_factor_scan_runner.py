@@ -3,12 +3,15 @@ from __future__ import annotations
 from datetime import date
 from pathlib import Path
 
-from lucerna_core.domain.models import AssetID, AssetType, Exchange
-from lucerna_core.factors.demo import DemoQuietAccumulationDetector, DemoVolumeBreakoutDetector
-from lucerna_core.factors.registry import FactorDetectorRegistry
-from lucerna_core.factors.scan import FactorScanRunner
-from lucerna_core.providers.local_fixture import LocalFixtureProvider
-from lucerna_core.providers.registry import ProviderRegistry
+from indiciumforge_core.domain.models import AssetID, AssetType, Exchange
+from indiciumforge_core.factors.demo import (
+    DemoQuietAccumulationDetector,
+    DemoVolumeBreakoutDetector,
+)
+from indiciumforge_core.factors.registry import FactorDetectorRegistry
+from indiciumforge_core.factors.scan import FactorScanRunner
+from indiciumforge_core.providers.local_fixture import LocalFixtureProvider
+from indiciumforge_core.providers.registry import ProviderRegistry
 from provider_stubs import FailingProvider
 
 ROOT = Path(__file__).resolve().parents[2]

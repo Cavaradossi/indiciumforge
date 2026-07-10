@@ -4,9 +4,9 @@ import json
 from datetime import date
 from pathlib import Path
 
-from lucerna_core.factors.universe import load_assets_from_fixture_list
-from lucerna_workflow.factor_scan.runner import FactorScanStageConfig
-from lucerna_workflow.workflow_chain.runner import (
+from indiciumforge_core.factors.universe import load_assets_from_fixture_list
+from indiciumforge_workflow.factor_scan.runner import FactorScanStageConfig
+from indiciumforge_workflow.workflow_chain.runner import (
     WORKFLOW_CHAIN_SUMMARY_SCHEMA,
     run_workflow_chain_skeleton,
 )
@@ -96,7 +96,7 @@ def test_workflow_chain_factor_audit_failure_does_not_fail_chain(tmp_path: Path)
     scan_json = result.factor_scan_stage_dir / "factor_scan_20260623.json"
     scan_json.unlink()
 
-    from lucerna_core.artifacts.manifest import validate_factor_scan_stage
+    from indiciumforge_core.artifacts.manifest import validate_factor_scan_stage
 
     audit = validate_factor_scan_stage(
         result.factor_scan_stage_dir,

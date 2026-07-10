@@ -6,12 +6,12 @@ Status: accepted
 
 - `DataProviderPort` was a minimal stub (`provenance()` only) while contract tests assumed `supports()` and `fetch_ohlcv()`.
 - `ProviderRegistry` lived in tests, not in reusable core code.
-- IndiciumGrid ignored local paths (`.indiciumgrid/tdx/`, `.indiciumgrid/cache/fundamentals/`, `output/`, `tmp/`) may inform schema and provenance semantics but must not be copied into Lucerna Git.
+- IndiciumGrid ignored local paths (`.indiciumgrid/tdx/`, `.indiciumgrid/cache/fundamentals/`, `output/`, `tmp/`) may inform schema and provenance semantics but must not be copied into IndiciumForge Git.
 
 ## Decision
 
 - Formalize `DataProviderPort` v1 with `supports()` and `fetch_ohlcv()` returning OHLCV frames plus `Provenance`.
-- Move `ProviderRegistry` into `lucerna_core.providers.registry` with ordered fallback and warning preservation.
+- Move `ProviderRegistry` into `indiciumforge_core.providers.registry` with ordered fallback and warning preservation.
 - Add `LocalFixtureProvider` reading curated synthetic CSV fixtures from an explicit `fixture_root`.
 - Fixture path convention: `{fixture_root}/{exchange}_{asset_type}_{code}.csv`.
 

@@ -36,7 +36,7 @@ If you believe you have found a security issue in this repository:
 - Browser profiles, private source lists, or local `output/` / `.indiciumgrid/` artifacts.
 - PDFs or raw cache dumps from private environments.
 
-Lucerna is **alpha research software**. It is not a trading or execution system and does not
+IndiciumForge is **alpha research software**. It is not a trading or execution system and does not
 place orders. Security reports should focus on software defects (dependency issues, unsafe
 defaults, secret leakage paths), not investment advice or P&L.
 

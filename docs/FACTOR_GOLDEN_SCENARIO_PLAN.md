@@ -5,7 +5,7 @@ Reference manifests:
 - [FACTOR_DEMO_MANIFEST.yaml](../FACTOR_DEMO_MANIFEST.yaml) — open-source demo scenarios (v0.3)
 - [FACTOR_GOLDEN_MANIFEST.yaml](../FACTOR_GOLDEN_MANIFEST.yaml) — IG private/reference scenarios
 
-Lucerna v0.3 implements demo detector contract tests. IG golden export remains private-reference
+IndiciumForge v0.3 implements demo detector contract tests. IG golden export remains private-reference
 until a private factor pack provides real detectors.
 
 ## Open-source demo scenarios (v0.3)
@@ -30,7 +30,7 @@ Contract tests live under `tests/contract/test_factor_*.py` with fixtures in
 | `yang_line_density_boundary` | FACTOR_CASES 603778 | miss | private/reference only |
 | `multi_primary_scan` | IG synthetic test | dual hit | private/reference only |
 
-These scenarios require a private factor pack. Lucerna open core does not export or implement them.
+These scenarios require a private factor pack. IndiciumForge open core does not export or implement them.
 
 ## Directory layout (future private-pack golden export)
 

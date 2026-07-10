@@ -3,13 +3,13 @@ from __future__ import annotations
 from pathlib import Path
 
 import pytest
-from lucerna_core.workflow.handoff import HandoffArtifactKind
-from lucerna_core.workflow.model import (
+from indiciumforge_core.workflow.handoff import HandoffArtifactKind
+from indiciumforge_core.workflow.model import (
     AssetDomain,
     RecipeStageKind,
     SessionModel,
 )
-from lucerna_core.workflow.recipe_schema import (
+from indiciumforge_core.workflow.recipe_schema import (
     RecipeSchemaError,
     load_workflow_recipe,
     parse_workflow_recipe_payload,
@@ -31,7 +31,7 @@ IG_FOLDER_TO_STAGE_ID = {
 def test_load_ashare_recipe_fixture() -> None:
     recipe = load_workflow_recipe(RECIPE_PATH)
 
-    assert recipe.recipe_id == "lucerna.recipe.ashare_daily_research.v1"
+    assert recipe.recipe_id == "indiciumforge.recipe.ashare_daily_research.v1"
     assert recipe.asset_domain == AssetDomain.CHINA_A_SHARE
     assert recipe.session_model == SessionModel.CALENDAR_DAY_CYCLE
     assert len(recipe.stages) == 6
@@ -72,7 +72,7 @@ def test_parse_workflow_recipe_rejects_invalid_schema() -> None:
 
 def test_parse_workflow_recipe_rejects_empty_stages() -> None:
     payload = {
-        "schema": "lucerna.workflow_recipe.v1",
+        "schema": "indiciumforge.workflow_recipe.v1",
         "recipe_id": "test",
         "asset_domain": "china_a_share",
         "session_model": "calendar_day_cycle",

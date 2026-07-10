@@ -1,6 +1,6 @@
 # Workflow Session Model
 
-Normative reference for Lucerna session-cyclic workflow contracts (v0.8). See
+Normative reference for IndiciumForge session-cyclic workflow contracts (v0.8). See
 [ADR-0018](decisions/ADR-0018-session-cyclic-workflow-model-v0.8.md).
 
 ## Core principle
@@ -23,7 +23,7 @@ flowchart TB
     MG1[market_gate]
     DR1 --> PC1 --> PO1 --> MD1 --> MG1
   end
-  subgraph cyclic [LucernaSessionCyclicModel]
+  subgraph cyclic [IndiciumForgeSessionCyclicModel]
     CP1[checkpoint_N]
     CP2[checkpoint_Nplus1]
     HO[handoff_artifact]
@@ -47,7 +47,7 @@ Global equities and crypto do not share one calendar `trade_date` folder semanti
 | `Gate` | Policy filter (market_gate = A-share recipe gate, not the only gate) |
 | `Review` | Human-facing review artifact family |
 
-## A-share recipe: `lucerna.recipe.ashare_daily_research.v1`
+## A-share recipe: `indiciumforge.recipe.ashare_daily_research.v1`
 
 Fixture: [tests/fixtures/workflow/recipe_ashare_daily_v1.yaml](../tests/fixtures/workflow/recipe_ashare_daily_v1.yaml)
 
@@ -103,14 +103,14 @@ Provider outputs should declare:
 - `ProviderAuthorityLevel` (fallback is not primary authority)
 - compatible `HandoffArtifact` kind
 
-Open-core CI uses fixture/fake providers only (`lucerna provider fetch`). Real adapters load via
-private `lucerna.data_providers` entry points — see
+Open-core CI uses fixture/fake providers only (`indiciumforge provider fetch`). Real adapters load via
+private `indiciumforge.data_providers` entry points — see
 [PRIVATE_DATA_ADAPTER_TEMPLATE.md](PRIVATE_DATA_ADAPTER_TEMPLATE.md).
 
 ## Recipe runner dependency (v0.10)
 
 Delivered in v0.10.0: `RecipeRunner` loads recipe YAML, resolves handoff inputs, and dispatches
-stages to `lucerna.recipe_extensions` entry points. Open-core handlers cover evidence and gate
+stages to `indiciumforge.recipe_extensions` entry points. Open-core handlers cover evidence and gate
 stages; discovery/handoff require a private (or fake) extension. See
 [ADR-0021](decisions/ADR-0021-ashare-private-recipe-integration-v0.10.md) and
 [PRIVATE_ASHARE_RECIPE_TEMPLATE.md](PRIVATE_ASHARE_RECIPE_TEMPLATE.md).

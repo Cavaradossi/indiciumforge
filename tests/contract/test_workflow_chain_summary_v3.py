@@ -4,7 +4,7 @@ import json
 from datetime import date
 from pathlib import Path
 
-from lucerna_workflow.workflow_chain.runner import (
+from indiciumforge_workflow.workflow_chain.runner import (
     WORKFLOW_CHAIN_SUMMARY_SCHEMA,
     run_workflow_chain_skeleton,
 )
@@ -29,12 +29,12 @@ def test_workflow_chain_summary_v3_includes_session_metadata(tmp_path: Path) -> 
     payload = json.loads(result.summary_path.read_text(encoding="utf-8-sig"))
 
     assert payload["schema"] == WORKFLOW_CHAIN_SUMMARY_SCHEMA
-    assert payload["schema"] == "lucerna.workflow_chain_summary.v3"
+    assert payload["schema"] == "indiciumforge.workflow_chain_summary.v3"
     assert payload["chain_ok"] is True
     assert payload["strict_count"] == 0
 
     session = payload["workflow_session"]
-    assert session["recipe_id"] == "lucerna.recipe.ashare_daily_research.v1"
+    assert session["recipe_id"] == "indiciumforge.recipe.ashare_daily_research.v1"
     assert session["asset_domain"] == "china_a_share"
     assert session["session_model"] == "calendar_day_cycle"
     assert session["cycle_id"] == "2026-06-24"

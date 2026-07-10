@@ -1,6 +1,6 @@
 # Golden Artifact Test Plan
 
-Golden tests compare Lucerna outputs with artifacts generated from frozen IndiciumGrid reference scenarios.
+Golden tests compare IndiciumForge outputs with artifacts generated from frozen IndiciumGrid reference scenarios.
 
 Reference:
 

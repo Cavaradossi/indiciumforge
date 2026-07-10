@@ -2,10 +2,10 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from lucerna_core.labels.market_gate import MARKET_DAILY
-from lucerna_workflow.market_awareness.classifier import classify_theme_state
-from lucerna_workflow.market_awareness.fixtures import load_theme_sector_fixture
-from lucerna_workflow.market_awareness.models import ThemeSectorMetrics
+from indiciumforge_core.labels.market_gate import MARKET_DAILY
+from indiciumforge_workflow.market_awareness.classifier import classify_theme_state
+from indiciumforge_workflow.market_awareness.fixtures import load_theme_sector_fixture
+from indiciumforge_workflow.market_awareness.models import ThemeSectorMetrics
 
 ROOT = Path(__file__).resolve().parents[2]
 DEMO_FIXTURE = ROOT / "tests" / "fixtures" / "market_awareness" / "theme_sectors_demo.yaml"

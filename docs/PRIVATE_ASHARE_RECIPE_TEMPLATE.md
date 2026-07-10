@@ -1,6 +1,6 @@
 # Private A-share Recipe Extension Template (v0.10)
 
-Use this template for a **private** Lucerna recipe extension pack. Open core ships ports +
+Use this template for a **private** IndiciumForge recipe extension pack. Open core ships ports +
 fake extension only.
 
 ## Layout
@@ -8,7 +8,7 @@ fake extension only.
 ```
 my-ashare-recipe-pack/
   pyproject.toml
-  recipe_extension_pack.yaml    # schema: lucerna.recipe_extension_pack.v1
+  recipe_extension_pack.yaml    # schema: indiciumforge.recipe_extension_pack.v1
   extensions/
     ashare_recipe.py            # PrivateRecipeExtensionPort implementation
   .gitignore                    # local paths, caches, output trees
@@ -17,21 +17,21 @@ my-ashare-recipe-pack/
 ## Entry point (`pyproject.toml`)
 
 ```toml
-[project.entry-points."lucerna.recipe_extensions"]
+[project.entry-points."indiciumforge.recipe_extensions"]
 my_ashare_recipe = "my_ashare_pack.extensions.ashare_recipe:AsharePrivateRecipeExtension"
 ```
 
 ## Extension pack YAML
 
 ```yaml
-schema: lucerna.recipe_extension_pack.v1
+schema: indiciumforge.recipe_extension_pack.v1
 pack_id: my-ashare-recipe
 version: "0.1.0"
 recipe_ids:
-  - lucerna.recipe.ashare_daily_research.v1
+  - indiciumforge.recipe.ashare_daily_research.v1
 load:
   include_entry_points: true
-  entry_point_group: lucerna.recipe_extensions
+  entry_point_group: indiciumforge.recipe_extensions
 ```
 
 Or module reference with kwargs (paths relative to pack file):
@@ -60,9 +60,9 @@ Private layer may implement:
 
 | Private pack | Entry point group |
 | --- | --- |
-| Data provider | `lucerna.data_providers` |
-| Factor detectors | `lucerna.factor_detectors` |
-| Recipe extension | `lucerna.recipe_extensions` |
+| Data provider | `indiciumforge.data_providers` |
+| Factor detectors | `indiciumforge.factor_detectors` |
+| Recipe extension | `indiciumforge.recipe_extensions` |
 
 ## Provenance rules
 
@@ -73,9 +73,9 @@ Private layer may implement:
 ## CLI smoke (open core fake)
 
 ```bash
-lucerna workflow chain \
+indiciumforge workflow chain \
   --trade-date 2026-06-23 \
-  --artifact-root /tmp/lucerna-recipe \
+  --artifact-root /tmp/indiciumforge-recipe \
   --recipe tests/fixtures/workflow/recipe_ashare_daily_v1.yaml \
   --recipe-extension-pack tests/fixtures/recipe_extension_pack_demo.yaml \
   --daily-review-fixture tests/fixtures/market_awareness/theme_sectors_demo.yaml \
@@ -86,7 +86,7 @@ lucerna workflow chain \
 
 ## Deferred
 
-- Real TDX sync → private adapter + future `lucerna data sync`
+- Real TDX sync → private adapter + future `indiciumforge data sync`
 - Production review builder → v0.11 private implementation
 - ResearchDossier runtime → v0.10+ contract slice (register only in v0.10)
 

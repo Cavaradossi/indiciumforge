@@ -5,7 +5,7 @@ from datetime import date
 from pathlib import Path
 
 import pytest
-from lucerna_workflow.workflow_chain.runner import (
+from indiciumforge_workflow.workflow_chain.runner import (
     WORKFLOW_CHAIN_SUMMARY_SCHEMA,
     run_workflow_chain_skeleton,
 )

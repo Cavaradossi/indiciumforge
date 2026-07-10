@@ -1,4 +1,4 @@
-schema: lucerna.factor_pack.v1
+schema: indiciumforge.factor_pack.v1
 pack_id: demo-pack
 version: "0.1.0"
 load:

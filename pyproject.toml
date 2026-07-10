@@ -3,9 +3,9 @@ requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "lucerna-workspace"
-version = "1.0.0"
-description = "Lucerna monorepo workspace."
+name = "indiciumforge-workspace"
+version = "2.0.0"
+description = "IndiciumForge monorepo workspace."
 requires-python = ">=3.10"
 dependencies = []
 
@@ -26,7 +26,7 @@ select = ["E", "F", "I", "UP", "B"]
 
 [tool.ruff.lint.per-file-ignores]
 "scripts/*" = ["E501"]
-"packages/lucerna-cli/*" = ["B008"]
+"packages/indiciumforge-cli/*" = ["B008"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

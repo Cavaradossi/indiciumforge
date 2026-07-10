@@ -3,12 +3,12 @@ from __future__ import annotations
 from datetime import date
 from pathlib import Path
 
-from lucerna_core.domain.models import AssetID, AssetType, Exchange
-from lucerna_core.providers.capabilities import DataKind
-from lucerna_core.providers.local_fixture_v2 import LocalFixtureProviderV2
-from lucerna_core.providers.query import DataQuery
-from lucerna_core.providers.result import ProviderFailureStatus
-from lucerna_core.workflow.model import AssetDomain
+from indiciumforge_core.domain.models import AssetID, AssetType, Exchange
+from indiciumforge_core.providers.capabilities import DataKind
+from indiciumforge_core.providers.local_fixture_v2 import LocalFixtureProviderV2
+from indiciumforge_core.providers.query import DataQuery
+from indiciumforge_core.providers.result import ProviderFailureStatus
+from indiciumforge_core.workflow.model import AssetDomain
 
 ROOT = Path(__file__).resolve().parents[2]
 FIXTURE_ROOT = ROOT / "tests" / "fixtures" / "ohlcv"

@@ -6,7 +6,7 @@
 
 Use **accounting-risk anomaly detection** — not "fraud conviction" or legal findings.
 
-Lucerna and related research aim to surface **disclosure and accounting-signal anomalies** for human review. Outputs are audit hypotheses, not investment recommendations or legal conclusions.
+IndiciumForge and related research aim to surface **disclosure and accounting-signal anomalies** for human review. Outputs are audit hypotheses, not investment recommendations or legal conclusions.
 
 ## Problem statement (draft)
 
@@ -19,7 +19,7 @@ Primary open-research direction: **point-in-time disclosure drift** — measurin
 IndiciumGrid explored accounting-risk **signal design** conceptually (feature families, labeling guardrails, audit-first presentation). This open repo:
 
 - Does **not** ship private datasets, labels, or calibrated models.
-- May reuse **public methodological ideas** in future Lucerna extensions or research modules.
+- May reuse **public methodological ideas** in future IndiciumForge extensions or research modules.
 - Must keep all experiments on public or synthetic data committed to OSS.
 
 ## Data and labels (future work)
@@ -52,7 +52,7 @@ No baseline results are claimed in this document.
 
 ## Method sketch (planned)
 
-1. Build point-in-time feature store aligned to Lucerna artifact audit timestamps.
+1. Build point-in-time feature store aligned to IndiciumForge artifact audit timestamps.
 2. Define anomaly score as robust multivariate drift vs peer cohort.
 3. Emit **research artifacts** (scores, explanations, provenance) — same evidence-first pattern as workflow outputs.
 4. Human-in-the-loop review; no automated trade linkage.
@@ -71,7 +71,7 @@ When experiments exist, a paper should include:
 
 **Until then:** treat this file as an internal roadmap stub only.
 
-## Relationship to Lucerna OSS
+## Relationship to IndiciumForge OSS
 
 - No new runtime code required for v1.0 publication.
 - Future work may add optional research ports or example notebooks under `docs/research/`.

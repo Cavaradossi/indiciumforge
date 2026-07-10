@@ -1,5 +1,5 @@
 {
-  "schema": "lucerna.preopen_review_state.v1",
+  "schema": "indiciumforge.preopen_review_state.v1",
   "trade_date": "2026-06-23",
   "stage": "preopen",
   "paths": {

@@ -3,8 +3,8 @@ from __future__ import annotations
 from datetime import date
 from pathlib import Path
 
-from lucerna_core.artifacts.paths import daily_review_dir, theme_state_ranking_path
-from lucerna_workflow.market_awareness.runner import run_daily_review_skeleton
+from indiciumforge_core.artifacts.paths import daily_review_dir, theme_state_ranking_path
+from indiciumforge_workflow.market_awareness.runner import run_daily_review_skeleton
 
 ROOT = Path(__file__).resolve().parents[2]
 DEMO_FIXTURE = ROOT / "tests" / "fixtures" / "market_awareness" / "theme_sectors_demo.yaml"

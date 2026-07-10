@@ -5,9 +5,9 @@ from datetime import date
 import pandas as pd
 import pytest
 from factor_stubs import EmptyDetector, FailingDetector, SuccessDetector
-from lucerna_core.domain.models import AssetID, AssetType, Exchange
-from lucerna_core.factors.demo import DemoVolumeBreakoutDetector
-from lucerna_core.factors.registry import DuplicateDetectorError, FactorDetectorRegistry
+from indiciumforge_core.domain.models import AssetID, AssetType, Exchange
+from indiciumforge_core.factors.demo import DemoVolumeBreakoutDetector
+from indiciumforge_core.factors.registry import DuplicateDetectorError, FactorDetectorRegistry
 
 AS_OF = date(2026, 5, 6)
 ASSET = AssetID("DEMO001", Exchange.SSE, AssetType.STOCK)

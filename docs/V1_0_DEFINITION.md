@@ -1,14 +1,14 @@
-# Lucerna v1.0 Definition of Done
+# IndiciumForge v1.0 Definition of Done
 
-Signed scope for Lucerna **v1.0.0** (open-core semantics frozen at v0.11.0; private path evidenced externally).
+Signed scope for IndiciumForge **v1.0.0** (open-core semantics frozen at v0.11.0; private path evidenced externally).
 
 ## v1.0 meaning
 
-v1.0 means the **Lucerna open-core + private extension** migration path for **core A-share daily
-research workflow** is validated: operators can run `lucerna parity run` with a private recipe pack
+v1.0 means the **IndiciumForge open-core + private extension** migration path for **core A-share daily
+research workflow** is validated: operators can run `indiciumforge parity run` with a private recipe pack
 against a local reference without `import indiciumgrid`.
 
-v1.0 **does not** mean Lucerna fully replaces IndiciumGrid for all domains, artifact bundles, or
+v1.0 **does not** mean IndiciumForge fully replaces IndiciumGrid for all domains, artifact bundles, or
 operator surfaces (account, watchlist, intraday, research dossier).
 
 ## v1.0-rc1 (readiness milestone — completed)
@@ -29,12 +29,12 @@ Evidence layers:
 | L2 OSS parity demo | Harness + comparator against synthetic reference (`strict_count: 1`) |
 | L3 Private real-path | End-to-end IG-output adapter on golden date `2026-07-03`, `all_match: true` |
 
-See private repo `V1_0_SIGNOFF_REPORT.md` and `V1_0_SIGNOFF_GAP_REGISTER.md` (no paths in Lucerna Git).
+See private repo `V1_0_SIGNOFF_REPORT.md` and `V1_0_SIGNOFF_GAP_REGISTER.md` (no paths in IndiciumForge Git).
 
 ## Criteria
 
-1. **Local A-share daily recipe** runs end-to-end via Lucerna CLI + private packs without `import indiciumgrid`. — **met** (L3)
-2. **Core artifacts** pass `lucerna artifact audit` for workflow stages. — **partial**: `market_gate` ok on golden run; IG-shaped `daily_review` fails Lucerna skeleton manifest (accepted gap GAP-07)
+1. **Local A-share daily recipe** runs end-to-end via IndiciumForge CLI + private packs without `import indiciumgrid`. — **met** (L3)
+2. **Core artifacts** pass `indiciumforge artifact audit` for workflow stages. — **partial**: `market_gate` ok on golden run; IG-shaped `daily_review` fails IndiciumForge skeleton manifest (accepted gap GAP-07)
 3. **Parity gate:** private golden reference comparison for market_gate plus post_close/preopen shape. — **met** (L3); strict-pass semantics also covered by L1+L2
 4. **Private extensions** live outside the public repository. — **met**
 5. **No IG private detector logic** in OSS. — **met**
@@ -51,7 +51,7 @@ Documented in private `V1_0_SIGNOFF_GAP_REGISTER.md`:
 - Incomplete frozen layouts (`2026-06-24`, `2026-06-23`) not runnable without adapter expansion
 - No real frozen `strict_count > 0` date (L1+L2 suffice for open-core)
 - IG-output replay adapter; production review builder deferred to v1.1
-- IG-shaped daily_review vs Lucerna manifest column set (parity structure still matches reference)
+- IG-shaped daily_review vs IndiciumForge manifest column set (parity structure still matches reference)
 
 ## Not in v1.0 scope
 

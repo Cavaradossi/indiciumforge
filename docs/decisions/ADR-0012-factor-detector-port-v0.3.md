@@ -5,13 +5,13 @@ Status: accepted
 ## Context
 
 - ADR-0010 and ADR-0011 established factor-core inventory and the open-core/private-extension split.
-- Lucerna v0.2.1 provides `DataProviderPort` and synthetic OHLCV fixtures.
+- IndiciumForge v0.2.1 provides `DataProviderPort` and synthetic OHLCV fixtures.
 - v0.3 must deliver the open-source runtime slice without copying IndiciumGrid long-structure
   detector internals.
 
 ## Decision
 
-Lucerna v0.3 implements in `lucerna_core.factors`:
+IndiciumForge v0.3 implements in `indiciumforge_core.factors`:
 
 - domain models: `FactorSignal`, `FactorScanResult`
 - `FactorDetectorPort` protocol
@@ -20,7 +20,7 @@ Lucerna v0.3 implements in `lucerna_core.factors`:
 - factor scan artifact schema and writer helpers
 - two neutral demo detectors: `demo_volume_breakout`, `demo_quiet_accumulation`
 - private-pack loading boundary via YAML config and optional setuptools entry points
-  (`lucerna.factor_detectors`)
+  (`indiciumforge.factor_detectors`)
 
 Demo detectors use toy/synthetic rules only. They are not compatible implementations of IG
 private factors.
@@ -40,9 +40,9 @@ Open-source tests use `tests/fixtures/ohlcv/sse_stock_DEMO001.csv` and
 Private factor packs may register detectors through:
 
 1. YAML config (`module` + `class` entries) loaded by `load_detectors_from_config`
-2. setuptools entry points in group `lucerna.factor_detectors`
+2. setuptools entry points in group `indiciumforge.factor_detectors`
 
-Lucerna open core does not ship IG factor name -> implementation mappings. Private packs load
+IndiciumForge open core does not ship IG factor name -> implementation mappings. Private packs load
 through explicit config or entry points only.
 
 ## Out of scope (v0.3)

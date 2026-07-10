@@ -3,8 +3,8 @@ from __future__ import annotations
 from datetime import date
 
 import pandas as pd
-from lucerna_core.domain.models import AssetID
-from lucerna_core.factors.models import FactorSignal
+from indiciumforge_core.domain.models import AssetID
+from indiciumforge_core.factors.models import FactorSignal
 
 
 class FakePrivateHitDetector:

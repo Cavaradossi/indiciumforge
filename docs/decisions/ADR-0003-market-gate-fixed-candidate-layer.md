@@ -2,4 +2,4 @@
 
 Status: accepted
 
-Lucerna v0.1 implements an IndiciumGrid-compatible candidate-gate recipe. It is a walking skeleton, not the only future workflow type.
+IndiciumForge v0.1 implements an IndiciumGrid-compatible candidate-gate recipe. It is a walking skeleton, not the only future workflow type.

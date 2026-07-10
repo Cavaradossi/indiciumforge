@@ -3,8 +3,8 @@ from __future__ import annotations
 from datetime import date
 
 import pandas as pd
-from lucerna_core.domain.models import AssetID, MissingData, Provenance
-from lucerna_core.ports.contracts import FetchResult
+from indiciumforge_core.domain.models import AssetID, MissingData, Provenance
+from indiciumforge_core.ports.contracts import FetchResult
 
 
 class EmptyProvider:

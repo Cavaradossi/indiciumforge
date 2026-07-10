@@ -4,7 +4,7 @@ from datetime import date
 from pathlib import Path
 
 import pytest
-from lucerna_workflow.market_awareness.fixtures import (
+from indiciumforge_workflow.market_awareness.fixtures import (
     ThemeFixtureLoadError,
     load_theme_sector_fixture,
 )

@@ -3,21 +3,21 @@ from __future__ import annotations
 from datetime import date
 
 import pandas as pd
-from lucerna_core.domain.models import AssetID, MissingData
-from lucerna_core.providers.capabilities import (
+from indiciumforge_core.domain.models import AssetID, MissingData
+from indiciumforge_core.providers.capabilities import (
     DataKind,
     LatencyProfile,
     ProviderAuthorityLevel,
     ProviderCapability,
 )
-from lucerna_core.providers.query import DataQuery
-from lucerna_core.providers.result import (
+from indiciumforge_core.providers.query import DataQuery
+from indiciumforge_core.providers.result import (
     ProviderFailureStatus,
     ProviderProvenance,
     ProviderResult,
     utc_now_iso,
 )
-from lucerna_core.workflow.model import AssetDomain
+from indiciumforge_core.workflow.model import AssetDomain
 
 
 def _base_query(asset: AssetID) -> DataQuery:

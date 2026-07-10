@@ -1,24 +1,24 @@
 # System Map
 
-High-level map of the Lucerna open-core workspace: packages, ports, artifacts, and parity.
+High-level map of the IndiciumForge open-core workspace: packages, ports, artifacts, and parity.
 
 ## Packages
 
 | Package | Path | Responsibility |
 | --- | --- | --- |
-| `lucerna-core` | `packages/lucerna_core/` | Domain types, ports, artifact I/O, recipes, parity, providers, factors |
-| `lucerna-workflow` | `packages/lucerna_workflow/` | `market_gate` kernel, daily-review skeleton, e2e, workflow chain |
-| `lucerna-cli` | `packages/lucerna_cli/` | Typer CLI: `workflow`, `artifact`, `factor`, `provider`, `parity` |
+| `indiciumforge-core` | `packages/indiciumforge_core/` | Domain types, ports, artifact I/O, recipes, parity, providers, factors |
+| `indiciumforge-workflow` | `packages/indiciumforge_workflow/` | `market_gate` kernel, daily-review skeleton, e2e, workflow chain |
+| `indiciumforge-cli` | `packages/indiciumforge_cli/` | Typer CLI: `workflow`, `artifact`, `factor`, `provider`, `parity` |
 
 ## Core ports
 
 | Port | Schema / module | OSS implementation |
 | --- | --- | --- |
-| `DataProviderPort` v1 | `lucerna_core.providers` | `LocalFixtureProvider` + synthetic OHLCV |
+| `DataProviderPort` v1 | `indiciumforge_core.providers` | `LocalFixtureProvider` + synthetic OHLCV |
 | `DataProviderPortV2` | session-aware v2 | Pack loader + fixture/fake smoke |
-| `FactorDetectorPort` | `lucerna_core.factors` | Demo detectors + pack loader boundary |
-| Recipe extensions | `lucerna_core.recipes` | `RecipeRunner`, fake A-share extension in fixtures |
-| Parity harness | `lucerna_core.parity` | Reference comparator + demo tree |
+| `FactorDetectorPort` | `indiciumforge_core.factors` | Demo detectors + pack loader boundary |
+| Recipe extensions | `indiciumforge_core.recipes` | `RecipeRunner`, fake A-share extension in fixtures |
+| Parity harness | `indiciumforge_core.parity` | Reference comparator + demo tree |
 
 Workflows **never** import vendor modules directly — only ports and pack loaders.
 
@@ -35,11 +35,11 @@ artifact-root/
   factors/{YYYYMMDD}/                             # factor_scan artifacts (optional)
 ```
 
-CLI audit: `lucerna artifact list/audit` for `market_gate` and `daily_review` stages.
+CLI audit: `indiciumforge artifact list/audit` for `market_gate` and `daily_review` stages.
 
 ## Parity dimensions
 
-Config-driven via `lucerna.parity_local_config.v1`:
+Config-driven via `indiciumforge.parity_local_config.v1`:
 
 - `daily_review_structure`
 - `post_close_handoff_shape`
@@ -57,10 +57,10 @@ Demo: `tests/fixtures/parity_reference_demo/`.
 
 ```mermaid
 flowchart TB
-  subgraph openCore [Lucerna_OpenCore]
-    Core[lucerna_core]
-    Workflow[lucerna_workflow]
-    CLI[lucerna_cli]
+  subgraph openCore [IndiciumForge_OpenCore]
+    Core[indiciumforge_core]
+    Workflow[indiciumforge_workflow]
+    CLI[indiciumforge_cli]
   end
   subgraph privateExt [Private_Extensions_OperatorLocal]
     DataPack[DataProvider_pack]
@@ -90,10 +90,10 @@ flowchart LR
 
 ```mermaid
 flowchart TB
-  Root[Lucerna_repo]
-  Root --> CorePkg[packages/lucerna_core]
-  Root --> WfPkg[packages/lucerna_workflow]
-  Root --> CliPkg[packages/lucerna_cli]
+  Root[IndiciumForge_repo]
+  Root --> CorePkg[packages/indiciumforge_core]
+  Root --> WfPkg[packages/indiciumforge_workflow]
+  Root --> CliPkg[packages/indiciumforge_cli]
   Root --> Tests[tests]
   Root --> Docs[docs]
 ```
@@ -110,6 +110,6 @@ flowchart TB
 | Document | Purpose |
 | --- | --- |
 | [CAPABILITY_REGISTER.md](../CAPABILITY_REGISTER.md) | Capability status matrix |
-| [LUCERNA_CONSTITUTION.md](../LUCERNA_CONSTITUTION.md) | Non-negotiable principles |
+| [INDICIUMFORGE_CONSTITUTION.md](../INDICIUMFORGE_CONSTITUTION.md) | Non-negotiable principles |
 | [MIGRATION_ROADMAP.md](MIGRATION_ROADMAP.md) | Forward schedule |
 | [V1_0_DEFINITION.md](V1_0_DEFINITION.md) | v1.0 sign-off criteria |
