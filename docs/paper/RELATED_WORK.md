@@ -1,48 +1,136 @@
-# Related work
+# Related work — candidate areas
 
-Survey notes for the IndiciumForge paper draft. **Not a formal bibliography** — refine before arXiv/LaTeX.
+**Purpose:** orient literature review before LaTeX/BibTeX curation.
 
-## Workflow and pipeline systems
+**Rule:** this file lists **candidate research areas and exemplar systems only**. It does **not** contain formal citations, DOIs, or invented bibliography entries. Codex should add verified references during LaTeX conversion.
 
-- **Luigi / Airflow / Prefect** — general DAG orchestration; weak native artifact schema contracts for domain-specific audit
-- **MLflow / DVC** — experiment tracking and data versioning; focus on model metrics rather than staged research artifact manifests
-- **Great Expectations** — data quality tests; complementary to but not replacing workflow-stage artifact contracts
+---
 
-**Gap IndiciumForge addresses:** domain-specific **financial research stage artifacts** with explicit schema IDs and manifest audit integrated into the workflow CLI.
+## 1. Open-source scientific software papers
 
-## Financial research platforms
+**Candidate area:** journals and arXiv categories that publish **software implementations** with reproducibility artifacts (JOSS, NeurIPS Datasets & Benchmarks track patterns, SciPy proceedings).
 
-- **Quantopian / Zipline lineage** — backtest-centric; execution simulation blur research/execution boundary
-- **Backtrader / VectorBT** — strategy backtesting; not artifact-audit-first
-- **OpenBB** — data terminal orientation; different contract boundary
+**Relevance:** IndiciumForge is positioned as reproducible research **infrastructure**, not a single-model benchmark.
 
-**Distinction:** IndiciumForge explicitly **does not** ship broker execution or investment advice; outputs are research audit artifacts.
+**Contrast:** scientific software papers often center one library; IndiciumForge centers multi-stage **workflow artifacts** and audit.
 
-## Provenance and evidence systems
+---
 
-- **W3C PROV** — provenance model; IndiciumForge uses lighter-weight JSON schema IDs + manifest files
-- **RO-Crate / Frictionless Data** — research object packaging; potential future alignment for export bundles
+## 2. Workflow orchestration systems
 
-## Software product lines / open-core
+**Exemplar families (names only):** Luigi, Apache Airflow, Prefect, Snakemake.
 
-- **Open-core + commercial extension** pattern (Elastic, GitLab) — analogous boundary to OSS ports vs private packs
-- **ADR governance** (Nygard) — adopted in `docs/decisions/`
+**Gap:** general DAG engines schedule tasks but typically lack domain-specific **financial research stage schemas** and integrated manifest audit CLI.
 
-## Migration and regression testing
+**IndiciumForge distinction:** stage outputs are first-class versioned artifacts with `indiciumforge.*` schema IDs.
 
-- **Golden file testing** — common in compilers/UI; IndiciumForge applies to **semantic market-gate artifacts**
-- **Characterization tests** — legacy behavior capture without code inheritance (frozen `indiciumgrid-golden-v1` reference)
+---
 
-## Accounting and disclosure risk (future work only)
+## 3. Reproducible financial ML / quant research
 
-- Point-in-time disclosure anomaly literature (no experiment claims in this draft)
-- See [ACCOUNTING_RISK_ANOMALY_RESEARCH_PLAN.md](../research/ACCOUNTING_RISK_ANOMALY_RESEARCH_PLAN.md) for planned direction — **not completed research**
+**Candidate area:** reproducibility checklists for financial ML, point-in-time feature construction, backtest leakage audits.
 
-## Agent tooling (adjacent, not core contribution)
+**Exemplar families (names only):** Quantopian/Zipline lineage, Qlib-style factor platforms, OpenBB-style terminals.
 
-- MCP code-index servers — different problem (AST search vs artifact audit)
-- Cursor Agent Skills — IndiciumForge ships in-repo skills as documentation-adjacent agent surface
+**Contrast:** many frameworks optimize backtest or execution simulation. IndiciumForge **explicitly excludes** broker execution and investment advice; outputs are audit artifacts.
 
-## Positioning statement (draft)
+**Evidence for contrast:** README scope disclaimer; CAPABILITY_REGISTER `execution port` = `technical_reserve`.
 
-IndiciumForge sits between **generic workflow engines** (flexible but schema-agnostic) and **trading/backtest platforms** (performance-centric). Its contribution is a **contract-first artifact layer** for evidence-first financial research with an explicit open-core/private-extension split and golden parity methodology.
+---
+
+## 4. Artifact- and versioned-data pipelines
+
+**Candidate area:** data versioning (DVC), experiment tracking (MLflow), data quality frameworks (Great Expectations).
+
+**Complementary role:** these tools version datasets and metrics; IndiciumForge versions **multi-file stage bundles** (JSON state + CSV reviews + summaries) under predictable directory conventions.
+
+**Potential alignment:** RO-Crate / Frictionless Data packaging for future export bundles (not implemented v2.0.0).
+
+---
+
+## 5. Toolbox / open-ecosystem papers (OpenMMLab style)
+
+**Candidate area:** "toolbox" papers describing extensible frameworks with registry + config + plugin entry points (e.g., MMDetection-style ecosystems in other domains).
+
+**Parallel:** IndiciumForge pack loaders + entry point groups (`indiciumforge.data_providers`, `indiciumforge.factor_detectors`, `indiciumforge.recipe_extensions`) follow similar **open-core + extension** ergonomics without claiming computer-vision scope.
+
+---
+
+## 6. Backtesting / trading frameworks (contrast)
+
+**Exemplar families (names only):** Backtrader, VectorBT, proprietary broker APIs.
+
+**Contrast table (draft):**
+
+| Dimension | Trading / backtest frameworks | IndiciumForge |
+| --- | --- | --- |
+| Primary output | PnL, orders, positions | Artifact manifests + parity reports |
+| Execution | Often simulated or live | Explicitly out of scope |
+| Extension model | Strategy classes | Port + pack contracts |
+| Regression | Equity curve diff | Golden artifact semantic compare |
+
+---
+
+## 7. Provenance and evidence models
+
+**Candidate area:** W3C PROV, research object crates, audit-log standards.
+
+**IndiciumForge approach:** lighter-weight JSON schema IDs + per-stage state files + manifest audit violations list—optimized for local research audit, not enterprise provenance federation.
+
+---
+
+## 8. Architecture decision records (governance)
+
+**Candidate area:** Michael Nygard ADR pattern; docs-as-code governance in open source.
+
+**Evidence:** 23 ADRs in `docs/decisions/`; INDICIUMFORGE_CONSTITUTION.md; AGENTS.md agent rules.
+
+---
+
+## 9. Migration / characterization testing
+
+**Candidate area:** golden-file testing (compilers, UI), characterization tests for legacy behavior capture.
+
+**IndiciumForge instantiation:** five exported market-gate scenarios in `GOLDEN_MANIFEST.yaml`; semantic comparator in `indiciumforge_core.artifacts.comparator`.
+
+**Frozen reference:** `indiciumgrid @ indiciumgrid-golden-v1` — behavioral reference label, not co-brand endorsement (ADR-0019).
+
+---
+
+## 10. Agent tooling for software engineering (adjacent)
+
+**Candidate area:** MCP servers for code indexing; Cursor Agent Skills for repo onboarding.
+
+**IndiciumForge surface:** in-repo skills under `agent/skills/`; future MCP design doc (not implemented v2.0.0).
+
+**Distinction:** code-index MCPs solve repository navigation; IndiciumForge MCP design targets **artifact manifest and parity report** inspection.
+
+---
+
+## 11. Accounting and disclosure risk (future work only)
+
+**Candidate area:** point-in-time disclosure anomaly detection, reporting-quality signals.
+
+**Status:** planning stub in `docs/research/ACCOUNTING_RISK_ANOMALY_RESEARCH_PLAN.md` — **no completed experiments** in OSS.
+
+**Paper rule:** cite as future work only; do not claim empirical results.
+
+---
+
+## Positioning statement (for introduction §2)
+
+IndiciumForge occupies a middle layer:
+
+- **Below** generic workflow schedulers (flexible, schema-agnostic)
+- **Above** raw notebooks (no contract discipline)
+- **Beside** backtest/trading stacks (contrast on execution)
+- **Focused on** evidence-first artifact contracts for financial **research audit**
+
+---
+
+## Bibliography workflow (for Codex)
+
+1. Operator selects 15–25 verified citations from candidate areas above
+2. Map each citation to a subsection in this file
+3. Add BibTeX only after manual verification
+4. Cross-check that no citation implies IndiciumForge trading or performance claims

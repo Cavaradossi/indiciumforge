@@ -1,99 +1,155 @@
 # Paper outline
 
-**Working title:** IndiciumForge: A Contract-First Open Core for Evidence-First Financial Research Workflows
+**Title:** IndiciumForge: A Contract-First Open Core for Evidence-First Financial Research Workflows
 
-**Format:** software / systems paper (Markdown draft; LaTeX deferred)
+**Genre:** software / systems paper (Markdown draft for Codex → LaTeX conversion)
 
-**Status:** draft — no arXiv submission, no experiment claims
+**Status:** draft — not submitted to arXiv; no fabricated experiments or citations
 
-## Abstract (draft)
+**Evidence index:** [CLAIMS_REGISTER.md](CLAIMS_REGISTER.md)
 
-IndiciumForge is an open-core software architecture for building reproducible financial research workflows whose primary outputs are **auditable artifacts** rather than trading actions. The system separates stable contracts (ports, schema IDs, manifest audit) from operator-local private extensions (data adapters, factor detectors, recipe stages). A golden artifact parity methodology compares new implementations against a frozen legacy reference without importing legacy code. We describe the recipe/session model, the open-core boundary, and a private extension case study conducted entirely with synthetic and anonymized structural evidence—without claiming investment performance or legal findings.
+**Repository:** https://github.com/Cavaradossi/indiciumforge · tag `v2.0.0`
+
+---
+
+## Section map
+
+| § | Title | Primary evidence |
+| --- | --- | --- |
+| Abstract | Summary | CLAIMS_REGISTER rows C01–C06 |
+| 1 | Introduction | README, INDICIUMFORGE_CONSTITUTION.md |
+| 2 | Problem statement | ADR-0019, MIGRATION_MAP_FROM_INDICIUMGRID.md |
+| 3 | Contributions | CAPABILITY_REGISTER.md, ADR-0011..0022 |
+| 4 | Architecture | packages/*, docs/SYSTEM_MAP.md |
+| 5 | Artifact lifecycle & audit | ADR-0008, ADR-0014, manifest.py |
+| 6 | Recipe & session model | ADR-0018, WORKFLOW_SESSION_MODEL.md |
+| 7 | Open-core / private boundary | ADR-0011, EXTENSION_AUTHOR_GUIDE.md |
+| 8 | Golden & parity methodology | ADR-0022, GOLDEN_MANIFEST.yaml, parity tests |
+| 9 | Case study | V1_0_DEFINITION.md L1–L3, parity_reference_demo |
+| 10 | Agent-friendly governance | AGENTS.md, docs/decisions/, agent/skills/ |
+| 11 | Limitations | V1_0_DEFINITION.md non-goals, CAPABILITY_REGISTER |
+| 12 | Future work | research plan stub, MCP/plugin design docs |
+| 13 | Conclusion | — |
+| A | Reproducibility | pytest, CLI commands |
+| B | Schema inventory | ADR-0023, indiciumforge_core constants |
+
+---
 
 ## 1. Introduction
 
-- Motivation: research workflows need evidence trails, not opaque pipelines
-- Gap: monolithic research stacks mix data, signals, and execution
-- Contributions (enumerated below)
-- Scope disclaimer: not trading, not investment advice
+- Research vs execution boundary
+- Evidence-first artifact outputs
+- Six contributions (numbered, cross-ref register)
+- Explicit non-claims (trading, advice, broker)
 
-## 2. Background and problem framing
+## 2. Problem statement
 
-- Evidence-first research vs execution-first systems
-- Legacy reference migration (behavior preservation without inheritance)
-- Related work pointer → [RELATED_WORK.md](RELATED_WORK.md)
+### 2.1 Entangled research pipelines
 
-## 3. System overview
+- Data ingestion, private signals, local state, execution assumptions mixed in monoliths
+- Reviewers cannot reconstruct point-in-time evidence
 
-- Package architecture: core, workflow, CLI
-- Artifact store layout
-- Workflow chain stages (awareness → discovery → handoff → gate)
-- Figure pointers → [FIGURES.md](FIGURES.md)
+### 2.2 Legacy migration without module copying
 
-## 4. Contract-first architecture
+- Frozen reference label `indiciumgrid-golden-v1`
+- Behavior preservation via artifact parity, not `import indiciumgrid`
+- ADR-0019 anti-inheritance rules
 
-- Port interfaces (provider v2, factor detector, recipe extension)
-- Entry-point pack loading
-- Schema IDs and versioning policy
-- ADR governance model
+## 3. Contributions (enumerated)
 
-## 5. Artifact schema and manifest audit
+1. Contract-first open core (ports + pack loaders)
+2. Artifact schemas + manifest audit CLI
+3. Recipe / session workflow model
+4. Open-core / private-extension boundary
+5. Golden artifact + parity harness methodology
+6. Agent-friendly governance (ADRs, agent rules, skills)
 
-- Schema namespace (`indiciumforge.*`)
-- Manifest audit dimensions (files, schemas, trade_date consistency)
-- CLI `artifact audit` as structural gate vs semantic golden compare
+## 4. Architecture
 
-## 6. Open-core / private-extension boundary
+- Three packages: core, workflow, CLI
+- Extension types: provider, factor detector, recipe extension, parity reference provider
+- Artifact lifecycle: produce → store → audit → compare
 
-- What ships in OSS vs operator-local packs
-- Security and IP boundaries
-- Extension templates without proprietary logic
+## 5. Artifact lifecycle & manifest audit
 
-## 7. Golden artifact parity methodology
+- Schema IDs (`indiciumforge.*`)
+- Stage directories under `artifact_root`
+- Structural audit vs semantic golden compare
 
-- Frozen reference pin (`indiciumgrid-golden-v1`)
-- Five parity dimensions (daily review, post_close, preopen, market_gate, chain summary)
-- Verdict taxonomy: match, mismatch, intentional_change, unsupported_gap
-- Synthetic demo harness (`parity_reference_demo`)
+## 6. Recipe & session model
 
-## 8. Recipe and session model
+- `WorkflowRecipe`, `SessionModel`, `HandoffArtifact`
+- A-share daily recipe as one domain instance
+- Cyclic vs linear operator views
 
-- Cyclic session workflow (post_close → preopen → midday → market_gate)
-- Recipe YAML and stage dispatch
-- Handoff artifacts between stages
+## 7. Open-core / private boundary
 
-## 9. Case study: private extension without private data
+- OSS vs operator-local table
+- Entry-point pack pattern
+- Templates without proprietary logic
 
-- Structural description of IG-output adapter pattern
-- Normalized candidate pool replay into IndiciumForge layout
-- Parity smoke on golden date (report verdict categories only — no private rows)
-- Accepted gaps (e.g., daily_review column mismatch documented as intentional)
+## 8. Golden & parity methodology
 
-## 10. Limitations
+- Five OSS golden market-gate scenarios
+- Five parity dimensions (ADR-0022)
+- Verdict taxonomy
+- Synthetic `parity_reference_demo` for public CI
 
-- OSS uses synthetic fixtures by default
-- Not a compliance or fraud conviction system
-- Parity harness is research audit, not production certification
+## 9. Case study
 
-## 11. Future work
+- L1: OSS golden strict semantics
+- L2: synthetic parity demo (`strict_count: 1`)
+- L3: private extension boundary validation (verdict categories only; external sign-off doc)
+- No private paths, rows, or raw data
 
-- Accounting-risk anomaly detection on point-in-time disclosures (see research plan stub)
-- MCP agent tools for manifest/parity inspection
-- Expanded golden coverage beyond market-gate scenarios
+## 10. Agent-friendly governance
 
-## 12. Conclusion
+- AGENTS.md constraints
+- 23 ADRs (0001–0023)
+- In-repo Cursor skills (`agent/skills/`)
 
-- Summary of architectural contributions
-- Call for community extensions behind ports
+## 11. Limitations
 
-## Appendices (planned)
+- Not trading / advice / broker execution
+- No public proprietary detectors
+- Not full IndiciumGrid replacement
+- Parity = research audit only
 
-- A: Schema ID inventory
-- B: Capability register excerpt
-- C: Reproducibility package checklist (monorepo install + pytest)
+## 12. Future work
+
+- Accounting-risk anomaly detection (planning stub)
+- Research dossier contracts (`technical_reserve`)
+- MCP / agent skills expansion
+- Cross-domain session lessons (crypto/US) without contest framing
+
+## 13. Conclusion
+
+- Artifact-first research audit architecture
+- Community extensions behind ports
+
+## Appendices
+
+- **A:** Reproducibility commands (tag `v2.0.0`)
+- **B:** Schema ID inventory (ADR-0023)
+- **C:** Claims register excerpt
+
+## Figures
+
+See [FIGURES.md](FIGURES.md) — five Mermaid diagrams + extension boundary table figure.
+
+## Related work
+
+See [RELATED_WORK.md](RELATED_WORK.md) — candidate areas only; no invented bibliography.
+
+## LaTeX conversion notes (for Codex)
+
+- Convert Mermaid via `mermaid-cli` or redraw as TikZ
+- Claims register → supplemental table or appendix
+- Keep disclaimer box in introduction
+- Do not add citations until operator curates RELATED_WORK into BibTeX
 
 ## Authoring rules
 
-- Do not fabricate experiment numbers or backtest results
-- Do not claim trading system or investment advice capabilities
-- Cite frozen reference only as migration methodology, not co-brand endorsement
+- Every technical claim must appear in CLAIMS_REGISTER with source path/tag/test
+- No fabricated metrics, Sharpe ratios, or legal findings
+- No private paths, account data, or competition references
