@@ -1,0 +1,40 @@
+{
+  "name": "indiciumforge",
+  "version": "2.0.0",
+  "description": "Codex plugin packaging IndiciumForge onboarding, extension-authoring, and release-audit skills.",
+  "author": {
+    "name": "IndiciumForge maintainers",
+    "url": "https://github.com/Cavaradossi/indiciumforge"
+  },
+  "homepage": "https://github.com/Cavaradossi/indiciumforge",
+  "repository": "https://github.com/Cavaradossi/indiciumforge",
+  "license": "Apache-2.0",
+  "keywords": [
+    "codex-skill",
+    "financial-research",
+    "open-core",
+    "artifact-audit",
+    "parity-harness",
+    "research-workflow"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "IndiciumForge",
+    "shortDescription": "Agent onboarding, extension authoring, and release audit for IndiciumForge.",
+    "longDescription": "IndiciumForge packages Codex skills for working safely with the contract-first open core for evidence-first financial research workflows. The plugin orients agents to the repository boundary, guides private extension authors without leaking proprietary logic, and supports release-readiness audits for packaging, PyPI, paper, and governance surfaces.",
+    "developerName": "IndiciumForge maintainers",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/Cavaradossi/indiciumforge",
+    "defaultPrompt": [
+      "Use $indiciumforge-orientation to get oriented in the repository.",
+      "Use $indiciumforge-extension-author to design a private extension pack.",
+      "Use $indiciumforge-release-audit to audit a release candidate."
+    ],
+    "brandColor": "#1F6FEB"
+  }
+}
