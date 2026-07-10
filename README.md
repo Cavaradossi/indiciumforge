@@ -11,6 +11,13 @@ Licensed under [Apache License 2.0](LICENSE). See [RELEASE_NOTES.md](RELEASE_NOT
 
 Lucerna v0.11 adds private-local parity harness (ADR-0022); `lucerna parity run` compares recipe-chain outputs against a local reference root (research audit only).
 
+### Private extension path to v1.0
+
+Lucerna open-core supplies the recipe chain, parity harness, and market-gate runner. Real A-share
+production logic lives in **private extension packs** (e.g. `lucerna-private` / `lucerna-private-ashare`).
+v1.0-rc1 readiness is documented when private parity evidence achieves `all_match: true` on a golden
+trade date — see [docs/V1_0_DEFINITION.md](docs/V1_0_DEFINITION.md) and the private repo readiness report.
+
 Lucerna v0.10 adds A-share private recipe integration (ADR-0021); recipe-driven workflow chain via `--recipe` + fake extension pack.
 
 Lucerna v0.9 adds session-aware data provider contract v2 (ADR-0019/0020); `lucerna provider inspect/fetch` for fixture/fake smoke tests only.

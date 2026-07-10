@@ -1,5 +1,29 @@
 # Lucerna Release Notes
 
+## v1.0-rc1 — readiness milestone (documentation)
+
+v1.0-rc1 marks **readiness** for the Lucerna open-core + private extension migration path. It is
+**not** a feature release: open-core code remains v0.11.0; this milestone adds documentation and
+references private parity evidence.
+
+### Evidence summary
+
+| Item | Status |
+| --- | --- |
+| Open-core baseline | `v0.11.0-parity-harness` |
+| Private A-share adapter | `lucerna-private-ashare` IG-output replay extension |
+| Golden parity date | `2026-07-03` — `all_match: true` on five dimensions |
+| Blocked frozen dates | `2026-06-24` (missing preopen dir), `2026-06-23` (legacy post_close layout) |
+| `strict_count > 0` coverage | Not available in frozen reference; documented gap |
+
+Full summary (no private paths): see `V1_0_RC1_READINESS_REPORT.md` in the `lucerna-private` repository.
+
+### Explicit non-goals (v1.0-rc1)
+
+- No real TDX sync, proprietary factor detectors, or IG report builder in OSS.
+- No full IndiciumGrid replacement claim.
+- No committing private `output/`, reference trees, or parity reports to Lucerna Git.
+
 ## v0.11.0 — private local parity harness
 
 Lucerna 0.11.0 delivers a **config-driven parity harness** so operators can compare recipe-chain

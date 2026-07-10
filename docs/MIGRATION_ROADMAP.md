@@ -130,6 +130,22 @@ Delivered in v0.11.0: `lucerna_core.parity`, `lucerna parity run/report`, synthe
 [PRIVATE_PARITY_HARNESS_TEMPLATE.md](PRIVATE_PARITY_HARNESS_TEMPLATE.md). Local reference roots
 only; no IG runtime; v1.0 sign-off deferred.
 
+### v1.0-rc1: readiness milestone (completed)
+
+| Item | Detail |
+| --- | --- |
+| Scope | Document validated Lucerna open-core v0.11.0 + private `lucerna-private-ashare` path |
+| Evidence | Golden date `2026-07-03` parity `all_match: true`; blocked dates documented |
+| Open-core | Docs only on `v0.11.0-parity-harness` baseline; annotated tag `v1.0-rc1` |
+| Private | External `lucerna-private` readiness report + optional `v0.1.0-ig-output-parity` tag |
+| Not claimed | Full IG replacement; `strict_count>0` coverage; incomplete frozen layouts |
+
+Post-v1.0-rc1 route:
+
+- Private production review builder (replace IG-output replay adapter)
+- Optional v0.12.1 open-core comparator fix for IG list-shaped `candidate_pool_raw`
+- TDX adapter and proprietary factors remain private packs only
+
 ### v0.10+: research dossier model (candidate, contract-only first)
 
 | Item | Detail |

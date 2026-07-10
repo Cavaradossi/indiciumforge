@@ -1,7 +1,25 @@
 # Lucerna v1.0 Definition of Done (Draft)
 
-Planning document — not a release commitment. v1.0 means Lucerna can replace IndiciumGrid
-for **core A-share daily research workflow** without importing IG Python runtime.
+Planning document — not a release commitment.
+
+## v1.0 meaning
+
+v1.0 means the **Lucerna open-core + private extension** migration path for **core A-share daily
+research workflow** is validated: operators can run `lucerna parity run` with a private recipe pack
+against a local reference without `import indiciumgrid`.
+
+v1.0 **does not** mean Lucerna fully replaces IndiciumGrid for all domains or artifact bundles.
+
+## v1.0-rc1 (readiness milestone)
+
+v1.0-rc1 is a **readiness tag** on open-core v0.11.0 plus documented private parity evidence
+(`lucerna-private` readiness report). It confirms:
+
+- v0.11 parity harness and recipe chain operate end-to-end with a real private A-share adapter.
+- At least one frozen trade date achieves `all_match: true` on all five parity dimensions.
+- Remaining gaps (incomplete frozen layouts, `strict_count>0` absence) are classified and non-blocking.
+
+v1.0-rc1 is **not** a feature release and does not bump open-core semantics beyond v0.11.0.
 
 ## Criteria
 
@@ -21,8 +39,11 @@ for **core A-share daily research workflow** without importing IG Python runtime
 10. **Documented command sequence** in README/runbook:
     sync → daily-review → post-close → preopen → market-gate → audit.
 
-## Not required for v1.0
+## Not required for v1.0 (explicit non-scope)
 
+- **Real TDX sync in OSS** — private adapter only
+- **Proprietary factor detectors in OSS** — private factor packs only
+- **Account / watchlist / research dossier / intraday** runtime in OSS
 - intraday-watch, midday/late quote refresh, factor_tracking, account analysis
 - ETF workflow, crypto/perp domains
 - ResearchDossier production runtime
@@ -34,4 +55,6 @@ for **core A-share daily research workflow** without importing IG Python runtime
 | --- | --- |
 | v0.10 | Recipe wiring + fake private recipe (OSS) |
 | v0.11 | Private local parity harness (OSS) + local reference compare |
-| v0.12+ | Production private review builder + v1.0 sign-off |
+| v0.12 | Private parity pilot evidence (external `lucerna-private`) |
+| v1.0-rc1 | Readiness tag + documented multi-date parity summary |
+| v1.0 | Production private review builder + repeatable operator sign-off |
