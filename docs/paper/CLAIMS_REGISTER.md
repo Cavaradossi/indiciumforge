@@ -26,8 +26,8 @@ Every major technical statement in [INDICIUMFORGE_ARXIV_DRAFT.md](INDICIUMFORGE_
 | C20 | Ruff lint passes in CI | CI workflow | `.github/workflows/ci.yml` ruff step | high | "static analysis gate in CI" |
 | C21 | L1 evidence: OSS golden covers strict_count ≥ 1 scenarios | v1 definition | `docs/V1_0_DEFINITION.md` layer L1 | high | "L1 OSS golden includes strict_pass semantics" |
 | C22 | L2 evidence: synthetic parity demo reports strict_count 1 | v1 definition + demo | `docs/V1_0_DEFINITION.md` L2; parity_reference_demo | high | "L2 synthetic parity demo reproduces harness path" |
-| C23 | L3 evidence: private extension achieved five-dimension match on golden date | External sign-off summary (no paths) | `docs/V1_0_DEFINITION.md` L3; private `V1_0_SIGNOFF_REPORT.md` (not in OSS) | medium | "L3 operator-local sign-off reported all_match on five dimensions for golden date 2026-07-03" |
-| C24 | L3 daily_review manifest mismatch accepted as gap GAP-07 | Gap register reference | `docs/V1_0_DEFINITION.md` criterion 2 | medium | "accepted daily_review column mismatch documented as GAP-07" |
+| C23 | L3 golden date 2026-07-03: five parity dimensions match, all_match true | External sign-off + OSS summary | `docs/V1_0_DEFINITION.md` L3; `RELEASE_NOTES.md` v1.0.0; private `V1_0_RC1_READINESS_REPORT.md` §2026-07-03 dimension table | high | "golden date 2026-07-03: 5/5 parity dimensions match; all_match true" |
+| C24 | Blocked dates 2026-06-24 and 2026-06-23 are unsupported_gap | v1 definition + release notes | `docs/V1_0_DEFINITION.md` accepted limitations; `RELEASE_NOTES.md` blocked frozen dates | high | "2026-06-24 / 2026-06-23 blocked as unsupported_gap (layout/reference gaps)" |
 | C25 | Not a trading system / not investment advice / not broker execution | README + constitution | `README.md` disclaimer; INDICIUMFORGE_CONSTITUTION.md | high | explicit scope disclaimer in abstract and §11 |
 | C26 | Execution port is technical_reserve only | Capability register | CAPABILITY_REGISTER row `execution port` | high | "broker order placement out of scope" |
 | C27 | No public proprietary long-structure detectors | Capability register | `proprietary long-structure detectors` = `private_extension` | high | "proprietary detectors not shipped in OSS" |
@@ -44,6 +44,8 @@ Every major technical statement in [INDICIUMFORGE_ARXIV_DRAFT.md](INDICIUMFORGE_
 | C38 | Research dossier model is technical_reserve | Capability register | CAPABILITY_REGISTER `research dossier model` | high | "ResearchDossier contracts deferred" |
 | C39 | Crypto/session cross-domain lessons documented without contest framing | Session model doc | `docs/WORKFLOW_SESSION_MODEL.md` AssetDomain includes crypto_spot | medium | "session model generalizes beyond A-share linear folders" |
 | C40 | Extension template ships without proprietary logic | Example tree | `examples/private_extension_template/` | high | "OSS ships extension skeleton only" |
+| C41 | No strict_count > 0 in frozen operator reference; L1+L2 cover strict-pass | Accepted limitations | `docs/V1_0_DEFINITION.md` accepted limitations bullet 2 | high | "frozen reference lacks strict_count>0 date; OSS L1+L2 provide strict_count evidence" |
+| C42 | No IndiciumForge_bug or private extension defect on golden date | RC1 report | private `V1_0_RC1_READINESS_REPORT.md` §2026-07-03 | medium | "no open-core bug or private extension defect on golden date" |
 
 ## Claims explicitly forbidden in paper
 
@@ -55,6 +57,7 @@ Every major technical statement in [INDICIUMFORGE_ARXIV_DRAFT.md](INDICIUMFORGE_
 | Private file paths, tickers, operator screening lists | ADR-0011 / ADR-0019 |
 | Competition / contest workflows | Operator constraint |
 | Invented citations | RELATED_WORK.md candidate-only rule |
+| daily_review parity mismatch on golden date 2026-07-03 | Contradicts v1.0-rc1 five-dimension match evidence |
 
 ## Maintenance
 

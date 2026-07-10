@@ -203,13 +203,30 @@ The parity_reference_demo harness reports compatible structure and market-gate s
 
 ### 9.3 Layer L3 — private extension boundary validation
 
-An operator-local recipe extension pack (external to the public repository) replays **normalized structural shapes** from a legacy output layout into IndiciumForge artifact directories. Private sign-off documentation (external) reports:
+External v1.0-rc1 readiness and v1.0 sign-off summaries (private repository; cited at category level in `docs/V1_0_DEFINITION.md` and `RELEASE_NOTES.md`) report the following—**no private paths, tickers, or row-level data**.
 
-- golden trade date **2026-07-03**,
-- **five parity dimensions** evaluated,
-- aggregate verdict **all_match: true** for that date (C23).
+**Golden date `2026-07-03` (C23):**
 
-A **daily_review** manifest column mismatch was recorded as accepted gap **GAP-07**—showing how parity separates hard semantic gates from documented structural drift (C24). This case study validates the **open-core boundary**, not proprietary alpha quality.
+| Item | Result |
+| --- | --- |
+| Parity dimensions | **5/5 match** (`daily_review_structure`, `post_close_handoff_shape`, `preopen_handoff_shape`, `market_gate_strict_semantics`, `workflow_chain_summary_v4`) |
+| Aggregate verdict | `all_match: true` |
+| Defect classification | No mismatch attributed to IndiciumForge open-core bug or private extension defect |
+
+**Blocked candidate dates (C24):**
+
+| Trade date | Classification | Reason (category only) |
+| --- | --- | --- |
+| `2026-06-24` | `unsupported_gap` | Frozen reference layout incomplete for parity prepare (missing preopen stage directory) |
+| `2026-06-23` | `unsupported_gap` | Legacy thin post_close layout blocks required handoff artifact |
+
+These dates are **recorded limitations**, not golden-path failures.
+
+**Frozen-reference coverage gap (C41):**
+
+The operator frozen reference export contains **no `strict_count > 0` date**. Open-core strict-pass semantics are evidenced separately by L1 golden scenarios and L2 synthetic parity (`strict_count: 1`) per `docs/V1_0_DEFINITION.md` accepted limitations.
+
+This case study validates the **open-core / private-extension boundary** and parity methodology—not proprietary signal quality or trading performance.
 
 ### 9.4 Public OSS fixtures
 

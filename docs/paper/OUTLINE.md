@@ -97,9 +97,11 @@
 
 ## 9. Case study
 
-- L1: OSS golden strict semantics
+- L1: OSS golden strict semantics (`strict_count >= 1` scenarios)
 - L2: synthetic parity demo (`strict_count: 1`)
-- L3: private extension boundary validation (verdict categories only; external sign-off doc)
+- L3 golden date `2026-07-03`: 5/5 parity dimensions match; `all_match: true`; no open-core bug or private extension defect (C23, C42)
+- Blocked dates `2026-06-24` / `2026-06-23`: `unsupported_gap` (C24)
+- Frozen reference: no `strict_count > 0` date; L1+L2 cover strict-pass (C41)
 - No private paths, rows, or raw data
 
 ## 10. Agent-friendly governance
