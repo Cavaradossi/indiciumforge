@@ -4,13 +4,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "indiciumforge-cli"
-version = "2.0.0"
-description = "Reference CLI for IndiciumForge research audit workflows (indiciumforge command)."
+version = "2.0.1"
+description = "CLI for IndiciumForge reproducible financial research workflows."
 readme = "README.md"
 license = "Apache-2.0"
 requires-python = ">=3.10"
 authors = [{ name = "IndiciumForge contributors" }]
-keywords = ["cli", "workflow", "research", "audit", "open-core"]
+keywords = ["financial-research", "workflow", "artifacts", "open-core", "reproducibility"]
 classifiers = [
   "Development Status :: 4 - Beta",
   "Intended Audience :: Developers",

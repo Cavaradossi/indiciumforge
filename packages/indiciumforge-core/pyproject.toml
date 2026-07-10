@@ -4,13 +4,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "indiciumforge-core"
-version = "2.0.0"
-description = "Core contracts, artifact schemas, and ports for IndiciumForge evidence-first research workflows."
+version = "2.0.1"
+description = "Core contracts and output artifacts for reproducible financial research workflows."
 readme = "README.md"
 license = "Apache-2.0"
 requires-python = ">=3.10"
 authors = [{ name = "IndiciumForge contributors" }]
-keywords = ["workflow", "artifacts", "research", "audit", "open-core"]
+keywords = ["financial-research", "workflow", "artifacts", "open-core", "reproducibility"]
 classifiers = [
   "Development Status :: 4 - Beta",
   "Intended Audience :: Developers",

@@ -1,5 +1,21 @@
 # IndiciumForge Release Notes
 
+## v2.0.1 — Public metadata and narrative patch
+
+Documentation and PyPI package metadata only — **no runtime behavior changes**.
+
+### Changes
+
+- PyPI package README and `pyproject.toml` descriptions now align with public positioning: *open-core toolkit for reproducible financial research workflows*.
+- Root [README.md](README.md) and [README_CN.md](README_CN.md) narrative (from baf367b) reflected in per-package README files.
+- [docs/GLOSSARY.md](docs/GLOSSARY.md) linked from package READMEs for plain-language terms.
+
+### Unchanged
+
+- No Python runtime or CLI behavior changes.
+- No schema ID changes.
+- No new OpenBB public demo implementation.
+
 ## v2.0.0 — Lucerna → IndiciumForge rebrand (breaking)
 
 **IndiciumForge** replaces **Lucerna** as the open-core brand. Historical tag `v1.0.0` remains the Lucerna sign-off release.

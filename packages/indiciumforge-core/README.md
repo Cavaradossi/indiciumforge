@@ -1,21 +1,25 @@
 # indiciumforge-core
 
-Core contracts, artifact schemas, and ports for [IndiciumForge](https://github.com/Cavaradossi/indiciumforge).
+**IndiciumForge is an open-core toolkit for reproducible financial research workflows.**
 
-IndiciumForge produces **research audit artifacts** and parity evidence. It is **not investment advice**, **not a trading system**, and **not a broker execution platform**.
+This package provides **core contracts and output artifacts**: domain models, ports, schema-tagged artifact I/O, provider and recipe loaders, and reference-comparison models.
+
+Outputs are staged workflow files (JSON/CSV) for human research review. **Not a trading system, broker gateway, or investment advice.**
 
 ## Install
 
-Published on PyPI:
-
 ```bash
-pip install indiciumforge-core==2.0.0
+pip install indiciumforge-core==2.0.1
 ```
 
-For monorepo development:
+Monorepo development:
 
 ```bash
 pip install -e packages/indiciumforge-core
 ```
 
-See [docs/PYPI_RELEASE_CHECKLIST.md](https://github.com/Cavaradossi/indiciumforge/blob/master/docs/PYPI_RELEASE_CHECKLIST.md).
+## More documentation
+
+- [Repository README](https://github.com/Cavaradossi/indiciumforge/blob/master/README.md)
+- [中文说明](https://github.com/Cavaradossi/indiciumforge/blob/master/README_CN.md)
+- [Glossary](https://github.com/Cavaradossi/indiciumforge/blob/master/docs/GLOSSARY.md)

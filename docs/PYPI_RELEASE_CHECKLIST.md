@@ -1,6 +1,6 @@
 # PyPI release checklist
 
-**Status:** `indiciumforge-core`, `indiciumforge-workflow`, and `indiciumforge-cli` **v2.0.0** are published on production PyPI. This checklist is retained for future releases.
+**Status:** `indiciumforge-core`, `indiciumforge-workflow`, and `indiciumforge-cli` **v2.0.0** are on production PyPI. **v2.0.1** metadata patch is prepared in-repo — publish when operator confirms.
 
 IndiciumForge ships three installable packages from this monorepo. They are **real packages** with working code — not empty placeholders.
 
@@ -8,9 +8,9 @@ IndiciumForge ships three installable packages from this monorepo. They are **re
 
 | Package | Version | CLI | Publish order |
 | --- | --- | --- | --- |
-| `indiciumforge-core` | 2.0.0 | — | 1 |
-| `indiciumforge-workflow` | 2.0.0 | — | 2 (depends on core) |
-| `indiciumforge-cli` | 2.0.0 | `indiciumforge` | 3 (depends on workflow) |
+| `indiciumforge-core` | 2.0.1 | — | 1 |
+| `indiciumforge-workflow` | 2.0.1 | — | 2 (depends on core) |
+| `indiciumforge-cli` | 2.0.1 | `indiciumforge` | 3 (depends on workflow) |
 
 Workspace meta-package `indiciumforge-workspace` is **dev-only** and not intended for PyPI.
 
@@ -19,8 +19,8 @@ Workspace meta-package `indiciumforge-workspace` is **dev-only** and not intende
 For each package under `packages/indiciumforge-{core,workflow,cli}/`:
 
 - [ ] `name` matches reserved PyPI slug
-- [ ] `version` is `2.0.0` (or next release bump)
-- [ ] `description` states research-audit scope; no trading claims
+- [ ] `version` is `2.0.1` (or next release bump)
+- [ ] `description` states reproducible workflow scope; no trading claims
 - [ ] `readme = "README.md"` present in package directory
 - [ ] `license = "Apache-2.0"`
 - [ ] `authors` set (`IndiciumForge contributors`)
@@ -58,17 +58,17 @@ Expected: `twine check` passes with no errors for all three wheels/sdists.
 
 ## Scope disclaimer (include in release announcement)
 
-IndiciumForge is a **contract-first open core for evidence-first financial research workflows**. It produces research audit artifacts and parity evidence. It is **not investment advice**, **not a trading system**, and **not a broker execution platform**.
+IndiciumForge is an **open-core toolkit for reproducible financial research workflows**. It standardizes workflow contracts, output artifacts, and extension boundaries. Outputs are for human research review — **not** order routing or portfolio actions.
 
 ## Post-publish verification
 
-- [x] `pip install indiciumforge-cli==2.0.0` resolves all three packages (v2.0.0)
-- [x] `indiciumforge --help` works in a clean venv (v2.0.0)
-- [x] PyPI project pages show correct URLs and license (v2.0.0)
+- [ ] `pip install indiciumforge-cli==2.0.1` resolves all three packages
+- [ ] `indiciumforge --help` works in a clean venv
+- [ ] PyPI project pages show updated README and descriptions
 - [ ] GitHub Release tag matches published versions
 
 ## Related docs
 
 - [TESTPYPI_RELEASE_RUNBOOK.md](TESTPYPI_RELEASE_RUNBOOK.md)
 - [FUTURE_SURFACES.md](FUTURE_SURFACES.md)
-- [RELEASE_NOTES.md](../RELEASE_NOTES.md) — v2.0.0 breaking changes
+- [RELEASE_NOTES.md](../RELEASE_NOTES.md) — v2.0.1 metadata patch, v2.0.0 breaking changes

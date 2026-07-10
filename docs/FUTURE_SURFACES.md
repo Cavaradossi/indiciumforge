@@ -1,6 +1,6 @@
 # Future surfaces — IndiciumForge naming registry
 
-**Status:** naming registry (v2.0.0+). PyPI packages published at **2.0.0**.
+**Status:** naming registry (v2.0.1+). PyPI packages published at **2.0.0**; **v2.0.1** metadata patch prepared in-repo.
 
 ## PyPI
 
@@ -11,7 +11,7 @@
 | `indiciumforge-cli` | Reference CLI (`indiciumforge` command) | Published — depends on `-workflow` |
 | `indiciumforge-workspace` | Monorepo meta (optional) | dev-only (not on PyPI) |
 
-Install: `pip install indiciumforge-cli==2.0.0`
+Install: `pip install indiciumforge-cli==2.0.1`
 
 **Do not** publish under `lucerna` — PyPI name taken by unrelated AI orchestration.
 

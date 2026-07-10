@@ -1,23 +1,33 @@
 # indiciumforge-cli
 
-Reference CLI for [IndiciumForge](https://github.com/Cavaradossi/indiciumforge).
+**IndiciumForge is an open-core toolkit for reproducible financial research workflows.**
 
-Entry point: `indiciumforge` — workflow, artifact audit, factor scan, provider inspect, parity harness.
+This package provides the **`indiciumforge` CLI** for running workflow chains, checking output completeness, inspecting demo providers, and comparing runs against reference fixtures.
 
-Research audit only — not investment advice, not broker execution.
+**Not a trading system, broker gateway, or investment advice.**
 
 ## Install
 
-Published on PyPI:
-
 ```bash
-pip install indiciumforge-cli==2.0.0
+pip install indiciumforge-cli==2.0.1
 ```
 
-For monorepo development:
+This pulls `indiciumforge-workflow` and `indiciumforge-core` as dependencies.
+
+Monorepo development:
 
 ```bash
 pip install -e packages/indiciumforge-core -e packages/indiciumforge-workflow -e packages/indiciumforge-cli
 ```
 
-See [docs/PYPI_RELEASE_CHECKLIST.md](https://github.com/Cavaradossi/indiciumforge/blob/master/docs/PYPI_RELEASE_CHECKLIST.md).
+## Quick smoke
+
+```bash
+indiciumforge --help
+```
+
+## More documentation
+
+- [Repository README](https://github.com/Cavaradossi/indiciumforge/blob/master/README.md)
+- [中文说明](https://github.com/Cavaradossi/indiciumforge/blob/master/README_CN.md)
+- [Glossary](https://github.com/Cavaradossi/indiciumforge/blob/master/docs/GLOSSARY.md)

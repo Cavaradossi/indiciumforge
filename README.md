@@ -4,7 +4,7 @@
 
 **Open-core toolkit for reproducible financial research workflows.**
 
-Licensed under [Apache License 2.0](LICENSE). **v2.0.0** — see [RELEASE_NOTES.md](RELEASE_NOTES.md).
+Licensed under [Apache License 2.0](LICENSE). **v2.0.1** — see [RELEASE_NOTES.md](RELEASE_NOTES.md).
 
 > IndiciumForge standardizes workflow contracts, output artifacts, and extension boundaries. Default examples use **synthetic fixtures only**. Outputs are for **human research review**—not order routing or portfolio actions.
 
@@ -167,23 +167,23 @@ Details: [docs/OPENBB_PUBLIC_DEMO_PLAN.md](docs/OPENBB_PUBLIC_DEMO_PLAN.md)
 
 ### PyPI (production)
 
-Published on PyPI at **v2.0.0**:
+Published on PyPI at **v2.0.1**:
 
 ```bash
-pip install indiciumforge-cli==2.0.0
+pip install indiciumforge-cli==2.0.1
 ```
 
 Install sibling packages explicitly if needed:
 
 ```bash
-pip install indiciumforge-core==2.0.0 indiciumforge-workflow==2.0.0 indiciumforge-cli==2.0.0
+pip install indiciumforge-core==2.0.1 indiciumforge-workflow==2.0.1 indiciumforge-cli==2.0.1
 ```
 
 | Package | PyPI | Install |
 | --- | --- | --- |
-| `indiciumforge-core` | [Published](https://pypi.org/project/indiciumforge-core/2.0.0/) | `pip install indiciumforge-core==2.0.0` |
-| `indiciumforge-workflow` | [Published](https://pypi.org/project/indiciumforge-workflow/2.0.0/) | `pip install indiciumforge-workflow==2.0.0` |
-| `indiciumforge-cli` | [Published](https://pypi.org/project/indiciumforge-cli/2.0.0/) | `pip install indiciumforge-cli==2.0.0` |
+| `indiciumforge-core` | [Published](https://pypi.org/project/indiciumforge-core/) | `pip install indiciumforge-core==2.0.1` |
+| `indiciumforge-workflow` | [Published](https://pypi.org/project/indiciumforge-workflow/) | `pip install indiciumforge-workflow==2.0.1` |
+| `indiciumforge-cli` | [Published](https://pypi.org/project/indiciumforge-cli/) | `pip install indiciumforge-cli==2.0.1` |
 
 Release procedure: [docs/PYPI_RELEASE_CHECKLIST.md](docs/PYPI_RELEASE_CHECKLIST.md), [docs/TESTPYPI_RELEASE_RUNBOOK.md](docs/TESTPYPI_RELEASE_RUNBOOK.md).
 
