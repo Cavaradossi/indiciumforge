@@ -4,7 +4,7 @@
 **Audience:** Codex → LaTeX conversion
 **Status:** not submitted to arXiv
 **Repository:** https://github.com/Cavaradossi/indiciumforge  
-**Version tag:** `v2.0.0`  
+**Version tag:** `v2.0.0`
 **Claims index:** [CLAIMS_REGISTER.md](CLAIMS_REGISTER.md)
 
 ---
@@ -58,7 +58,7 @@ Production research stacks often merge:
 
 - raw and derived data paths known only on operator machines,
 - proprietary signal definitions,
-- local calibration and watchlist state,
+- local calibration and operator-local screening state,
 - implicit assumptions about session timing and execution feasibility.
 
 When these concerns share one codebase without artifact contracts, reviewers cannot reconstruct point-in-time evidence. Regression testing devolves into manual diffing of opaque outputs.
