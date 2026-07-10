@@ -2,7 +2,7 @@
 
 **Contract-first open core for evidence-first financial research workflows.**
 
-Licensed under [Apache License 2.0](LICENSE). **v1.0.0 signed** — open-core semantics frozen at v0.11.0; see [RELEASE_NOTES.md](RELEASE_NOTES.md).
+Licensed under [Apache License 2.0](LICENSE). **v2.0.0** — Lucerna rebrand; historical **v1.0.0** Lucerna sign-off preserved; see [RELEASE_NOTES.md](RELEASE_NOTES.md).
 
 > IndiciumForge produces **research audit artifacts** and parity evidence. It is **not investment advice**, **not a trading system**, and **not a broker execution platform**. Default workflows use **synthetic fixtures only**.
 
@@ -131,10 +131,56 @@ To build your own extensions, start at [docs/EXTENSION_AUTHOR_GUIDE.md](docs/EXT
 | System map | [docs/SYSTEM_MAP.md](docs/SYSTEM_MAP.md) |
 | Constitution + ADRs | [INDICIUMFORGE_CONSTITUTION.md](INDICIUMFORGE_CONSTITUTION.md), [docs/decisions/](docs/decisions/) |
 | Security | [SECURITY.md](SECURITY.md) |
+| PyPI checklist | [docs/PYPI_RELEASE_CHECKLIST.md](docs/PYPI_RELEASE_CHECKLIST.md) |
+| Paper draft | [docs/paper/INDICIUMFORGE_ARXIV_DRAFT.md](docs/paper/INDICIUMFORGE_ARXIV_DRAFT.md) |
 
-For AI agents: start at [docs/AGENT_QUICKSTART.md](docs/AGENT_QUICKSTART.md) (rules in [AGENTS.md](AGENTS.md)).
+## Agent skills
+
+Copyable Cursor Agent Skills live under [agent/skills/](agent/skills/):
+
+| Skill | Purpose |
+| --- | --- |
+| [indiciumforge-orientation](agent/skills/indiciumforge-orientation/SKILL.md) | Onboard agents to README, AGENTS.md, SYSTEM_MAP, CURRENT_STATUS |
+| [indiciumforge-extension-author](agent/skills/indiciumforge-extension-author/SKILL.md) | Build private provider/factor/recipe packs |
+| [indiciumforge-release-audit](agent/skills/indiciumforge-release-audit/SKILL.md) | GitHub/PyPI/security pre-release checks |
+
+Roadmap: [docs/AGENT_SKILL_ROADMAP.md](docs/AGENT_SKILL_ROADMAP.md). Install by copying a skill folder to `~/.cursor/skills/`.
+
+For AI agents in-repo: start at [docs/AGENT_QUICKSTART.md](docs/AGENT_QUICKSTART.md) (rules in [AGENTS.md](AGENTS.md)).
+
+## Technical paper draft
+
+Markdown draft (not submitted to arXiv):
+
+- [docs/paper/INDICIUMFORGE_ARXIV_DRAFT.md](docs/paper/INDICIUMFORGE_ARXIV_DRAFT.md)
+- [docs/paper/OUTLINE.md](docs/paper/OUTLINE.md) · [FIGURES.md](docs/paper/FIGURES.md) · [RELATED_WORK.md](docs/paper/RELATED_WORK.md)
+
+Software/systems framing — no experiment results claimed. Future work may include accounting-risk anomaly detection on public data only.
+
+## Future MCP and plugin surfaces
+
+Design-only in v2.0.0 (not implemented):
+
+| Surface | Doc |
+| --- | --- |
+| MCP server (`indiciumforge-mcp`) | [docs/mcp/INDICIUMFORGE_MCP_DESIGN.md](docs/mcp/INDICIUMFORGE_MCP_DESIGN.md) |
+| IDE plugin | [docs/plugin/INDICIUMFORGE_PLUGIN_DESIGN.md](docs/plugin/INDICIUMFORGE_PLUGIN_DESIGN.md) |
+
+Naming registry: [docs/FUTURE_SURFACES.md](docs/FUTURE_SURFACES.md).
 
 ## Install
+
+### PyPI status
+
+| Package | PyPI | Install today |
+| --- | --- | --- |
+| `indiciumforge-core` | **pending** (not published) | editable from source |
+| `indiciumforge-workflow` | **pending** | editable from source |
+| `indiciumforge-cli` | **pending** | editable from source |
+
+PyPI metadata is validated (`python -m build`, `twine check`) — see [docs/PYPI_RELEASE_CHECKLIST.md](docs/PYPI_RELEASE_CHECKLIST.md) and [docs/TESTPYPI_RELEASE_RUNBOOK.md](docs/TESTPYPI_RELEASE_RUNBOOK.md). **No production PyPI upload yet.**
+
+### Install from source
 
 ```bash
 cd <repo-root>
