@@ -1,31 +1,41 @@
 # IndiciumForge
 
-**Contract-first open core for evidence-first financial research workflows.**
+[中文说明](README_CN.md)
 
-Licensed under [Apache License 2.0](LICENSE). **v2.0.0** — Lucerna rebrand; historical **v1.0.0** Lucerna sign-off preserved; see [RELEASE_NOTES.md](RELEASE_NOTES.md).
+**Open-core toolkit for reproducible financial research workflows.**
 
-> IndiciumForge produces **research audit artifacts** and parity evidence. It is **not investment advice**, **not a trading system**, and **not a broker execution platform**. Default workflows use **synthetic fixtures only**.
+Licensed under [Apache License 2.0](LICENSE). **v2.0.0** — see [RELEASE_NOTES.md](RELEASE_NOTES.md).
+
+> IndiciumForge standardizes workflow contracts, output artifacts, and extension boundaries. Default examples use **synthetic fixtures only**. Outputs are for **human research review**—not order routing or portfolio actions.
 
 ## What IndiciumForge is
 
-- A **port-and-contract** workspace for daily research workflows: recipes, artifact stores, manifest audit, and golden parity.
-- An **open-core + private extension** model: OSS ships ports, schemas, demo fixtures, and harnesses; operators plug in private data, factors, and recipes locally.
-- A **migration harness** against a frozen legacy reference (`indiciumgrid-golden-v1`) — preserves behavior where golden-covered, not module structure.
+IndiciumForge is an open-core toolkit for building reproducible financial research workflows. It helps you:
+
+- **Define repeatable research workflow chains** (recipes and session stages)
+- **Write auditable output artifacts** (JSON/CSV bundles with schema IDs)
+- **Check output completeness** before deeper review (`artifact audit`)
+- **Compare runs against reference outputs** when you refactor stages or extensions
+- **Load private data, factor, and recipe extensions** via packs—without forking core contracts
+
+IndiciumForge was extracted from an internal financial research workflow and generalized into an open-core toolkit.
+
+New to the vocabulary? Start with [docs/GLOSSARY.md](docs/GLOSSARY.md).
 
 ## What IndiciumForge is not
 
-- Not live trading, order routing, or portfolio management.
-- Not a substitute for compliance, disclosure, or investment research opinions.
-- Not a full drop-in replacement for every legacy workflow surface (see [docs/V1_0_DEFINITION.md](docs/V1_0_DEFINITION.md)).
+- Not live trading, order routing, or portfolio management
+- Not a substitute for compliance review or published research opinions
+- Not a one-click “signals” product—outputs are workflow evidence for your team to interpret
 
 ## Who it is for
 
 | Audience | Use case |
 | --- | --- |
-| Quant / research engineers | Run reproducible workflow chains and audit artifact completeness |
-| Workflow authors | Wire custom recipes and extension packs behind stable ports |
-| Extension authors | Build private data, factor, and recipe packs without forking core contracts |
-| Migration operators | Compare new outputs against legacy golden artifacts via parity harness |
+| Quant / research engineers | Run reproducible workflow chains with consistent outputs |
+| Workflow authors | Define recipes and stage handoff formats |
+| Extension authors | Ship private data/factor/recipe packs behind stable ports |
+| Teams needing output governance | Audit artifact completeness and compare against references |
 
 ## 30-second Quickstart
 
@@ -58,16 +68,16 @@ flowchart TB
     Workflow[indiciumforge_workflow]
     CLI[indiciumforge_cli]
   end
-  subgraph privateExt [Private_Extensions_OperatorLocal]
+  subgraph privateExt [Private_Extensions_Local]
     DataPack[DataProvider_pack]
     FactorPack[FactorDetector_pack]
     RecipePack[Recipe_extension]
   end
-  subgraph legacyRef [Legacy_Reference_ReadOnly]
-    GoldenStore[Golden_artifact_store]
+  subgraph refOut [Reference_Outputs_ReadOnly]
+    RefStore[Saved_reference_artifacts]
   end
   openCore -->|"ports_and_contracts"| privateExt
-  openCore -->|"parity_harness"| legacyRef
+  openCore -->|"output_comparison"| refOut
 ```
 
 ### Runtime data flow
@@ -76,10 +86,10 @@ flowchart TB
 flowchart LR
   Fixture[Fixture_or_Provider] --> Recipe[RecipeRunner]
   Recipe --> Artifacts[Artifact_store]
-  Artifacts --> Audit[Manifest_audit_CLI]
-  Artifacts --> Parity[Golden_comparator]
-  GoldenRef[Reference_artifacts] --> Parity
-  Parity --> Verdict["match_or_gap_or_intentional_change"]
+  Artifacts --> Audit[Output_completeness_check]
+  Artifacts --> Compare[Reference_compare]
+  RefTree[Reference_outputs] --> Compare
+  Compare --> Report["match_or_gap_report"]
 ```
 
 ### Package workspace
@@ -96,83 +106,68 @@ flowchart TB
 
 Deeper diagrams: [docs/SYSTEM_MAP.md](docs/SYSTEM_MAP.md), [docs/diagrams/context.md](docs/diagrams/context.md).
 
-## v1.0 capability matrix
+## Core capabilities
 
-| Capability | Status | Notes |
-| --- | --- | --- |
-| Market-gate decision kernel | `implemented_v1` | Golden-tested strict/observation/active_watch semantics |
-| Artifact store + golden compare | `implemented_v1` | Local I/O, semantic comparator, five scenarios |
-| Artifact manifest / audit CLI | `implemented_v0.4.1` | `indiciumforge artifact list/audit` |
-| Data provider ports v1 + v2 | `implemented_v1` / `implemented_v0.9` | Fixtures in OSS; live adapters in private packs |
-| Factor detector port + pack loading | `implemented_v0.3` / `implemented_v0.7` | Demo detectors only in OSS |
-| Workflow chain + recipe integration | `implemented_v0.6` / `implemented_v0.10` | `--recipe` + extension pack wiring |
-| Private-local parity harness | `implemented_v0.11` | `indiciumforge parity run` — research audit only |
-| Open-core sign-off | `signed_v1.0` | Gaps accepted in private register |
+| Capability | What you get |
+| --- | --- |
+| Workflow CLI | `indiciumforge workflow ...` — synthetic e2e, chains, recipes |
+| Output contracts | Schema-tagged JSON/CSV per stage |
+| Output completeness | `indiciumforge artifact list/audit` |
+| Reference comparison | `indiciumforge parity run` with demo fixtures |
+| Extension packs | Provider, factor, and recipe entry points via YAML |
+| OSS demos | Synthetic fixtures only—no live credentials in repo |
 
-Full matrix: [CAPABILITY_REGISTER.md](CAPABILITY_REGISTER.md).
+Full capability matrix: [CAPABILITY_REGISTER.md](CAPABILITY_REGISTER.md).
 
 ## Open core vs private extensions
 
-**In this repository:** ports, schemas, artifact contracts, synthetic fixtures, demo implementations, CLI, parity harness, and governance docs.
+**In this repository:** ports, schemas, demo fixtures, CLI, comparison harness, and author docs.
 
-**Operator-local (not in OSS):** real market data adapters, proprietary factor detectors, production A-share recipe logic, account evidence, and legacy `output/` trees.
+**Operator-local (not in OSS):** live data adapters, proprietary factor detectors, production recipe logic, credentials, and local reference trees.
 
-To build your own extensions, start at [docs/EXTENSION_AUTHOR_GUIDE.md](docs/EXTENSION_AUTHOR_GUIDE.md) and [examples/private_extension_template/](examples/private_extension_template/).
+Start here: [docs/EXTENSION_AUTHOR_GUIDE.md](docs/EXTENSION_AUTHOR_GUIDE.md) · [examples/private_extension_template/](examples/private_extension_template/)
 
 ## Documentation
 
+### Users and extension authors
+
 | Topic | Path |
 | --- | --- |
-| Release history | [RELEASE_NOTES.md](RELEASE_NOTES.md) |
+| Glossary (start here) | [docs/GLOSSARY.md](docs/GLOSSARY.md) |
+| Extension author guide | [docs/EXTENSION_AUTHOR_GUIDE.md](docs/EXTENSION_AUTHOR_GUIDE.md) |
+| Extension template | [examples/private_extension_template/](examples/private_extension_template/) |
+| OpenBB public demo plan | [docs/OPENBB_PUBLIC_DEMO_PLAN.md](docs/OPENBB_PUBLIC_DEMO_PLAN.md) |
+| Workflow session model | [docs/WORKFLOW_SESSION_MODEL.md](docs/WORKFLOW_SESSION_MODEL.md) |
+| Security | [SECURITY.md](SECURITY.md) |
+| Release notes | [RELEASE_NOTES.md](RELEASE_NOTES.md) |
+
+### Maintainer and contributor docs
+
+| Topic | Path |
+| --- | --- |
+| System map | [docs/SYSTEM_MAP.md](docs/SYSTEM_MAP.md) |
+| Capability register | [CAPABILITY_REGISTER.md](CAPABILITY_REGISTER.md) |
+| Architecture decisions (ADRs) | [docs/decisions/](docs/decisions/) |
+| Constitution | [INDICIUMFORGE_CONSTITUTION.md](INDICIUMFORGE_CONSTITUTION.md) |
 | Migration roadmap | [docs/MIGRATION_ROADMAP.md](docs/MIGRATION_ROADMAP.md) |
 | v1.0 definition | [docs/V1_0_DEFINITION.md](docs/V1_0_DEFINITION.md) |
-| Extension author guide | [docs/EXTENSION_AUTHOR_GUIDE.md](docs/EXTENSION_AUTHOR_GUIDE.md) |
-| Agent onboarding | [docs/AGENT_QUICKSTART.md](docs/AGENT_QUICKSTART.md) |
-| System map | [docs/SYSTEM_MAP.md](docs/SYSTEM_MAP.md) |
-| Constitution + ADRs | [INDICIUMFORGE_CONSTITUTION.md](INDICIUMFORGE_CONSTITUTION.md), [docs/decisions/](docs/decisions/) |
-| Security | [SECURITY.md](SECURITY.md) |
+| Agent onboarding | [docs/AGENT_QUICKSTART.md](docs/AGENT_QUICKSTART.md) · [AGENTS.md](AGENTS.md) |
+| Agent skills | [agent/skills/](agent/skills/) |
 | PyPI checklist | [docs/PYPI_RELEASE_CHECKLIST.md](docs/PYPI_RELEASE_CHECKLIST.md) |
 | Paper draft | [docs/paper/INDICIUMFORGE_ARXIV_DRAFT.md](docs/paper/INDICIUMFORGE_ARXIV_DRAFT.md) |
+| MCP / plugin design | [docs/mcp/](docs/mcp/) · [docs/plugin/](docs/plugin/) |
 
-## Agent skills
+## Coming next: OpenBB public demo
 
-Copyable Cursor Agent Skills live under [agent/skills/](agent/skills/):
+**Planning only (not in v2.0.0):** a short public-data smoke workflow using OpenBB as an adapter example—one command, small deterministic artifact tree, no private paths.
 
-| Skill | Purpose |
-| --- | --- |
-| [indiciumforge-orientation](agent/skills/indiciumforge-orientation/SKILL.md) | Onboard agents to README, AGENTS.md, SYSTEM_MAP, CURRENT_STATUS |
-| [indiciumforge-extension-author](agent/skills/indiciumforge-extension-author/SKILL.md) | Build private provider/factor/recipe packs |
-| [indiciumforge-release-audit](agent/skills/indiciumforge-release-audit/SKILL.md) | GitHub/PyPI/security pre-release checks |
-
-Roadmap: [docs/AGENT_SKILL_ROADMAP.md](docs/AGENT_SKILL_ROADMAP.md). Install by copying a skill folder to `~/.cursor/skills/`.
-
-For AI agents in-repo: start at [docs/AGENT_QUICKSTART.md](docs/AGENT_QUICKSTART.md) (rules in [AGENTS.md](AGENTS.md)).
-
-## Technical paper draft
-
-Markdown draft (not submitted to arXiv):
-
-- [docs/paper/INDICIUMFORGE_ARXIV_DRAFT.md](docs/paper/INDICIUMFORGE_ARXIV_DRAFT.md)
-- [docs/paper/OUTLINE.md](docs/paper/OUTLINE.md) · [FIGURES.md](docs/paper/FIGURES.md) · [RELATED_WORK.md](docs/paper/RELATED_WORK.md)
-
-Software/systems framing — no experiment results claimed. Future work may include accounting-risk anomaly detection on public data only.
-
-## Future MCP and plugin surfaces
-
-Design-only in v2.0.0 (not implemented):
-
-| Surface | Doc |
-| --- | --- |
-| MCP server (`indiciumforge-mcp`) | [docs/mcp/INDICIUMFORGE_MCP_DESIGN.md](docs/mcp/INDICIUMFORGE_MCP_DESIGN.md) |
-| IDE plugin | [docs/plugin/INDICIUMFORGE_PLUGIN_DESIGN.md](docs/plugin/INDICIUMFORGE_PLUGIN_DESIGN.md) |
-
-Naming registry: [docs/FUTURE_SURFACES.md](docs/FUTURE_SURFACES.md).
+Details: [docs/OPENBB_PUBLIC_DEMO_PLAN.md](docs/OPENBB_PUBLIC_DEMO_PLAN.md)
 
 ## Install
 
 ### PyPI (production)
 
-Published on PyPI at **v2.0.0** (research audit CLI — not a trading system):
+Published on PyPI at **v2.0.0**:
 
 ```bash
 pip install indiciumforge-cli==2.0.0
@@ -190,7 +185,7 @@ pip install indiciumforge-core==2.0.0 indiciumforge-workflow==2.0.0 indiciumforg
 | `indiciumforge-workflow` | [Published](https://pypi.org/project/indiciumforge-workflow/2.0.0/) | `pip install indiciumforge-workflow==2.0.0` |
 | `indiciumforge-cli` | [Published](https://pypi.org/project/indiciumforge-cli/2.0.0/) | `pip install indiciumforge-cli==2.0.0` |
 
-Release procedure and dry-run steps: [docs/PYPI_RELEASE_CHECKLIST.md](docs/PYPI_RELEASE_CHECKLIST.md), [docs/TESTPYPI_RELEASE_RUNBOOK.md](docs/TESTPYPI_RELEASE_RUNBOOK.md).
+Release procedure: [docs/PYPI_RELEASE_CHECKLIST.md](docs/PYPI_RELEASE_CHECKLIST.md), [docs/TESTPYPI_RELEASE_RUNBOOK.md](docs/TESTPYPI_RELEASE_RUNBOOK.md).
 
 ### Install from source
 
@@ -203,12 +198,6 @@ python -m pip install -e ".[dev]"
 ```
 
 The CLI entry point is `indiciumforge` (from `indiciumforge-cli`).
-
-Golden export (optional, needs a local frozen reference checkout):
-
-```bash
-python scripts/export_golden_market_gate.py
-```
 
 ## Test
 
@@ -226,8 +215,8 @@ python -m pytest -p no:cacheprovider -q --basetemp "$env:TEMP\indiciumforge_pyte
 
 | Layer | Path | Purpose |
 | --- | --- | --- |
-| Golden | `tests/golden/` | Semantic parity vs exported reference artifacts (5 market-gate scenarios) |
-| Contract | `tests/contract/` | Artifact store, provider, factor detectors, daily-review skeleton |
+| Golden | `tests/golden/` | Semantic compare vs checked-in reference outputs |
+| Contract | `tests/contract/` | Artifact store, providers, factors, workflow skeleton |
 | Fixtures | `tests/fixtures/` | Synthetic OHLCV, recipes, parity demo trees |
 | CLI smoke | `tests/cli/` | Typer help + workflow/artifact/parity commands |
 
@@ -244,7 +233,7 @@ indiciumforge artifact audit --artifact-root <artifact-root> --trade-date 2026-0
 indiciumforge parity run --parity-config tests/fixtures/parity_reference_demo/parity_config_demo.yaml --artifact-root <artifact-root>
 ```
 
-`artifact audit` checks structural completeness (required files, schema IDs, trade_date consistency). Semantic parity remains the golden comparator's job.
+`artifact audit` checks structural completeness (required files, schema IDs, trade_date consistency). Semantic comparison uses the reference-comparison harness.
 
 Expected inputs under `--artifact-root`:
 
@@ -293,12 +282,44 @@ indiciumforge provider inspect --ohlcv-fixture-root tests/fixtures/ohlcv
 | `indiciumforge-workflow` | `market_gate` kernel; daily-review; e2e; workflow chain |
 | `indiciumforge-cli` | `workflow`, `artifact`, `factor`, `provider`, `parity` commands |
 
-## Version boundaries
+## Maintainer notes
 
-Per-release scope and non-goals are documented in [RELEASE_NOTES.md](RELEASE_NOTES.md) (condensed version history) and [CAPABILITY_REGISTER.md](CAPABILITY_REGISTER.md). Migration reconciliation: [docs/MIGRATION_ROADMAP.md](docs/MIGRATION_ROADMAP.md).
+The sections below are for operators migrating from a legacy internal workflow or extending the signed v1.0 path. **New users can skip this.**
 
-Reference pin:
+### Version boundaries
+
+Per-release scope: [RELEASE_NOTES.md](RELEASE_NOTES.md), [CAPABILITY_REGISTER.md](CAPABILITY_REGISTER.md), [docs/V1_0_DEFINITION.md](docs/V1_0_DEFINITION.md).
+
+### Migration and reference pin
+
+Historical migration reconciliation: [docs/MIGRATION_ROADMAP.md](docs/MIGRATION_ROADMAP.md).
+
+Frozen legacy reference label used by OSS golden fixtures (maintainer context only):
 
 ```text
 indiciumgrid @ indiciumgrid-golden-v1
 ```
+
+Golden export script (requires local frozen reference checkout):
+
+```bash
+python scripts/export_golden_market_gate.py
+```
+
+### Agent skills
+
+| Skill | Purpose |
+| --- | --- |
+| [indiciumforge-orientation](agent/skills/indiciumforge-orientation/SKILL.md) | Onboard agents to repo layout and status docs |
+| [indiciumforge-extension-author](agent/skills/indiciumforge-extension-author/SKILL.md) | Build private provider/factor/recipe packs |
+| [indiciumforge-release-audit](agent/skills/indiciumforge-release-audit/SKILL.md) | Pre-release security and packaging checks |
+
+Roadmap: [docs/AGENT_SKILL_ROADMAP.md](docs/AGENT_SKILL_ROADMAP.md).
+
+### Technical paper draft
+
+Markdown draft (not submitted to arXiv): [docs/paper/INDICIUMFORGE_ARXIV_DRAFT.md](docs/paper/INDICIUMFORGE_ARXIV_DRAFT.md) · [OUTLINE.md](docs/paper/OUTLINE.md) · [FIGURES.md](docs/paper/FIGURES.md)
+
+### Future MCP and plugin surfaces
+
+Design-only in v2.0.0: [docs/mcp/INDICIUMFORGE_MCP_DESIGN.md](docs/mcp/INDICIUMFORGE_MCP_DESIGN.md), [docs/plugin/INDICIUMFORGE_PLUGIN_DESIGN.md](docs/plugin/INDICIUMFORGE_PLUGIN_DESIGN.md), [docs/FUTURE_SURFACES.md](docs/FUTURE_SURFACES.md).
