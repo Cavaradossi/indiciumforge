@@ -27,4 +27,7 @@ jobs:
       - name: Ruff
         run: python -m ruff check .
       - name: Pytest
+        env:
+          NO_COLOR: "1"
+          TERM: dumb
         run: python -m pytest -q
