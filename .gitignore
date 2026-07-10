@@ -11,3 +11,9 @@ output/
 parity_local.yaml
 tests/golden/**/_run/
 paper/*.pdf
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.blg
+paper/*.synctex.gz
+paper/.build/
