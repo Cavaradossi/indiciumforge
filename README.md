@@ -9,14 +9,25 @@ Lucerna is an evidence-first financial research workspace extracted from the fro
 
 Licensed under [Apache License 2.0](LICENSE). See [RELEASE_NOTES.md](RELEASE_NOTES.md) for release history.
 
+**Lucerna v1.0.0** signs the open-core + private extension migration path (v0.11.0 semantics frozen).
+Parity and audit output are **research evidence only** — not investment advice.
+
 Lucerna v0.11 adds private-local parity harness (ADR-0022); `lucerna parity run` compares recipe-chain outputs against a local reference root (research audit only).
 
-### Private extension path to v1.0
+### Private extension path to v1.0 (signed)
 
 Lucerna open-core supplies the recipe chain, parity harness, and market-gate runner. Real A-share
-production logic lives in **private extension packs** (e.g. `lucerna-private` / `lucerna-private-ashare`).
-v1.0-rc1 readiness is documented when private parity evidence achieves `all_match: true` on a golden
-trade date — see [docs/V1_0_DEFINITION.md](docs/V1_0_DEFINITION.md) and the private repo readiness report.
+logic lives in **private extension packs** (`lucerna-private` / `lucerna-private-ashare`).
+
+v1.0 is evidenced when:
+
+- Private golden parity achieves `all_match: true` on a real frozen trade date, and
+- Accepted gaps are published in the private sign-off register.
+
+See [docs/V1_0_DEFINITION.md](docs/V1_0_DEFINITION.md). Private docs: `V1_0_SIGNOFF_REPORT.md`,
+`V1_0_SIGNOFF_GAP_REGISTER.md` (external repo; no local paths in Lucerna Git).
+
+v1.0 **does not** claim full IndiciumGrid replacement.
 
 Lucerna v0.10 adds A-share private recipe integration (ADR-0021); recipe-driven workflow chain via `--recipe` + fake extension pack.
 

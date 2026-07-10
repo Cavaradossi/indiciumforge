@@ -13,6 +13,7 @@ Status values:
 - `implemented_v0.10`: A-share private recipe integration — ports, RecipeRunner, fake extension (ADR-0021).
 - `implemented_v0.11`: private local parity harness — config-driven reference compare (ADR-0022).
 - `validated_private_path`: readiness evidence from external private pack; not implemented in OSS.
+- `signed_v1.0`: v1.0 sign-off evidence complete; open-core semantics frozen; gaps accepted in private register.
 - `implemented_v0.7`: private factor pack loading integration + workflow chain factor_scan stage.
 - `implemented_v0.6`: workflow chain skeleton (post_close -> preopen -> market_gate).
 - `private_extension`: intentionally outside the open-source repository; implemented only by private packs/plugins.
@@ -39,7 +40,7 @@ Status values:
 | session-cyclic workflow model | `implemented_v0.8` | AssetDomain, SessionModel, WorkflowRecipe, checkpoint/handoff contracts; ADR-0018. |
 | A-share private recipe integration | `implemented_v0.10` | `lucerna_core.recipes`, RecipeRunner, extension pack loader, recipe-driven chain CLI; ADR-0021. |
 | private local parity harness | `implemented_v0.11` | `lucerna_core.parity`, `lucerna parity run/report`, synthetic demo reference; ADR-0022. |
-| A-share private extension path (IG-output adapter) | `validated_private_path` | External `lucerna-private-ashare`; v1.0-rc1 golden date parity evidence; production review builder remains `private_extension`. |
+| A-share private extension path (IG-output adapter) | `signed_v1.0` | External `lucerna-private-ashare`; v1.0 sign-off golden date evidence; production review builder remains `private_extension`. |
 | proprietary long-structure detectors | `private_extension` | Real IG detector rules; private factor packs only. |
 | market daily-review upstream | `implemented_v0.4.1` | Skeleton `theme_state_ranking` generation + `lucerna workflow daily-review` CLI; ADR-0013/0014; synthetic fixtures only. |
 | synthetic end-to-end workflow | `implemented_v0.5_alpha` | `lucerna workflow synthetic-e2e`; DR -> MG -> audit summary; ADR-0015; fixture-only demo. |
@@ -130,12 +131,14 @@ Forward schedule and original-plan reconciliation:
   `ReferenceArtifactProvider`, `CandidateComparator`, `lucerna parity run/report`,
   synthetic `parity_reference_demo/` (ADR-0022; private IG output paths local-only).
 
-## v1.0-rc1 readiness (completed — documentation milestone)
+## v1.0 signed (completed)
 
-- v1.0-rc1 tag documents validated private path: v0.11 harness + `lucerna-private-ashare` IG-output
-  adapter; golden date `2026-07-03` `all_match: true`; blocked frozen dates classified as gaps.
-- See private repo `V1_0_RC1_READINESS_REPORT.md` (summary only; no paths committed to Lucerna).
+- v1.0.0 tag: open-core sign-off on v0.11.0 semantics + private migration path evidence.
+- Golden date `2026-07-03` private parity `all_match: true`; OSS L1/L2 strict semantics evidence.
+- Accepted gaps in private `V1_0_SIGNOFF_GAP_REGISTER.md` (no Lucerna Git paths).
 
-## v1.0 forward candidate (planning only)
+## v1.1 forward (post-sign-off)
 
-- production private review builder + repeatable operator parity sign-off; optional v0.12.1 comparator fixes; TDX adapter docs remain private.
+- Production private review builder (replace IG-output replay adapter)
+- Partial frozen layout adapter support
+- Optional open-core v1.0.1 comparator/config patches

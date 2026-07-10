@@ -146,6 +146,21 @@ Post-v1.0-rc1 route:
 - Optional v0.12.1 open-core comparator fix for IG list-shaped `candidate_pool_raw`
 - TDX adapter and proprietary factors remain private packs only
 
+### v1.0: signed (completed)
+
+| Item | Detail |
+| --- | --- |
+| Scope | Sign open-core v0.11.0 + private `lucerna-private-ashare` migration path |
+| Evidence | L1 golden + L2 parity demo + L3 private golden `2026-07-03` |
+| Tag | `v1.0.0` on sign-off docs commit; preserves `v1.0-rc1`, `v0.11.0-parity-harness` |
+| Not claimed | Full IG replacement; all frozen dates runnable; real `strict_count>0` private date |
+
+### v1.1: post-sign-off (planning)
+
+- Production private review builder
+- Partial frozen layout support (`2026-06-24` fallback era, `2026-06-23` legacy post_close)
+- Real `strict_count > 0` private parity when new IG output exists
+
 ### v0.10+: research dossier model (candidate, contract-only first)
 
 | Item | Detail |

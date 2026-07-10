@@ -1,5 +1,29 @@
 # Lucerna Release Notes
 
+## v1.0.0 — open-core sign-off (documentation + version label)
+
+Lucerna **v1.0.0** signs the open-core + private extension migration path for core A-share daily
+research workflow. **No new open-core features** beyond v0.11.0 semantics; this release documents
+accepted limitations and promotes operator sign-off evidence.
+
+### Evidence summary
+
+| Item | Status |
+| --- | --- |
+| Open-core semantics | Frozen at v0.11.0 (`v0.11.0-parity-harness` code baseline) |
+| Private golden parity | `2026-07-03` — `all_match: true` (external `lucerna-private`) |
+| OSS strict semantics | Golden scenarios + `parity_reference_demo` (`strict_count: 1`) |
+| Gap register | Private `V1_0_SIGNOFF_GAP_REGISTER.md` — all gaps accepted for v1.0 |
+| Artifact audit | `market_gate` ok on golden run; IG-shaped `daily_review` manifest mismatch accepted |
+
+### Explicit non-goals (v1.0)
+
+- Not full IndiciumGrid replacement
+- No real TDX sync, proprietary factors, or IG report builder in OSS
+- No private `output/` / reference / parity reports in Lucerna Git
+
+Prior milestone: **v1.0-rc1** (`838f018`). Private sign-off: `V1_0_SIGNOFF_REPORT.md` in `lucerna-private`.
+
 ## v1.0-rc1 — readiness milestone (documentation)
 
 v1.0-rc1 marks **readiness** for the Lucerna open-core + private extension migration path. It is
