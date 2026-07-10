@@ -3,7 +3,7 @@
 **Document type:** software / systems paper draft (Markdown)
 **Audience:** Codex → LaTeX conversion
 **Status:** not submitted to arXiv
-**Repository:** https://github.com/Cavaradossi/indiciumforge  
+**Repository:** https://github.com/Cavaradossi/indiciumforge
 **Version tag:** `v2.0.0`
 **Claims index:** [CLAIMS_REGISTER.md](CLAIMS_REGISTER.md)
 
