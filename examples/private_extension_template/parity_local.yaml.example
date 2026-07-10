@@ -1,0 +1,17 @@
+# Copy to parity_local.yaml (gitignored) — operator-local only.
+
+schema: lucerna.parity_local_config.v1
+reference_artifact_root: <operator-local-reference-root>
+trade_date: <YYYYMMDD>
+artifact_root: <writable-local-temp>
+recipe:
+  path: <path-to-recipe-yaml>
+  extension_pack: <path-to-recipe-extension-pack>
+  daily_review_fixture: <path-to-daily-review-fixture>
+dimensions:
+  - daily_review_structure
+  - post_close_handoff_shape
+  - preopen_handoff_shape
+  - market_gate_strict_semantics
+  - workflow_chain_summary_v4
+disclaimer: research_audit_only

@@ -1,0 +1,9 @@
+# Copy to factor_pack.yaml — operator-local only.
+
+schema: lucerna.factor_pack.v1
+pack_id: <your-factor-pack-id>
+version: "0.1.0"
+load:
+  detectors_config: <path-to-detectors.yaml>
+  include_entry_points: true
+  entry_point_group: lucerna.factor_detectors

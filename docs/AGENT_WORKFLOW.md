@@ -18,7 +18,8 @@
 ## Golden export flow
 
 ```powershell
-pip install -e d:\project\indiciumgrid
+# Requires a local frozen reference checkout (indiciumgrid-golden-v1) — not part of Lucerna OSS.
+pip install -e <path-to-frozen-reference-checkout>
 python scripts/export_golden_market_gate.py
 ```
 

@@ -1,0 +1,12 @@
+# Copy to extension_pack.yaml if you use a unified pack manifest — optional.
+
+schema: lucerna.private_extension_manifest.v0
+pack_id: <your-extension-bundle-id>
+version: "0.1.0"
+components:
+  provider_pack: <path-to-provider_pack.yaml>
+  factor_pack: <path-to-factor_pack.yaml>
+  recipe_extension_pack: <path-to-recipe_extension_pack.yaml>
+notes: >
+  Illustrative manifest only. Lucerna loads each pack type via its own schema;
+  this file is documentation for operators organizing a private repo layout.

@@ -33,6 +33,7 @@
 ## Allowed project agent files
 
 - `AGENTS.md`
+- `docs/AGENT_QUICKSTART.md` — start here for onboarding
 - `docs/AGENT_WORKFLOW.md`
 - `docs/AGENT_REVIEW_CHECKLIST.md`
 

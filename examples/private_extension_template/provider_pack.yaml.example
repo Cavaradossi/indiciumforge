@@ -1,0 +1,8 @@
+# Copy to provider_pack.yaml — operator-local only.
+
+schema: lucerna.provider_pack.v1
+pack_id: <your-provider-pack-id>
+version: "0.1.0"
+load:
+  include_entry_points: true
+  entry_point_group: lucerna.data_providers

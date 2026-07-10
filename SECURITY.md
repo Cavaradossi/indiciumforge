@@ -2,8 +2,8 @@
 
 ## Supported versions
 
-Security fixes are considered for the current public alpha line on `master`
-(pyproject version `0.5.0`, documented as v0.5-alpha).
+Security fixes are considered for the current signed release line on `master`
+(pyproject version `1.0.0`, documented as v1.0.0).
 
 ## Reporting a vulnerability
 

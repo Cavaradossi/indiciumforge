@@ -1,5 +1,15 @@
 # Lucerna Release Notes
 
+## v1.0.0 — public GitHub materials (documentation polish)
+
+Adds open-source onboarding without changing v0.11.0 runtime semantics:
+
+- README first-screen rewrite (hero, architecture Mermaid, v1.0 matrix)
+- Agent onboarding pack (`docs/AGENT_QUICKSTART.md`, `SYSTEM_MAP.md`, `CURRENT_STATUS.md`, `NEXT_ACTIONS.md`, `CONTEXT_PROMPTS/`)
+- [EXTENSION_AUTHOR_GUIDE.md](docs/EXTENSION_AUTHOR_GUIDE.md) and [examples/private_extension_template/](examples/private_extension_template/)
+- [Accounting-risk research plan stub](docs/research/ACCOUNTING_RISK_ANOMALY_RESEARCH_PLAN.md) (no experiment claims)
+- Security scan remediation (generic paths, `SECURITY.md` version `1.0.0`)
+
 ## v1.0.0 — open-core sign-off (documentation + version label)
 
 Lucerna **v1.0.0** signs the open-core + private extension migration path for core A-share daily
@@ -308,3 +318,29 @@ Apache License 2.0 — see [LICENSE](LICENSE) and [ADR-0007](docs/decisions/ADR-
 - Intraday watch, factor tracking, account analysis
 
 See [docs/MIGRATION_ROADMAP.md](docs/MIGRATION_ROADMAP.md) and [CAPABILITY_REGISTER.md](CAPABILITY_REGISTER.md).
+
+---
+
+## Version history (condensed)
+
+Moved from README for GitHub first-screen clarity. Full per-release notes remain in sections above.
+
+| Version | Headline |
+| --- | --- |
+| **v1.0.0** | Open-core sign-off; private golden parity evidenced externally; gaps accepted |
+| **v1.0-rc1** | Readiness milestone; documentation + private parity references |
+| **v0.11.0** | Private-local parity harness (`lucerna parity run`) |
+| **v0.10.0** | A-share private recipe integration (`--recipe`, extension packs) |
+| **v0.9.0** | Session-aware data provider contract v2 |
+| **v0.8.0** | Session-cyclic workflow model contracts |
+| **v0.7.0** | Private factor pack loading + chain `factor_scan` stage |
+| **v0.6.0** | Workflow chain skeleton (`lucerna workflow chain`) |
+| **v0.5.0** | Synthetic end-to-end demo (`synthetic-e2e`) |
+| **v0.4.1** | Daily-review CLI + manifest audit |
+| **v0.4.0** | Market daily-review upstream skeleton |
+| **v0.3.0** | Factor detector port + demo detectors |
+| **v0.2.x** | Provider port, factor inventory, open-core boundary |
+| **v0.2.0** | Artifact manifest audit CLI |
+| **v0.1.0** | Market-gate walking skeleton + golden parity |
+
+Reference pin throughout: `indiciumgrid @ indiciumgrid-golden-v1`. Lucerna preserves golden-covered behavior, not legacy module structure.

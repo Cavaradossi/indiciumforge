@@ -13,7 +13,7 @@ Status values:
 - `implemented_v0.10`: A-share private recipe integration — ports, RecipeRunner, fake extension (ADR-0021).
 - `implemented_v0.11`: private local parity harness — config-driven reference compare (ADR-0022).
 - `validated_private_path`: readiness evidence from external private pack; not implemented in OSS.
-- `signed_v1.0`: v1.0 sign-off evidence complete; open-core semantics frozen; gaps accepted in private register.
+- `signed_v1.0`: v1.0 sign-off evidence complete; open-core semantics frozen; gaps accepted in private register. GitHub public onboarding docs (Agent Pack, Extension Author Guide, research stub) added in the v1.0.0 polish patch — no capability status changes.
 - `implemented_v0.7`: private factor pack loading integration + workflow chain factor_scan stage.
 - `implemented_v0.6`: workflow chain skeleton (post_close -> preopen -> market_gate).
 - `private_extension`: intentionally outside the open-source repository; implemented only by private packs/plugins.
