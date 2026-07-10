@@ -10,3 +10,4 @@ build/
 output/
 parity_local.yaml
 tests/golden/**/_run/
+paper/*.pdf
