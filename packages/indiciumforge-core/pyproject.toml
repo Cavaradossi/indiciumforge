@@ -5,9 +5,32 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "indiciumforge-core"
 version = "2.0.0"
-description = "Core contracts and artifacts for IndiciumForge."
+description = "Core contracts, artifact schemas, and ports for IndiciumForge evidence-first research workflows."
+readme = "README.md"
+license = "Apache-2.0"
 requires-python = ">=3.10"
+authors = [{ name = "IndiciumForge contributors" }]
+keywords = ["workflow", "artifacts", "research", "audit", "open-core"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Science/Research",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering",
+  "Topic :: Software Development :: Libraries",
+]
 dependencies = ["pandas>=2.0", "tabulate>=0.9"]
+
+[project.urls]
+Homepage = "https://github.com/Cavaradossi/indiciumforge"
+Repository = "https://github.com/Cavaradossi/indiciumforge"
+Documentation = "https://github.com/Cavaradossi/indiciumforge/tree/master/docs"
+Issues = "https://github.com/Cavaradossi/indiciumforge/issues"
+Changelog = "https://github.com/Cavaradossi/indiciumforge/blob/master/RELEASE_NOTES.md"
 
 [tool.setuptools.packages.find]
 where = ["src"]

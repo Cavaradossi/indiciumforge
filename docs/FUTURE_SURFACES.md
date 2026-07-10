@@ -25,8 +25,9 @@
 
 | Item | Target |
 | --- | --- |
-| Skill slug | `indiciumforge-agent-quickstart` |
-| Source docs | `docs/AGENT_QUICKSTART.md`, `SYSTEM_MAP.md` |
+| Skill slugs | `indiciumforge-orientation`, `indiciumforge-extension-author`, `indiciumforge-release-audit` |
+| In-repo path | `agent/skills/` |
+| Roadmap | [AGENT_SKILL_ROADMAP.md](AGENT_SKILL_ROADMAP.md) |
 
 ## MCP server (future)
 
@@ -37,13 +38,11 @@
 
 ## arXiv / research
 
-Working title (post-rebrand):
+Working title (paper draft):
 
-> *IndiciumForge: Contract-First Evidence Artifacts for Point-in-Time Accounting-Risk Anomaly Detection*
+> *IndiciumForge: A Contract-First Open Core for Evidence-First Financial Research Workflows*
 
-- Replace Lucerna brand mentions with IndiciumForge
-- Keep IndiciumGrid as frozen reference lineage only
-- Link ORCID/GitHub to `Cavaradossi/indiciumforge` after rename
+Draft: [paper/INDICIUMFORGE_ARXIV_DRAFT.md](paper/INDICIUMFORGE_ARXIV_DRAFT.md) — **not submitted** to arXiv.
 
 ## Private extension packs
 
