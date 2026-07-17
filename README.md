@@ -120,24 +120,43 @@ Deeper diagrams: [docs/SYSTEM_MAP.md](docs/SYSTEM_MAP.md), [docs/diagrams/contex
 
 Full capability matrix: [CAPABILITY_REGISTER.md](CAPABILITY_REGISTER.md).
 
-## Quant capabilities (W4)
+## Quant quickstart (W4)
 
-IndiciumForge now ships real, tested quant capability behind `indiciumforge_core.quant`:
-four ports (analytics, portfolio, backtest, pricing) with reference adapters
-(statsmodels, cvxpy, vectorized numpy/pandas, analytic Black-Scholes), an A-share
-golden-snapshot provider, and a deterministic end-to-end pipeline exposed via
-`indiciumforge quant {analytics,optimize,backtest,price,pipeline}`.
+IndiciumForge now ships real, tested quant capability behind `indiciumforge_core.quant`,
+following the same port + pack-loading pattern:
 
-> Honesty note: the backtester is daily, single-asset-return, and cost-flat only (no
-> slippage/impact); the demo runs on a **synthetic** golden panel, so all reported
-> metrics demonstrate framework correctness, not market performance or investment
-> advice. See [ADR-0026](docs/decisions/ADR-0026-quant-capability-increment.md).
+| Capability | Port / adapter | Notes |
+| --- | --- | --- |
+| Factor analytics | `FactorAnalyticsPort` / `StatsmodelsFactorEngine` | Per-horizon Spearman IC, Fama-MacBeth slope + t-stat, turnover |
+| Portfolio optimization | `PortfolioOptimizationPort` / `CvxpyOptimizer` | Mean-variance / min-variance, long-only, weight & sector caps |
+| Backtest | `BacktestPort` / `VectorizedBacktester` | Pure numpy/pandas; prior-period weights (no look-ahead), flat cost, Sharpe/max-drawdown/Calmar |
+| Option pricing | `PricingPort` / `BlackScholesPricer` | Analytic Black-Scholes European price + Greeks (stdlib only, no extra deps) |
+| Data | `GoldenSnapshotProvider` / `AkshareDataProvider` | Committed synthetic A-share golden panel; akshare adapter behind `data` extra + offline `cache_only` |
+
+The CLI exposes `indiciumforge quant` with `analytics` / `optimize` / `backtest` /
+`price` / `pipeline` subcommands; heavy dependencies are imported lazily inside each
+command, so the CLI loads even without the `analytics` / `portfolio` extras installed.
 
 ```bash
-# End-to-end pipeline on the synthetic golden panel (deterministic):
+# End-to-end pipeline: factor -> analytics -> optimize -> backtest (deterministic, on the synthetic golden panel)
 indiciumforge quant pipeline \
   --panel tests/fixtures/golden_ashare/panel.parquet --rebalance-every 10
+
+# Analytic Black-Scholes European option price + Greeks
+indiciumforge quant price \
+  --spot 100 --strike 100 --maturity 1 --rate 0.05 --volatility 0.2 --type call
 ```
+
+> The `analytics` / `optimize` / `backtest` subcommands accept pre-built CSVs (factor
+> panel, returns panel, expected returns, covariance, weight history); `pipeline` starts
+> from the OHLCV panel and is the out-of-the-box end-to-end demo.
+
+> **Honesty note:** the W4 backtester is a daily, single-asset-return, cost-flat model
+> with no slippage, market impact, or intraday dynamics; the demo runs on a **synthetic**
+> golden panel, so all reported metrics demonstrate framework correctness, not market
+> performance or live-trading backtests, and not investment advice (see
+> [ADR-0026](docs/decisions/ADR-0026-quant-capability-increment.md)). QuantLib / rqalpha
+> integration is out of scope for W4; the ports remain swappable for alternative adapters.
 
 ## Open core vs private extensions
 
