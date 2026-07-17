@@ -1,0 +1,3 @@
+engines:
+  - module: indiciumforge_core.quant.analytics.statsmodels_engine
+    class: StatsmodelsFactorEngine

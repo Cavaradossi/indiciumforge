@@ -4,7 +4,7 @@
 **Audience:** Codex → LaTeX conversion
 **Status:** not submitted to arXiv
 **Repository:** https://github.com/Cavaradossi/indiciumforge
-**Version tag:** `v2.0.0`
+**Version tag:** `v2.0.1`
 **Claims index:** [CLAIMS_REGISTER.md](CLAIMS_REGISTER.md)
 
 ---
@@ -15,7 +15,7 @@ Financial research pipelines frequently combine data ingestion, proprietary sign
 
 IndiciumForge is an open-core Python architecture whose primary outputs are **versioned research artifacts**—JSON stage states, CSV review tables, and chain summaries—rather than orders or portfolio actions. Stable contracts (`DataProviderPortV2`, `FactorDetectorPort`, `PrivateRecipeExtensionPort`) and YAML pack loaders let operator-local extensions attach without forking core semantics. A manifest audit CLI validates structural completeness; golden and parity comparators evaluate semantic agreement against exported reference trees without importing legacy runtime code.
 
-We describe six contributions: contract-first packaging, artifact schema audit, recipe/session orchestration, an explicit open-core boundary, golden parity methodology, and agent-friendly governance documentation. A three-layer validation story (OSS golden, synthetic parity demo, operator-local sign-off categories) illustrates migration evidence without publishing private rows or paths. IndiciumForge is a **research audit framework**—not a trading system, not investment advice, and not a broker execution platform.
+We describe six contributions: contract-first packaging, artifact schema audit, recipe/session orchestration, an explicit open-core boundary, golden parity methodology, and agent-friendly governance documentation. A three-layer validation story (OSS golden, synthetic parity demo, operator-local sign-off categories) illustrates migration evidence without publishing private rows or paths. IndiciumForge is a **quantitative finance framework**—not a trading system, not investment advice, and not a broker execution platform.
 
 **Keywords:** research workflows, software architecture, artifact audit, open core, reproducibility, financial research systems
 
@@ -34,7 +34,8 @@ IndiciumForge targets the middle ground: **evidence-first financial research** i
 3. **Recipe and session workflow model** — cyclic session contracts with domain-specific recipes, including an A-share daily instance (C16, C17).
 4. **Open-core / private-extension boundary** — ADR-governed IP and security split (C12, C29).
 5. **Golden artifact and parity harness methodology** — five OSS golden scenarios and five parity dimensions vs frozen reference exports (C05–C11, C21–C24).
-6. **Agent-friendly governance** — constitution, 23 ADRs, AGENTS.md, and in-repo Cursor skills for safe automation (C32, C33).
+6. **Agent-friendly governance** — constitution, 25 ADRs, AGENTS.md, and in-repo Cursor skills for safe automation (C32, C33).
+7. **Real quant capability (W4)** — four ports (analytics, portfolio, backtest, pricing) with reference adapters, an A-share golden snapshot, and a deterministic end-to-end pipeline behind `indiciumforge quant` (C43–C51, ADR-0026).
 
 ### 1.2 Non-claims
 
@@ -81,7 +82,7 @@ IndiciumForge v2.0.0 ships three installable packages (C01):
 | --- | --- |
 | `indiciumforge-core` | Domain models, ports, artifact I/O, manifest audit, parity models, pack loaders |
 | `indiciumforge-workflow` | Market gate kernel, daily review skeleton, workflow chain runner, synthetic e2e |
-| `indiciumforge-cli` | Typer CLI (`indiciumforge`) exposing workflow, artifact, factor, provider, parity commands (C02) |
+| `indiciumforge-cli` | Typer CLI (`indiciumforge`) exposing workflow, artifact, factor, provider, parity, and quant commands; the `quant` group lazily imports heavy deps (C02, C50) |
 
 Figure 4 (package workspace) and Figure 1 (system boundary) in [FIGURES.md](FIGURES.md) summarize the layout.
 
@@ -110,6 +111,18 @@ configure packs → run recipe/chain stage → write stage directory
 
 Structural audit intentionally precedes semantic comparison so incomplete runs fail before expensive diffs (C04).
 
+### 3.4 Quant analytics, optimization, backtest and pricing (W4)
+
+`indiciumforge_core.quant` mirrors the `factors/` domain-packaging pattern: each
+submodule (`analytics`, `portfolio`, `backtest`, `pricing`) declares a `typing.Protocol`
+port, frozen request/result dataclasses, one or more concrete adapters, a registry, and
+a pack loader (C43). Adapters lazily import heavy dependencies behind `_require_*`
+helpers so `import indiciumforge_core.quant` succeeds with only the core install; the
+optional deps are isolated behind the `[analytics]` (statsmodels, scipy), `[portfolio]`
+(cvxpy), and `[data]` (akshare, lxml) extras (C44–C47, ADR-0026). The end-to-end
+pipeline `run_quant_pipeline` and the `indiciumforge quant` CLI group compose these
+ports (C49, C50).
+
 ---
 
 ## 4. Contract-first design
@@ -128,7 +141,7 @@ Breaking namespace changes bump major release version (v2.0.0 rebrand from legac
 
 ### 4.4 Governance
 
-Twenty-three ADRs document boundaries from evidence-first principles (ADR-0001) through rebrand policy (ADR-0023) (C33). The capability register marks each feature `implemented_*`, `private_extension`, `contract_only`, or `technical_reserve` (C26–C28).
+Twenty-five ADRs document boundaries from evidence-first principles (ADR-0001) through the W4 quant increment (ADR-0026) (C33). The capability register marks each feature `implemented_*`, `private_extension`, `contract_only`, or `technical_reserve` (C26–C28).
 
 ---
 
@@ -232,6 +245,51 @@ This case study validates the **open-core / private-extension boundary** and par
 
 All reproducible commands in §13 use synthetic fixtures under `tests/fixtures/` only (C09, C40).
 
+### 9.5 W4 reference quant pipeline on the synthetic golden panel
+
+W4 instantiates the four quant ports (§3.4) with reference adapters and wires them into
+an end-to-end pipeline `run_quant_pipeline` (C43–C50). To make the demonstration
+**reproducible and honest**, the pipeline runs on a committed synthetic A-share-like
+panel (`tests/fixtures/golden_ashare/panel.parquet`, 36 assets × 521 trading dates)
+served by `GoldenSnapshotProvider` (C48). The panel is generated by a fixed-seed script
+with a persistent AR(1) trend, so the factor carries *positive and horizon-increasing*
+IC — a credible demo signal, not a fabricated one. All numbers below are
+**byte-deterministic** across runs and locked by `tests/golden/test_quant_pipeline.py`
+(C49).
+
+**Factor analytics (`StatsmodelsFactorEngine`).** A trailing-`lookback` momentum factor
+is evaluated over forward horizons `h ∈ {1, 5, 10}`. IC is the cross-sectional Spearman
+rank correlation of factor vs. forward return; the Fama-MacBeth slope is the per-date
+cross-sectional OLS slope aggregated over time with a t-statistic.
+
+| Horizon `h` | IC mean | IC std | IR | Positive % | t-stat | n dates |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1 | 0.0347 | 0.1651 | 0.21 | 58.3% | 4.71 | 501 |
+| 5 | 0.4056 | 0.1418 | 2.86 | 99.8% | 64.03 | 501 |
+| 10 | 0.6369 | 0.1004 | 6.34 | 100.0% | 141.97 | 501 |
+
+Fama-MacBeth slope mean **0.00786**, t-stat **5.18** (n = 502); rank-weight turnover
+**0.134**. As designed, IC **rises with horizon** because the synthetic trend is
+persistent — this is the opposite of the usual IC-decay pattern and is reported exactly
+as the engine produces it, with no "decay" assumption baked into the claim.
+
+**Portfolio optimization (`CvxpyOptimizer`).** At the final rebalance, mean-variance
+optimization over the top-`n` ranked assets yields expected return **0.00278**,
+expected risk **0.00861**, Sharpe **0.322** (long-only, weight bounds).
+
+**Backtest (`VectorizedBacktester`).** With `rebalance_every = 10` and `cost_bps = 5`,
+the vectorized backtest (prior-period weights, flat cost, no look-ahead) reports total
+return **0.4102**, annualized return **0.1809**, annualized volatility **0.1254**,
+Sharpe **1.44**, max drawdown **−0.0987**, Calmar **1.83** (n = 521); portfolio weights
+sum to 1.0.
+
+**Scope of these numbers.** They are **computed on the synthetic golden panel** and
+demonstrate *framework correctness and pipeline wiring* (C49, C51). They are **not**
+market performance, not a live-trading backtest, and not investment advice. The
+vectorized backtester is daily, single-asset-return, and cost-flat only; it does not
+model slippage, market impact, or intraday dynamics (§11, ADR-0026). The forbidden
+trading-performance claim remains in force for any real-market assertion.
+
 ---
 
 ## 10. Agent-friendly governance
@@ -239,7 +297,7 @@ All reproducible commands in §13 use synthetic fixtures under `tests/fixtures/`
 Financial research software must be maintainable by human reviewers **and** coding agents. IndiciumForge ships:
 
 - **AGENTS.md** — frozen-reference rules, anti-inheritance constraints, encoding policy (C32),
-- **23 ADRs** — architectural boundaries readable without spelunking code (C33),
+- **25 ADRs** — architectural boundaries readable without spelunking code (C33),
 - **Agent onboarding pack** — `docs/AGENT_QUICKSTART.md`, `SYSTEM_MAP.md`, `CURRENT_STATUS.md`,
 - **In-repo Cursor skills** — `agent/skills/indiciumforge-{orientation,extension-author,release-audit}/` (C32).
 
@@ -258,6 +316,8 @@ Skills deliberately exclude private paths, credentials, and trading API guidance
 7. **Manifest audit ≠ economic truth** — structure only; semantics require golden/parity (C04).
 8. **Parity ≠ production sign-off** — research audit disclaimer (C31).
 9. **Accounting-risk research** — planning stub only; no OSS experiments (C37).
+10. **Quant engine scope (W4)** — the vectorized backtester is daily, single-asset-return, and cost-flat only; it models no slippage, market impact, intraday dynamics, or factor decay beyond the IC sweep. Pricing is analytic European Black-Scholes only. A-share demonstration uses a **synthetic** golden panel; reported metrics demonstrate framework correctness, not market or live-trading performance (C43–C51, ADR-0026).
+11. **External quant frameworks deferred** — QuantLib / rqalpha / qlib integration is out of scope for W4; the ports remain swappable for alternative adapters (ADR-0026).
 
 ---
 
@@ -270,7 +330,7 @@ Skills deliberately exclude private paths, credentials, and trading API guidance
 | MCP tools (manifest inspect, parity summarize) | design only | `docs/mcp/INDICIUMFORGE_MCP_DESIGN.md` (C36) |
 | IDE plugin bundling skills + prompts | design only | `docs/plugin/INDICIUMFORGE_PLUGIN_DESIGN.md` |
 | Cross-domain session recipes (US equity, crypto spot) | contracts exist | WORKFLOW_SESSION_MODEL (C39) |
-| PyPI distribution | build-ready, unpublished | PYPI_RELEASE_CHECKLIST (C35) |
+| PyPI distribution | published v2.0.1 | PYPI_RELEASE_CHECKLIST (C35) |
 | arXiv LaTeX + verified bibliography | this draft | RELATED_WORK candidate areas |
 
 Future crypto or multi-session workflows will reuse session-cyclic checkpoints—**without** documenting contest or competition-specific execution paths.
@@ -287,7 +347,7 @@ The architecture prioritizes reviewer trust and reproducible stage evidence over
 
 ## 14. Reproducibility
 
-From tag `v2.0.0` (C19):
+From tag `v2.0.1` (C19):
 
 ```bash
 pip install -e packages/indiciumforge-core \
@@ -301,7 +361,29 @@ indiciumforge parity run \
   --artifact-root /tmp/indiciumforge-parity-demo
 ```
 
-Expected: pytest reports 144 passed, 1 skipped (C19); parity demo produces `parity_run_report.json` with dimension verdicts (C09).
+Expected: pytest reports 241 passed, 1 skipped (C19, C51); parity demo produces `parity_run_report.json` with dimension verdicts (C09).
+
+The W4 quant group runs without the optional `[analytics]` / `[portfolio]` extras
+because its commands import heavy deps lazily:
+
+```bash
+# End-to-end pipeline on the synthetic golden panel (deterministic):
+indiciumforge quant pipeline \
+  --panel tests/fixtures/golden_ashare/panel.parquet \
+  --rebalance-every 10
+# → per-horizon IC, Fama-MacBeth slope, optimization, backtest report (C49, C50)
+
+# Analytic Black-Scholes price + Greeks:
+indiciumforge quant price \
+  --spot 100 --strike 100 --maturity 1 --rate 0.05 --volatility 0.2 --type call
+# → price 10.45, delta 0.637, ... (C47, C50)
+```
+
+The `analytics` / `optimize` / `backtest` subcommands accept pre-built CSVs
+(factor/returns panels, expected returns, covariance, weight history); `pipeline`
+starts from the OHLCV panel and is the out-of-the-box end-to-end demo. All numbers are
+byte-locked by `tests/golden/test_quant_pipeline.py` on the synthetic golden panel
+(C49).
 
 ---
 

@@ -1,0 +1,5 @@
+schema: indiciumforge.factor_analytics_pack.v1
+pack_id: quant-demo
+version: '1.0'
+load:
+  engines_config: quant_engines.yaml

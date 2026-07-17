@@ -26,6 +26,13 @@ ALLOWLIST_PATHS = {
     ROOT / "docs" / "PRIVATE_PARITY_HARNESS_TEMPLATE.md",
     ROOT / "docs" / "decisions" / "ADR-0022-private-local-parity-harness-v0.11.md",
     ROOT / "tests" / "security" / "test_no_provider_path_leak.py",
+    # W4a OSS credential-resolution files (intentionally discuss secrets; they
+    # resolve from env / ~/.indiciumforge/secrets.toml, never hardcoded paths).
+    ROOT / "packages" / "indiciumforge-core" / "src" / "indiciumforge_core"
+    / "providers" / "secrets.py",
+    ROOT / "packages" / "indiciumforge-core" / "src" / "indiciumforge_core"
+    / "providers" / "__init__.py",
+    ROOT / "tests" / "contract" / "test_secrets_resolver.py",
 }
 
 SCAN_ROOTS = (

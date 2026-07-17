@@ -11,6 +11,7 @@ from indiciumforge_cli.daily_review import workflow_daily_review
 from indiciumforge_cli.factor import factor_scan
 from indiciumforge_cli.parity import parity_report, parity_run
 from indiciumforge_cli.provider import provider_fetch, provider_inspect
+from indiciumforge_cli.quant import quant_app
 from indiciumforge_cli.synthetic_e2e import workflow_synthetic_e2e
 from indiciumforge_cli.workflow_chain import workflow_chain
 
@@ -24,6 +25,7 @@ app.add_typer(artifact_app, name="artifact")
 app.add_typer(factor_app, name="factor")
 app.add_typer(provider_app, name="provider")
 app.add_typer(parity_app, name="parity")
+app.add_typer(quant_app, name="quant")
 
 TRADE_DATE_OPTION = typer.Option(..., "--trade-date")
 ARTIFACT_ROOT_OPTION = typer.Option(..., "--artifact-root")

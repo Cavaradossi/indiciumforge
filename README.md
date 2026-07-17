@@ -2,7 +2,7 @@
 
 [中文说明](README_CN.md)
 
-**Open-core toolkit for reproducible financial research workflows.**
+**Open-core quantitative finance framework for reproducible financial research workflows.**
 
 Licensed under [Apache License 2.0](LICENSE). **v2.0.1** — see [RELEASE_NOTES.md](RELEASE_NOTES.md).
 
@@ -10,7 +10,7 @@ Licensed under [Apache License 2.0](LICENSE). **v2.0.1** — see [RELEASE_NOTES.
 
 ## What IndiciumForge is
 
-IndiciumForge is an open-core toolkit for building reproducible financial research workflows. It helps you:
+IndiciumForge is an open-core quantitative finance framework for building reproducible financial research workflows. It helps you:
 
 - **Define repeatable research workflow chains** (recipes and session stages)
 - **Write auditable output artifacts** (JSON/CSV bundles with schema IDs)
@@ -116,8 +116,28 @@ Deeper diagrams: [docs/SYSTEM_MAP.md](docs/SYSTEM_MAP.md), [docs/diagrams/contex
 | Reference comparison | `indiciumforge parity run` with demo fixtures |
 | Extension packs | Provider, factor, and recipe entry points via YAML |
 | OSS demos | Synthetic fixtures only—no live credentials in repo |
+| Quant pipeline | `indiciumforge quant ...` — factor analytics, portfolio optimization, vectorized backtest, Black-Scholes pricing (W4) |
 
 Full capability matrix: [CAPABILITY_REGISTER.md](CAPABILITY_REGISTER.md).
+
+## Quant capabilities (W4)
+
+IndiciumForge now ships real, tested quant capability behind `indiciumforge_core.quant`:
+four ports (analytics, portfolio, backtest, pricing) with reference adapters
+(statsmodels, cvxpy, vectorized numpy/pandas, analytic Black-Scholes), an A-share
+golden-snapshot provider, and a deterministic end-to-end pipeline exposed via
+`indiciumforge quant {analytics,optimize,backtest,price,pipeline}`.
+
+> Honesty note: the backtester is daily, single-asset-return, and cost-flat only (no
+> slippage/impact); the demo runs on a **synthetic** golden panel, so all reported
+> metrics demonstrate framework correctness, not market performance or investment
+> advice. See [ADR-0026](docs/decisions/ADR-0026-quant-capability-increment.md).
+
+```bash
+# End-to-end pipeline on the synthetic golden panel (deterministic):
+indiciumforge quant pipeline \
+  --panel tests/fixtures/golden_ashare/panel.parquet --rebalance-every 10
+```
 
 ## Open core vs private extensions
 

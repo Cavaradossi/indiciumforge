@@ -22,7 +22,7 @@ Every major technical statement in [INDICIUMFORGE_ARXIV_DRAFT.md](INDICIUMFORGE_
 | C16 | Session-cyclic workflow contracts exist (v0.8) | ADR + model doc | ADR-0018; `docs/WORKFLOW_SESSION_MODEL.md` | high | "SessionModel, WorkflowCheckpoint, HandoffArtifact contracts" |
 | C17 | A-share daily recipe ID is `indiciumforge.recipe.ashare_daily_research.v1` | Recipe fixture | `tests/fixtures/workflow/recipe_ashare_daily_v1.yaml` | high | "A-share daily recipe as one WorkflowRecipe instance" |
 | C18 | Workflow chain summary v4 includes per-stage audit_ok | Tests | `test_parity_summary_v4_audit.py`; `test_fake_ashare_recipe_chain.py` | high | "workflow_chain_summary.v4 carries audit_ok fields" |
-| C19 | OSS pytest suite passes on v2.0.0 | CI + local pytest | `.github/workflows/ci.yml`; `python -m pytest -q` (144 passed, 1 skipped at draft time) | high | "144 contract/golden/cli tests pass (1 skipped)" |
+| C19 | OSS pytest suite passes on v2.0.1 | CI + local pytest | `.github/workflows/ci.yml`; `python -m pytest -q` (241 passed, 1 skipped; retested 2026-07-16) | high | "241 contract/golden/cli tests pass (1 skipped)" |
 | C20 | Ruff lint passes in CI | CI workflow | `.github/workflows/ci.yml` ruff step | high | "static analysis gate in CI" |
 | C21 | L1 evidence: OSS golden covers strict_count ≥ 1 scenarios | v1 definition | `docs/V1_0_DEFINITION.md` layer L1 | high | "L1 OSS golden includes strict_pass semantics" |
 | C22 | L2 evidence: synthetic parity demo reports strict_count 1 | v1 definition + demo | `docs/V1_0_DEFINITION.md` L2; parity_reference_demo | high | "L2 synthetic parity demo reproduces harness path" |
@@ -36,9 +36,9 @@ Every major technical statement in [INDICIUMFORGE_ARXIV_DRAFT.md](INDICIUMFORGE_
 | C30 | Provider output must not feed strict market-gate directly | ADR-0019 rule 8 | ADR-0019; ADR-0020 | high | "data adapter does not authorize strict gate promotion" |
 | C31 | Parity harness disclaimer is research_audit_only | Config schema + ADR | ADR-0022; `parity_local.yaml.example` | high | "parity outputs are research audit evidence only" |
 | C32 | Agent governance docs exist for coding agents | AGENTS.md + skills | `AGENTS.md`; `agent/skills/*`; `docs/AGENT_QUICKSTART.md` | high | "agent-friendly governance via AGENTS.md and in-repo skills" |
-| C33 | 23 architecture decision records document evolution | ADR index | `docs/decisions/ADR-0001` through `ADR-0023` | high | "23 ADRs govern architectural boundaries" |
+| C33 | 25 architecture decision records document evolution | ADR index | `docs/decisions/ADR-0001` through `ADR-0024` and `ADR-0026` (ADR-0025 intentionally skipped) | high | "25 ADRs govern architectural boundaries" |
 | C34 | One-release lucerna.* schema compat shim | Code + test | `schema_compat.py`; `test_schema_compat.py` | high | "deprecated lucerna.* IDs accepted one release with warning" |
-| C35 | PyPI packages build and pass twine check (not published) | Build logs | `docs/PYPI_RELEASE_CHECKLIST.md`; draft sprint build verification | medium | "packages are build-ready; PyPI publish pending operator gate" |
+| C35 | PyPI packages published as v2.0.1 (core, workflow, cli) | PyPI release | `README.md` PyPI section; `pyproject.toml` version 2.0.1; `docs/PYPI_RELEASE_CHECKLIST.md` | high | "packages published on PyPI at v2.0.1" |
 | C36 | MCP server not implemented in v2.0.0 | Design doc status | `docs/mcp/INDICIUMFORGE_MCP_DESIGN.md` | high | "MCP surface design-only" |
 | C37 | Accounting-risk anomaly detection is future work only | Research plan stub | `docs/research/ACCOUNTING_RISK_ANOMALY_RESEARCH_PLAN.md` status line | high | "no completed accounting-risk experiments in OSS" |
 | C38 | Research dossier model is technical_reserve | Capability register | CAPABILITY_REGISTER `research dossier model` | high | "ResearchDossier contracts deferred" |
@@ -46,6 +46,15 @@ Every major technical statement in [INDICIUMFORGE_ARXIV_DRAFT.md](INDICIUMFORGE_
 | C40 | Extension template ships without proprietary logic | Example tree | `examples/private_extension_template/` | high | "OSS ships extension skeleton only" |
 | C41 | No strict_count > 0 in frozen operator reference; L1+L2 cover strict-pass | Accepted limitations | `docs/V1_0_DEFINITION.md` accepted limitations bullet 2 | high | "frozen reference lacks strict_count>0 date; OSS L1+L2 provide strict_count evidence" |
 | C42 | No IndiciumForge_bug or private extension defect on golden date | RC1 report | private `V1_0_RC1_READINESS_REPORT.md` §2026-07-03 | medium | "no open-core bug or private extension defect on golden date" |
+| C43 | Four quant ports ship behind `indiciumforge_core.quant` | Submodule + tests | `packages/.../quant/{analytics,portfolio,backtest,pricing}/`; `test_factor_analytics_port.py`, `test_portfolio_optimization_port.py`, `test_backtest_port.py`, `test_pricing_port.py` | high | "four quant ports: analytics, portfolio, backtest, pricing" |
+| C44 | Factor analytics engine computes IC, Fama-MacBeth, turnover | Engine + contract tests | `quant/analytics/statsmodels_engine.py`; `StatsmodelsFactorEngine`; `test_factor_analytics_port.py` (12 tests) | high | "StatsmodelsFactorEngine reports per-horizon IC, FMB slope, turnover" |
+| C45 | Portfolio optimizer solves mean-variance / min-variance via cvxpy | Engine + contract tests | `quant/portfolio/cvxpy_optimizer.py`; `CvxpyOptimizer`; `test_portfolio_optimization_port.py` (9 tests) | high | "CvxpyOptimizer with long-only, weight and sector caps" |
+| C46 | Vectorized backtest is look-ahead free, cost-aware | Engine + contract tests | `quant/backtest/vectorized.py`; `VectorizedBacktester`; `test_backtest_port.py` (7 tests) | high | "vectorized backtest uses prior-period weights, flat cost_bps" |
+| C47 | Analytic Black-Scholes pricer with Greeks | Engine + contract tests | `quant/pricing/black_scholes.py`; `BlackScholesPricer`; `test_pricing_port.py` (8 tests) | high | "BlackScholesPricer: price + Greeks, put-call parity" |
+| C48 | A-share data adapter + golden snapshot provider | Adapter + provider + fixture | `providers/akshare.py`, `providers/golden_snapshot.py`; `tests/fixtures/golden_ashare/panel.parquet`; `test_golden_pipeline.py` | high | "akshare adapter behind akshare extra; committed golden A-share panel" |
+| C49 | End-to-end quant pipeline is deterministic on the golden panel | E2E + golden tests | `quant/pipeline.py`; `tests/contract/test_quant_e2e_pipeline.py`, `tests/golden/test_quant_pipeline.py` | high | "factor->analytics->optimize->backtest pipeline; locked numbers" |
+| C50 | Quant CLI group behind lazy imports | CLI wiring | `packages/indiciumforge-cli/.../quant.py`; `indiciumforge quant {analytics,optimize,backtest,price,pipeline}` | high | "indiciumforge quant subcommands import heavy deps lazily" |
+| C51 | OSS pytest suite passes on W4 increment | CI + local pytest | `python -m pytest -q` (241 passed, 1 skipped; retested 2026-07-16) | high | "241 contract/golden/cli tests pass (1 skipped)" |
 
 ## Claims explicitly forbidden in paper
 
@@ -58,6 +67,8 @@ Every major technical statement in [INDICIUMFORGE_ARXIV_DRAFT.md](INDICIUMFORGE_
 | Competition / contest workflows | Operator constraint |
 | Invented citations | RELATED_WORK.md candidate-only rule |
 | daily_review parity mismatch on golden date 2026-07-03 | Contradicts v1.0-rc1 five-dimension match evidence |
+
+**Clarification — W4 §9.5 synthetic pipeline numbers.** Claim C50/C51 and §9.5 report engine-computed metrics (IC, Fama-MacBeth slope, turnover, Sharpe, max drawdown) produced by the four quant ports **on the committed synthetic A-share golden panel** (`tests/fixtures/golden_ashare/panel.parquet`). Those figures demonstrate *framework correctness and pipeline wiring*, are byte-deterministic across runs, and are **not** market performance, not backtested live trading, and not investment advice. The forbidden-claim row "Trading performance, Sharpe, alpha" remains in force for any real-market or live-trading performance assertion; §9.5 is explicitly scoped to synthetic-fixture methodology demonstration.
 
 ## Maintenance
 

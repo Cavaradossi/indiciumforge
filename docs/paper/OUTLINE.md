@@ -107,7 +107,7 @@
 ## 10. Agent-friendly governance
 
 - AGENTS.md constraints
-- 23 ADRs (0001–0023)
+- 25 ADRs (0001–0024 and 0026)
 - In-repo Cursor skills (`agent/skills/`)
 
 ## 11. Limitations

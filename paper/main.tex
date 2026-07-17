@@ -35,11 +35,12 @@ extensions attach without forking core semantics. A manifest audit CLI validates
 completeness; golden and parity comparators evaluate semantic agreement against exported
 reference trees without importing legacy runtime code.
 
-We describe six contributions: contract-first packaging, artifact schema audit,
+We describe seven contributions: contract-first packaging, artifact schema audit,
 recipe/session orchestration, an explicit open-core boundary, golden parity methodology,
-and agent-friendly governance. A three-layer validation story combines public golden tests,
+agent-friendly governance, and real quant capability behind four audited ports. A three-layer
+validation story combines public golden tests,
 a synthetic parity demo, and category-level operator sign-off without disclosing private
-rows or paths. IndiciumForge is a research audit framework: it is not a trading system, not
+rows or paths. IndiciumForge is a quantitative finance framework: it is not a trading system, not
 investment advice, and not a broker execution platform.
 \end{abstract}
 
@@ -61,7 +62,7 @@ harness. Proprietary data adapters, factor detectors, and production recipe bodi
 in operator-local packs.
 
 \paragraph{Contributions.}
-This paper makes six software-architecture contributions:
+This paper makes seven software-architecture contributions:
 \begin{enumerate}[leftmargin=*]
   \item Contract-first open core: workflow stages consume port interfaces and pack loaders, not vendor SDKs.\claim{C13-C15}
   \item Artifact schemas and audit CLI: \schema{indiciumforge.*} schema IDs plus structural validation.\claim{C03-C04}
@@ -69,6 +70,7 @@ This paper makes six software-architecture contributions:
   \item Open-core/private-extension boundary: an ADR-governed IP and security split.\claim{C12,C29}
   \item Golden artifact and parity methodology: exported references and five parity dimensions.\claim{C05-C11}
   \item Agent-friendly governance: ADRs, agent rules, and in-repository skills for safe automation.\claim{C32-C33}
+  \item Real quant capability (W4): four ports--analytics, portfolio, backtest, pricing--with reference adapters, an A-share golden snapshot, and a deterministic end-to-end pipeline behind \texttt{indiciumforge quant}.\claim{C43-C51, ADR-0026}
 \end{enumerate}
 
 \paragraph{Non-claims.}
@@ -105,7 +107,7 @@ Package & Responsibility \\
 \midrule
 \pkg{indiciumforge-core} & Domain models, ports, artifact I/O, manifest audit, parity models \\
 \pkg{indiciumforge-workflow} & Market gate kernel, daily review skeleton, workflow chain runner \\
-\pkg{indiciumforge-cli} & Typer CLI exposing workflow, artifact, factor, provider, parity commands \\
+\pkg{indiciumforge-cli} & Typer CLI exposing workflow, artifact, factor, provider, parity, and quant commands \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -138,6 +140,17 @@ extensions supply data, factors, and recipe logic. Frozen legacy references supp
 comparison only; they are not imported at runtime.}
 \label{fig:boundary}
 \end{figure}
+
+\paragraph{Quant analytics, optimization, backtest and pricing (W4).}
+\pkg{indiciumforge\_core.quant} mirrors the \pkg{factors} packaging pattern: each submodule
+(\texttt{analytics}, \texttt{portfolio}, \texttt{backtest}, \texttt{pricing}) declares a
+\verb|typing.Protocol| port, frozen request/result dataclasses, a concrete adapter, a
+registry, and a pack loader.\claim{C43} Adapters lazily import heavy dependencies behind
+\verb|_require_*| helpers so the package imports with only the core install; optional deps
+sit behind the \texttt{[analytics]} (statsmodels, scipy), \texttt{[portfolio]} (cvxpy), and
+\texttt{[data]} (akshare, lxml) extras.\claim{C44-C47, ADR-0026} The end-to-end pipeline
+\verb|run_quant_pipeline| and the \texttt{indiciumforge quant} CLI group compose these
+ports.\claim{C49,C50}
 
 \section{Contract-First Design}
 
@@ -241,10 +254,11 @@ exercises the same harness without private paths.
 Evidence layer & Public or reported evidence & Claim IDs \\
 \midrule
 Package surface & Three installable packages and the \texttt{indiciumforge} CLI & C01, C02 \\
-Static and unit gates & Ruff in CI; pytest reported 144 passed and 1 skipped at draft time & C19, C20 \\
+Static and unit gates & Ruff in CI; pytest reported 241 passed and 1 skipped at draft time & C19, C20 \\
 Golden market gate & Five exported market-gate scenarios under \schema{indiciumgrid-golden-v1} & C05, C10 \\
 Synthetic parity & Public \texttt{parity\_reference\_demo} exercises the harness without private paths & C09, C22 \\
-Governance & 23 ADRs plus anti-inheritance rules and agent onboarding documents & C29, C32, C33 \\
+W4 quant pipeline & Deterministic factor$\to$analytics$\to$optimize$\to$backtest on the synthetic golden panel & C43-C51, ADR-0026 \\
+Governance & 25 ADRs plus anti-inheritance rules and agent onboarding documents & C29, C32, C33 \\
 \bottomrule
 \end{tabularx}
 \caption{Artifact-based evidence used in this paper. The table reports software and
@@ -347,6 +361,56 @@ the reconciled v1.0-rc1 evidence summary without disclosing private artifacts.}
 \label{tab:l3-dimensions}
 \end{table}
 
+\paragraph{W4 reference quant pipeline on the synthetic golden panel.}
+W4 instantiates the four quant ports with reference adapters and wires them into an
+end-to-end pipeline \verb|run_quant_pipeline|.\claim{C43-C50} To keep the demonstration
+reproducible and honest, the pipeline runs on a committed synthetic A-share-like panel
+(\texttt{tests/fixtures/golden\_ashare/panel.parquet}, 36 assets $\times$ 521 trading
+dates) served by \texttt{GoldenSnapshotProvider}.\claim{C48} The panel is generated by a
+fixed-seed script with a persistent AR(1) trend, so the factor carries positive and
+horizon-increasing IC--a credible demo signal, not a fabricated one. All numbers below are
+byte-deterministic across runs and locked by \texttt{tests/golden/test\_quant\_pipeline.py}.
+\claim{C49}
+
+A trailing-\texttt{lookback} momentum factor is evaluated over forward horizons
+$h \in \{1,5,10\}$. IC is the cross-sectional Spearman rank correlation of factor versus
+forward return; the Fama-MacBeth slope is the per-date cross-sectional OLS slope aggregated
+over time with a t-statistic.
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabularx}{\linewidth}{lYYYYl}
+\toprule
+Horizon $h$ & IC mean & IC std & IR & Positive \% & t-stat \\
+\midrule
+1 & 0.0347 & 0.1651 & 0.21 & 58.3 & 4.71 \\
+5 & 0.4056 & 0.1418 & 2.86 & 99.8 & 64.03 \\
+10 & 0.6369 & 0.1004 & 6.34 & 100.0 & 141.97 \\
+\bottomrule
+\end{tabularx}
+\caption{W4 factor analytics on the synthetic golden panel (n = 501 dates per horizon).
+Fama-MacBeth slope mean 0.00786, t-stat 5.18 (n = 502); rank-weight turnover 0.134. IC
+rises with horizon because the synthetic trend is persistent--the opposite of the usual
+IC-decay pattern, reported exactly as the engine produces it.}
+\label{tab:w4-analytics}
+\end{table}
+
+At the final rebalance, mean-variance optimization yields expected return 0.00278, expected
+risk 0.00861, Sharpe 0.322 (long-only, weight bounds). The vectorized backtest
+(prior-period weights, flat cost, no look-ahead) with \texttt{rebalance\_every = 10} and
+\texttt{cost\_bps = 5} reports total return 0.4102, annualized return 0.1809, annualized
+volatility 0.1254, Sharpe 1.44, max drawdown $-0.0987$, Calmar 1.83 (n = 521); portfolio
+weights sum to 1.0.
+
+\paragraph*{Scope of these numbers.}
+They are computed on the synthetic golden panel and demonstrate \emph{framework correctness
+and pipeline wiring}, not market performance, not a live-trading backtest, and not
+investment advice. The vectorized backtester is daily, single-asset-return, and cost-flat
+only; it models no slippage, market impact, or intraday dynamics (Section~``Limitations'',
+ADR-0026). The forbidden trading-performance claim remains in force for any real-market
+assertion.
+
 The frozen operator reference contains no \texttt{strict\_count > 0} date. Strict-pass
 semantics are therefore supported by L1 public golden scenarios and L2 synthetic parity rather
 than by the private frozen-reference export. This distinction prevents the case study from
@@ -358,12 +422,12 @@ IndiciumForge ships agent-facing guidance alongside human documentation: AGENTS.
 architecture decision records, onboarding maps, and in-repository skills for orientation,
 extension authoring, and release audit. These documents encode what automation must not do:
 inherit legacy paths, publish private data, or treat research artifacts as execution signals.
-The source repository is publicly available under the Apache-2.0 license, with package
-publication and MCP/plugin surfaces documented as future operational work.
+The source repository is publicly available under the Apache-2.0 license. Packages are
+published on PyPI at v2.0.1, while MCP and plugin surfaces remain documented as future operational work.
 
 \section{Reproducibility}
 
-From a clean checkout of tag \texttt{v2.0.0}:
+From a clean checkout of tag \texttt{v2.0.1}:
 \begin{verbatim}
 pip install -e packages/indiciumforge-core \
             -e packages/indiciumforge-workflow \
@@ -375,8 +439,19 @@ indiciumforge parity run \
   --parity-config tests/fixtures/parity_reference_demo/parity_config_demo.yaml \
   --artifact-root /tmp/indiciumforge-parity-demo
 \end{verbatim}
-At draft time the public suite reported 144 passing tests and one skipped test. The parity
+At draft time the public suite reported 241 passing tests and one skipped test. The parity
 command emits a \texttt{parity\_run\_report.json} with dimension-level verdicts.
+
+The W4 \texttt{quant} group runs without the optional \texttt{[analytics]}/\texttt{[portfolio]}
+extras because its commands import heavy deps lazily:
+\begin{verbatim}
+indiciumforge quant pipeline \
+  --panel tests/fixtures/golden_ashare/panel.parquet --rebalance-every 10
+indiciumforge quant price \
+  --spot 100 --strike 100 --maturity 1 --rate 0.05 --volatility 0.2 --type call
+\end{verbatim}
+All reported numbers are byte-locked by \texttt{tests/golden/test\_quant\_pipeline.py} on the
+synthetic golden panel.\claim{C49,C50}
 
 \section{Limitations and Threats to Validity}
 
@@ -386,6 +461,14 @@ economic correctness. The public repository does not include proprietary detecto
 reference trees, account artifacts, or live provider credentials. Operator-local L3 evidence is
 self-reported at category level; it is useful for migration sign-off but is not a third-party
 replication. Accounting-risk anomaly detection is future work only.
+
+The W4 quant engine is scoped deliberately: the vectorized backtester is daily,
+single-asset-return, and cost-flat only, modeling no slippage, market impact, or intraday
+dynamics; pricing is analytic European Black-Scholes only; the A-share demonstration uses a
+\emph{synthetic} golden panel, so all reported metrics demonstrate framework correctness
+rather than market or live-trading performance.\claim{C43-C51, ADR-0026} QuantLib, rqalpha,
+and qlib integration are out of scope for W4; the ports remain swappable for alternative
+adapters.
 
 \section{Related Work}
 

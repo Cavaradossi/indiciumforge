@@ -83,7 +83,7 @@
 
 **Candidate area:** Michael Nygard ADR pattern; docs-as-code governance in open source.
 
-**Evidence:** 23 ADRs in `docs/decisions/`; INDICIUMFORGE_CONSTITUTION.md; AGENTS.md agent rules.
+**Evidence:** 25 ADRs (ADR-0001–ADR-0024 and ADR-0026) in `docs/decisions/`; INDICIUMFORGE_CONSTITUTION.md; AGENTS.md agent rules.
 
 ---
 

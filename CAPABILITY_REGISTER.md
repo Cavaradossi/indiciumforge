@@ -12,6 +12,7 @@ Status values:
 - `implemented_v0.9`: session-aware data provider contract v2 (ADR-0019/0020).
 - `implemented_v0.10`: A-share private recipe integration — ports, RecipeRunner, fake extension (ADR-0021).
 - `implemented_v0.11`: private local parity harness — config-driven reference compare (ADR-0022).
+- `implemented_v2.0.1`: W4 quant increment — factor analytics, portfolio optimization, vectorized backtest, analytic pricing, A-share golden data, and the end-to-end pipeline; implemented, tested, documented.
 - `validated_private_path`: readiness evidence from external private pack; not implemented in OSS.
 - `signed_v1.0`: v1.0 sign-off evidence complete; open-core semantics frozen; gaps accepted in private register. GitHub public onboarding docs (Agent Pack, Extension Author Guide, research stub) added in the v1.0.0 polish patch — no capability status changes.
 - `implemented_v0.7`: private factor pack loading integration + workflow chain factor_scan stage.
@@ -58,6 +59,13 @@ Status values:
 | catalyst/KOL ingestion | `not_in_v0.1` | Future capture/evidence adapter. |
 | global cyclic workflow | `implemented_v0.8` | Session-cyclic contracts; recipe model; execution deferred. |
 | ETF workflow | `not_in_v0.1` | Future capability. |
+| factor analytics engine | `implemented_v2.0.1` | `FactorAnalyticsPort` + `StatsmodelsFactorEngine`; per-horizon IC (Spearman), Fama-MacBeth slope, turnover; `analytics` extra (statsmodels, scipy); ADR-0026. |
+| portfolio optimization | `implemented_v2.0.1` | `PortfolioOptimizationPort` + `CvxpyOptimizer`; mean-variance / min-variance, long-only, weight & sector caps; `portfolio` extra (cvxpy); ADR-0026. |
+| vectorized backtest | `implemented_v2.0.1` | `BacktestPort` + `VectorizedBacktester`; prior-period weights (no look-ahead), flat cost_bps, Sharpe/max-drawdown/calmar; numpy/pandas only; ADR-0026. |
+| analytic option pricing | `implemented_v2.0.1` | `PricingPort` + `BlackScholesPricer`; European price + Greeks, put-call parity; stdlib `math.erf`, no extra deps; ADR-0026. |
+| A-share golden data provider | `implemented_v2.0.1` | `GoldenSnapshotProvider` (DataProviderPortV2) over committed `tests/fixtures/golden_ashare/panel.parquet`; synthetic A-share-like panel; ADR-0026. |
+| A-share akshare adapter | `implemented_v2.0.1` | `AkshareDataProvider` behind `data` extra (akshare, lxml); offline-only `cache_only` mode; no private paths in OSS; ADR-0026. |
+| end-to-end quant pipeline | `implemented_v2.0.1` | `quant.pipeline.run_quant_pipeline` wiring factor->analytics->optimize->backtest; `indiciumforge quant` CLI group with lazy imports; deterministic golden test; ADR-0026. |
 
 Promotion rule: a capability can advance only when implementation, tests, and documentation agree.
 
@@ -142,3 +150,22 @@ Forward schedule and original-plan reconciliation:
 - Production private review builder (replace IG-output replay adapter)
 - Partial frozen layout adapter support
 - Optional open-core v1.0.1 comparator/config patches
+
+## v2.0.1 / W4 vertical slice (completed)
+
+- W4 delivered **real quant capability** behind `indiciumforge_core.quant` (Route A of
+  `blazing-forging-babbage.md`): four ports — analytics, portfolio, backtest, pricing —
+  each with a reference adapter (statsmodels, cvxpy, vectorized numpy/pandas,
+  analytic Black-Scholes) and a registry + pack loader (ADR-0026).
+- `GoldenSnapshotProvider` serves a committed synthetic A-share-like panel
+  (`tests/fixtures/golden_ashare/panel.parquet`, 36 assets, 521 dates); the `AkshareDataProvider`
+  adapter sits behind the `data` extra and an offline `cache_only` mode (no private paths in OSS).
+- `indiciumforge quant` CLI exposes `analytics`, `optimize`, `backtest`, `price`, `pipeline`
+  with lazy heavy-dep imports so the CLI loads without the `[analytics]`/`[portfolio]` extras.
+- End-to-end reference pipeline `run_quant_pipeline` is byte-deterministic on the golden panel;
+  `tests/golden/test_quant_pipeline.py` locks the reported numbers.
+- Honesty guardrails (ADR-0026): vectorized backtest is single-asset-return only (no factor
+  decay, no intraday, no slippage model), and §9.5 reports **synthetic-fixture** metrics as a
+  methodology demonstration — not market or live-trading performance.
+- Suite now 241 passed, 1 skipped (was 143); zero regression (C51).
+
