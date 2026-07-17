@@ -2,6 +2,7 @@ schema: indiciumforge.workflow_recipe.v1
 recipe_id: indiciumforge.recipe.ashare_daily_research.v1
 asset_domain: china_a_share
 session_model: calendar_day_cycle
+cycle_fn_id: ashare
 version: "1.0.0"
 stages:
   - stage_id: awareness_daily_review

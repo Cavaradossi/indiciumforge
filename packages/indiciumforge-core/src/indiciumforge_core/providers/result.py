@@ -1,12 +1,13 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from datetime import date, datetime, timezone
+from datetime import date
 from enum import Enum
 from typing import Any
 
 import pandas as pd
 
+from indiciumforge_core.clock import utc_now_iso
 from indiciumforge_core.providers.capabilities import DataKind, ProviderAuthorityLevel
 from indiciumforge_core.workflow.model import AssetDomain, SessionModel
 
@@ -71,7 +72,3 @@ class ProviderResult:
     frame: pd.DataFrame
     provenance: ProviderProvenance
     attempted_providers: tuple[str, ...] = ()
-
-
-def utc_now_iso() -> str:
-    return datetime.now(timezone.utc).replace(microsecond=0).isoformat()

@@ -24,6 +24,7 @@ class RecipeStageContext:
     session: WorkflowSessionMetadata
     inputs: dict[str, Path] = field(default_factory=dict)
     options: dict[str, Any] = field(default_factory=dict)
+    run_id: str = "default"
 
 
 @dataclass(frozen=True)
@@ -51,6 +52,18 @@ class StageRunResult:
         if self.extra:
             payload["extra"] = self.extra
         return payload
+
+    @classmethod
+    def from_payload(cls, payload: dict[str, Any]) -> "StageRunResult":
+        return cls(
+            stage_id=payload["stage_id"],
+            stage_dir=Path(payload["stage_dir"]),
+            artifacts=tuple(payload.get("artifacts", [])),
+            warnings=tuple(payload.get("warnings", [])),
+            empty_result_reason=payload.get("empty_result_reason"),
+            audit_ok=payload.get("audit_ok"),
+            extra=payload.get("extra", {}),
+        )
 
 
 @dataclass(frozen=True)

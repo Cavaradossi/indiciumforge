@@ -1,6 +1,6 @@
 # PyPI release checklist
 
-**Status:** `indiciumforge-core`, `indiciumforge-workflow`, and `indiciumforge-cli` **v2.0.0** are on production PyPI. **v2.0.1** metadata patch is prepared in-repo — publish when operator confirms.
+**Status:** `indiciumforge-core`, `indiciumforge-workflow`, and `indiciumforge-cli` are published on production PyPI at **v2.0.1** (v2.0.0 was the initial production release).
 
 IndiciumForge ships three installable packages from this monorepo. They are **real packages** with working code — not empty placeholders.
 

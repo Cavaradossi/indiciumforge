@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from collections.abc import Callable
 from dataclasses import dataclass
 from datetime import date
 from enum import Enum
@@ -38,6 +39,29 @@ EVIDENCE_STAGE_REF_SCHEMA = "indiciumforge.evidence_stage_ref.v1"
 
 DEFAULT_ASHARE_RECIPE_ID = "indiciumforge.recipe.ashare_daily_research.v1"
 
+# ---------------------------------------------------------------------------
+# Cycle-id resolvers: a recipe declares which function turns a trade date into
+# a session cycle id. The A-share recipe uses ``ashare_cycle_id``; other domains
+# register their own (see ADR-0024) instead of hard-coding one global function.
+# ---------------------------------------------------------------------------
+CycleIdFn = Callable[[date], str]
+_CYCLE_ID_FNS: dict[str, CycleIdFn] = {}
+
+
+def register_cycle_id_fn(fn_id: str, fn: CycleIdFn) -> None:
+    """Register a named cycle-id resolver (e.g. ``"ashare"``)."""
+    _CYCLE_ID_FNS[fn_id] = fn
+
+
+def resolve_cycle_id_fn(fn_id: str) -> CycleIdFn:
+    """Return a registered cycle-id resolver by id; raises ``KeyError`` if unknown."""
+    try:
+        return _CYCLE_ID_FNS[fn_id]
+    except KeyError as exc:
+        raise KeyError(
+            f"unknown cycle_fn_id {fn_id!r}; registered: {sorted(_CYCLE_ID_FNS)}"
+        ) from exc
+
 
 @dataclass(frozen=True)
 class RecipeStageSpec:
@@ -55,6 +79,7 @@ class WorkflowRecipe:
     session_model: SessionModel
     version: str
     stages: tuple[RecipeStageSpec, ...]
+    cycle_fn_id: str = "ashare"
     schema: str = WORKFLOW_RECIPE_SCHEMA
 
 
@@ -97,6 +122,9 @@ class WorkflowSessionMetadata:
 def ashare_cycle_id(trade_date: date) -> str:
     """A-share recipe uses trade_date ISO string as cycle_id for IG folder compatibility."""
     return trade_date.isoformat()
+
+
+register_cycle_id_fn("ashare", ashare_cycle_id)
 
 
 class MarketCalendarPort(Protocol):

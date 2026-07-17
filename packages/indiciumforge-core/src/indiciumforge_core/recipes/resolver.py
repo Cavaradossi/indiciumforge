@@ -19,19 +19,25 @@ from indiciumforge_core.workflow.model import RecipeStageKind, RecipeStageSpec
 class StageInputResolver:
     """Resolve handoff artifact paths for a recipe stage."""
 
-    def stage_dir(self, artifact_root: Path, trade_date: date, stage: RecipeStageSpec) -> Path:
+    def stage_dir(
+        self,
+        artifact_root: Path,
+        trade_date: date,
+        stage: RecipeStageSpec,
+        run_id: str = "default",
+    ) -> Path:
         folder = stage.ig_folder_name or stage.stage_id
         if folder == "daily_review":
-            return daily_review_dir(artifact_root, trade_date)
+            return daily_review_dir(artifact_root, trade_date, run_id)
         if folder == "factor_scan":
-            return factor_scan_dir(artifact_root, trade_date)
+            return factor_scan_dir(artifact_root, trade_date, run_id)
         if folder == "market_gate":
-            return market_gate_stage_dir(artifact_root, trade_date)
+            return market_gate_stage_dir(artifact_root, trade_date, run_id)
         if folder == "post_close":
-            return post_close_review_dir(artifact_root, trade_date)
+            return post_close_review_dir(artifact_root, trade_date, run_id)
         if folder == "preopen":
-            return preopen_review_dir(artifact_root, trade_date)
-        return workflow_root(artifact_root, trade_date) / folder
+            return preopen_review_dir(artifact_root, trade_date, run_id)
+        return workflow_root(artifact_root, trade_date, run_id) / folder
 
     def resolve_handoff_path(
         self,
@@ -40,15 +46,19 @@ class StageInputResolver:
         *,
         ig_folder: str,
         kind: HandoffArtifactKind,
+        run_id: str = "default",
     ) -> Path:
         if kind == HandoffArtifactKind.THEME_STATE_RANKING:
-            return daily_review_dir(artifact_root, trade_date) / HANDOFF_ARTIFACT_FILE_HINTS[kind]
+            return (
+                daily_review_dir(artifact_root, trade_date, run_id)
+                / HANDOFF_ARTIFACT_FILE_HINTS[kind]
+            )
         stage = RecipeStageSpec(
             stage_id=ig_folder,
             kind=RecipeStageKind.EVIDENCE,
             ig_folder_name=ig_folder,
         )
-        base = self.stage_dir(artifact_root, trade_date, stage)
+        base = self.stage_dir(artifact_root, trade_date, stage, run_id)
         hint = HANDOFF_ARTIFACT_FILE_HINTS[kind]
         if "{date}" in hint:
             hint = hint.replace("{date}", trade_date.isoformat())
@@ -69,6 +79,7 @@ class StageInputResolver:
                     context.trade_date,
                     ig_folder=folder,
                     kind=kind,
+                    run_id=context.run_id,
                 )
                 inputs[f"{prior.stage_id}:{kind.value}"] = path
         return inputs

@@ -9,6 +9,7 @@ from indiciumforge_core.workflow.model import (
     WORKFLOW_CHECKPOINT_SCHEMA,
     WORKFLOW_RECIPE_SCHEMA,
     AssetDomain,
+    CycleIdFn,
     EvidenceStageRef,
     MarketCalendarPort,
     RecipeStageKind,
@@ -18,6 +19,8 @@ from indiciumforge_core.workflow.model import (
     WorkflowRecipe,
     WorkflowSessionMetadata,
     ashare_cycle_id,
+    register_cycle_id_fn,
+    resolve_cycle_id_fn,
 )
 from indiciumforge_core.workflow.recipe_schema import (
     RecipeSchemaError,
@@ -32,6 +35,7 @@ __all__ = [
     "HANDOFF_ARTIFACT_FILE_HINTS",
     "HANDOFF_ARTIFACT_SCHEMA",
     "AssetDomain",
+    "CycleIdFn",
     "EvidenceStageRef",
     "HandoffArtifactKind",
     "MarketCalendarPort",
@@ -45,6 +49,8 @@ __all__ = [
     "WorkflowRecipe",
     "WorkflowSessionMetadata",
     "ashare_cycle_id",
+    "register_cycle_id_fn",
+    "resolve_cycle_id_fn",
     "load_workflow_recipe",
     "parse_workflow_recipe_payload",
     "recipe_to_payload",

@@ -11,4 +11,4 @@ class LocalArtifactStore:
 
     def write_csv(self, path: Path, frame: pd.DataFrame) -> None:
         path.parent.mkdir(parents=True, exist_ok=True)
-        frame.to_csv(path, index=False, encoding="utf-8-sig")
+        frame.to_csv(path, index=False, encoding="utf-8")

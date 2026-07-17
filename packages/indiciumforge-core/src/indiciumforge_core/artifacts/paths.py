@@ -3,39 +3,63 @@ from __future__ import annotations
 from datetime import date
 from pathlib import Path
 
-
-def workflow_root(artifact_root: Path, trade_date: date) -> Path:
-    return artifact_root / "workflows" / trade_date.strftime("%Y%m%d")
+from indiciumforge_core.run_id import is_isolated
 
 
-def market_gate_stage_dir(artifact_root: Path, trade_date: date) -> Path:
-    return workflow_root(artifact_root, trade_date) / "market_gate"
+def workflow_root(artifact_root: Path, trade_date: date, run_id: str = "default") -> Path:
+    base = artifact_root / "workflows" / trade_date.strftime("%Y%m%d")
+    if is_isolated(run_id):
+        base = base / "runs" / run_id
+    return base
 
 
-def theme_state_ranking_path(artifact_root: Path, trade_date: date) -> Path:
-    return daily_review_dir(artifact_root, trade_date) / "theme_state_ranking.csv"
+def market_gate_stage_dir(
+    artifact_root: Path, trade_date: date, run_id: str = "default"
+) -> Path:
+    return workflow_root(artifact_root, trade_date, run_id) / "market_gate"
 
 
-def daily_review_dir(artifact_root: Path, trade_date: date) -> Path:
+def theme_state_ranking_path(
+    artifact_root: Path, trade_date: date, run_id: str = "default"
+) -> Path:
+    return daily_review_dir(artifact_root, trade_date, run_id) / "theme_state_ranking.csv"
+
+
+def daily_review_dir(
+    artifact_root: Path, trade_date: date, run_id: str = "default"
+) -> Path:
     day = trade_date.strftime("%Y%m%d")
-    return artifact_root / "market_awareness" / day / "daily_review"
+    base = artifact_root / "market_awareness" / day
+    if is_isolated(run_id):
+        base = base / "runs" / run_id
+    return base / "daily_review"
 
 
-def synthetic_e2e_summary_path(artifact_root: Path, trade_date: date) -> Path:
-    return workflow_root(artifact_root, trade_date) / "synthetic_e2e_summary.json"
+def synthetic_e2e_summary_path(
+    artifact_root: Path, trade_date: date, run_id: str = "default"
+) -> Path:
+    return workflow_root(artifact_root, trade_date, run_id) / "synthetic_e2e_summary.json"
 
 
-def post_close_review_dir(artifact_root: Path, trade_date: date) -> Path:
-    return workflow_root(artifact_root, trade_date) / "post_close"
+def post_close_review_dir(
+    artifact_root: Path, trade_date: date, run_id: str = "default"
+) -> Path:
+    return workflow_root(artifact_root, trade_date, run_id) / "post_close"
 
 
-def preopen_review_dir(artifact_root: Path, trade_date: date) -> Path:
-    return workflow_root(artifact_root, trade_date) / "preopen"
+def preopen_review_dir(
+    artifact_root: Path, trade_date: date, run_id: str = "default"
+) -> Path:
+    return workflow_root(artifact_root, trade_date, run_id) / "preopen"
 
 
-def workflow_chain_summary_path(artifact_root: Path, trade_date: date) -> Path:
-    return workflow_root(artifact_root, trade_date) / "workflow_chain_summary.json"
+def workflow_chain_summary_path(
+    artifact_root: Path, trade_date: date, run_id: str = "default"
+) -> Path:
+    return workflow_root(artifact_root, trade_date, run_id) / "workflow_chain_summary.json"
 
 
-def factor_scan_dir(artifact_root: Path, trade_date: date) -> Path:
-    return workflow_root(artifact_root, trade_date) / "factor_scan"
+def factor_scan_dir(
+    artifact_root: Path, trade_date: date, run_id: str = "default"
+) -> Path:
+    return workflow_root(artifact_root, trade_date, run_id) / "factor_scan"

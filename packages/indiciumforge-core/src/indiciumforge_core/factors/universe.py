@@ -16,7 +16,7 @@ def _parse_asset_entry(entry: dict[str, Any]) -> AssetID:
     exchange_raw = str(entry.get("exchange", Exchange.SSE.value))
     asset_type_raw = str(entry.get("asset_type", AssetType.STOCK.value))
     try:
-        exchange = Exchange(exchange_raw)
+        exchange = Exchange.from_code(exchange_raw)
     except ValueError as exc:
         raise DetectorLoadError(f"invalid exchange: {exchange_raw}") from exc
     try:

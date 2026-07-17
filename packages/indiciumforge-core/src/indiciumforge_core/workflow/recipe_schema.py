@@ -92,6 +92,7 @@ def parse_workflow_recipe_payload(payload: dict[str, Any]) -> WorkflowRecipe:
         session_model=session_model,
         version=str(version),
         stages=stages,
+        cycle_fn_id=str(payload.get("cycle_fn_id", "ashare")),
     )
 
 
@@ -111,6 +112,7 @@ def recipe_to_payload(recipe: WorkflowRecipe) -> dict[str, Any]:
         "asset_domain": recipe.asset_domain.value,
         "session_model": recipe.session_model.value,
         "version": recipe.version,
+        "cycle_fn_id": recipe.cycle_fn_id,
         "stages": [
             {
                 "stage_id": stage.stage_id,
