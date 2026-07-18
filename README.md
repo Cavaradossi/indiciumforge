@@ -131,7 +131,7 @@ following the same port + pack-loading pattern:
 | Portfolio optimization | `PortfolioOptimizationPort` / `CvxpyOptimizer` | Mean-variance / min-variance, long-only, weight & sector caps |
 | Backtest | `BacktestPort` / `VectorizedBacktester` | Pure numpy/pandas; prior-period weights (no look-ahead), flat cost, Sharpe/max-drawdown/Calmar |
 | Option pricing | `PricingPort` / `BlackScholesPricer` | Analytic Black-Scholes European price + Greeks (stdlib only, no extra deps) |
-| Data | `GoldenSnapshotProvider` / `AkshareDataProvider` | Committed synthetic A-share golden panel; akshare adapter behind `data` extra + offline `cache_only` |
+| Data | `GoldenSnapshotProvider` / `AkshareDataProvider` / `OpenBBDataProvider` | Committed synthetic A-share golden panel; akshare adapter behind `data` extra + offline `cache_only`; OpenBB (US-equity) adapter behind `openbb` extra for the [public demo](#public-demo-openbb) |
 
 The CLI exposes `indiciumforge quant` with `analytics` / `optimize` / `backtest` /
 `price` / `pipeline` subcommands; heavy dependencies are imported lazily inside each
@@ -196,11 +196,36 @@ Start here: [docs/EXTENSION_AUTHOR_GUIDE.md](docs/EXTENSION_AUTHOR_GUIDE.md) · 
 | Paper draft | [docs/paper/INDICIUMFORGE_ARXIV_DRAFT.md](docs/paper/INDICIUMFORGE_ARXIV_DRAFT.md) |
 | MCP / plugin design | [docs/mcp/](docs/mcp/) · [docs/plugin/](docs/plugin/) |
 
-## Coming next: OpenBB public demo
+## Public demo (OpenBB)
 
-**Planning only (not in v2.0.0):** a short public-data smoke workflow using OpenBB as an adapter example—one command, small deterministic artifact tree, no private paths.
+A one-command, global (US-equity) public demo that runs the full quant pipeline
+(factor → analytics → optimize → backtest) and writes a small, deterministic
+artifact tree. **Offline by default** — it reads a committed synthetic sample
+panel shipped as package data, so a fresh clone or PyPI install works with no
+network, no API keys, and no private paths.
 
-Details: [docs/OPENBB_PUBLIC_DEMO_PLAN.md](docs/OPENBB_PUBLIC_DEMO_PLAN.md)
+```bash
+# Offline: runs on the committed deterministic sample (8 US tickers, no network)
+indiciumforge quant openbb-demo --artifact-root /tmp/openbb_demo
+# -> /tmp/openbb_demo/openbb_demo/summary.json  (IC-by-horizon, optimization, backtest)
+#    /tmp/openbb_demo/openbb_demo/panel_MANIFEST.yaml
+```
+
+To pull **real** data instead, install the opt-in extra and pass `--online`:
+
+```bash
+pip install 'indiciumforge-core[openbb]'   # routes through OpenBB -> yfinance (no API key)
+indiciumforge quant openbb-demo --online \
+  --tickers AAPL,MSFT,NVDA --start 2024-01-01 --end 2024-06-30 \
+  --artifact-root /tmp/openbb_demo
+```
+
+> **Honesty note:** the offline sample uses **synthetic deterministic values** —
+> the ticker symbols are public identifiers but the OHLCV values are generated
+> (`not_real_market_data: true` in the manifest). Reported metrics demonstrate
+> framework wiring, **not** market performance and **not** investment advice. See
+> [ADR-0027](docs/decisions/ADR-0027-openbb-adapter-boundary-v2.1.md) and the
+> [OpenBB public demo plan](docs/OPENBB_PUBLIC_DEMO_PLAN.md).
 
 ## Install
 

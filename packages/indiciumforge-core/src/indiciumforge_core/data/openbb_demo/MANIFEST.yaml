@@ -1,0 +1,27 @@
+schema: indiciumforge.openbb_demo_panel.v1
+source: synthetic_sample
+not_real_market_data: true
+universe:
+- AAPL
+- MSFT
+- GOOGL
+- AMZN
+- NVDA
+- META
+- TSLA
+- AVGO
+date_range:
+- '2024-01-02'
+- '2024-06-28'
+rows: 1032
+columns:
+- asset_uid
+- date
+- open
+- high
+- low
+- close
+- volume
+note: 'Synthetic deterministic sample for the offline public demo and CI; ticker symbols
+  are public identifiers but OHLCV values are generated. Real data requires: python
+  scripts/snapshot_openbb_demo.py --online (pip install ''indiciumforge-core[openbb]'').'

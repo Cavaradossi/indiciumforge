@@ -44,6 +44,9 @@ portfolio = ["cvxpy>=1.5,<2.0"]
 backtest = []   # vectorized backtest uses only numpy/pandas (already core deps)
 pricing = []    # Black-Scholes analytic uses stdlib math.erf (zero extra deps)
 data = ["akshare>=1.12", "lxml>=5.0"]
+# OpenBB public-demo adapter (global/US equity). Heavy + network; opt-in only,
+# never installed in default CI. The offline demo reads a committed sample panel.
+openbb = ["openbb>=4.0"]
 # Future: pricing-ql=["QuantLib>=1.36"]; backtest-engine=["rqalpha>=5.4"]
 
 [project.urls]
@@ -55,3 +58,7 @@ Changelog = "https://github.com/Cavaradossi/indiciumforge/blob/master/RELEASE_NO
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+# Ship demo panels + manifests so user-facing demos resolve regardless of cwd.
+indiciumforge_core = ["data/**/*.csv", "data/**/*.yaml"]
