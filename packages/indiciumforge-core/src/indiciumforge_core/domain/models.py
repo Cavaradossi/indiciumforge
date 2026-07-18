@@ -19,7 +19,7 @@ class MissingData(Exception):
 # *data*: well-known venues are seeded in a module-level registry, but any
 # non-empty code is accepted at runtime so the model is market-agnostic.
 # ---------------------------------------------------------------------------
-_EXCHANGE_REGISTRY: dict[str, "Exchange"] = {}
+_EXCHANGE_REGISTRY: dict[str, Exchange] = {}
 
 
 @dataclass(frozen=True)
@@ -49,14 +49,14 @@ class Exchange:
     @classmethod
     def register(
         cls, code: str, name: str, region: str, mic: str = ""
-    ) -> "Exchange":
+    ) -> Exchange:
         """Register a known exchange and return its canonical (shared) instance."""
         ex = cls(code=code, name=name, region=region, mic=mic)
         _EXCHANGE_REGISTRY[ex.code] = ex
         return ex
 
     @classmethod
-    def from_code(cls, code: str) -> "Exchange":
+    def from_code(cls, code: str) -> Exchange:
         """Resolve an exchange by code; returns an ad-hoc instance for unknown codes."""
         if not code:
             raise ValueError("exchange code must be a non-empty string")

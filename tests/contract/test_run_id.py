@@ -5,7 +5,6 @@ from pathlib import Path
 
 import pandas as pd
 import pytest
-
 from indiciumforge_core.run_id import (
     DEFAULT_RUN_ID,
     content_hash,

@@ -61,8 +61,8 @@ def fetch_akshare() -> pd.DataFrame:
     """Live fetch via AkshareDataProvider. Requires the [data] extra."""
     sys.path.insert(0, str(REPO / "packages" / "indiciumforge-core" / "src"))
     from indiciumforge_core.providers.akshare import AkshareDataProvider
-    from indiciumforge_core.providers.query import DataQuery
     from indiciumforge_core.providers.capabilities import DataKind
+    from indiciumforge_core.providers.query import DataQuery
     from indiciumforge_core.workflow.model import AssetDomain
 
     provider = AkshareDataProvider(adjust="qfq")
@@ -103,8 +103,8 @@ def generate_synthetic() -> pd.DataFrame:
     n_dates = len(dates)
     rows = []
     for i, code in enumerate(UNIVERSE_CODES):
-        from indiciumforge_core.providers.akshare import _exchange_for_code
         from indiciumforge_core.domain.models import AssetID, AssetType
+        from indiciumforge_core.providers.akshare import _exchange_for_code
         asset = AssetID(
             code=code,
             exchange=_exchange_for_code(code),

@@ -83,8 +83,8 @@ class StatsmodelsFactorEngine:
 
     def evaluate(self, request: FactorEvaluationRequest) -> FactorEvaluationResult:
         _require_analytics()
-        from scipy import stats as scipy_stats
         import statsmodels.api as sm
+        from scipy import stats as scipy_stats
 
         warnings: list[str] = []
         factor_name = request.factor_name
@@ -148,7 +148,7 @@ class StatsmodelsFactorEngine:
             on=["_date", "asset_uid"],
             how="inner",
         )
-        for d, grp in merged_fmb.groupby("_date"):
+        for _, grp in merged_fmb.groupby("_date"):
             if len(grp) < min_cs:
                 continue
             x = grp["factor_value"].to_numpy(dtype=float)

@@ -5,8 +5,6 @@ from __future__ import annotations
 from datetime import date
 
 import pandas as pd
-import pytest
-
 from indiciumforge_core.domain.models import AssetID, AssetType, Exchange
 from indiciumforge_core.providers.caching import CachingDataProvider
 from indiciumforge_core.providers.capabilities import DataKind, ProviderAuthorityLevel

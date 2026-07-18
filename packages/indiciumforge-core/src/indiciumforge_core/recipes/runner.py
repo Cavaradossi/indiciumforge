@@ -8,6 +8,7 @@ from typing import Any
 
 from indiciumforge_core.artifacts.paths import workflow_root
 from indiciumforge_core.clock import utc_now_iso
+from indiciumforge_core.ports.storage import MetadataStore, RunRecord, StageRecord
 from indiciumforge_core.recipes.models import (
     RECIPE_RUN_SUMMARY_SCHEMA,
     RECIPE_STAGE_STATE_SCHEMA,
@@ -23,7 +24,6 @@ from indiciumforge_core.run_id import (
     input_descriptor_hash,
     mint_run_id,
 )
-from indiciumforge_core.ports.storage import MetadataStore, RunRecord, StageRecord
 from indiciumforge_core.workflow.model import (
     WorkflowRecipe,
     WorkflowSessionMetadata,

@@ -4,40 +4,44 @@ import dataclasses
 import math
 
 import pytest
-
 from indiciumforge_core.quant.pricing import (
     BlackScholesPricer,
-    PricingRequest,
     PricerLoadError,
+    PricingRequest,
     load_pricing_pack,
 )
 
 
-def test_atm_call_price():
-    res = BlackScholesPricer().price(
-        PricingRequest(spot=100.0, strike=100.0, maturity=1.0, rate=0.05, volatility=0.2, option_type="call")
+def _req(**overrides: object) -> PricingRequest:
+    base = dict(
+        spot=100.0,
+        strike=100.0,
+        maturity=1.0,
+        rate=0.05,
+        volatility=0.2,
+        option_type="call",
     )
+    base.update(overrides)
+    return PricingRequest(**base)  # type: ignore[arg-type]
+
+
+def test_atm_call_price():
+    res = BlackScholesPricer().price(_req())
     # Analytic BS ATM call ~= 10.45
     assert res.price == pytest.approx(10.4506, abs=1e-3)
     assert res.pricer_id == "black_scholes"
 
 
 def test_put_call_parity():
-    call = BlackScholesPricer().price(
-        PricingRequest(spot=100.0, strike=100.0, maturity=1.0, rate=0.05, volatility=0.2, option_type="call")
-    )
-    put = BlackScholesPricer().price(
-        PricingRequest(spot=100.0, strike=100.0, maturity=1.0, rate=0.05, volatility=0.2, option_type="put")
-    )
+    call = BlackScholesPricer().price(_req(option_type="call"))
+    put = BlackScholesPricer().price(_req(option_type="put"))
     S, K, r, T = 100.0, 100.0, 0.05, 1.0
     parity = S - K * math.exp(-r * T)
     assert (call.price - put.price) == pytest.approx(parity, abs=1e-6)
 
 
 def test_greek_signs_call():
-    res = BlackScholesPricer().price(
-        PricingRequest(spot=100.0, strike=100.0, maturity=1.0, rate=0.05, volatility=0.2, option_type="call")
-    )
+    res = BlackScholesPricer().price(_req())
     assert 0.0 < res.delta < 1.0
     assert res.gamma > 0.0
     assert res.vega > 0.0
@@ -46,23 +50,19 @@ def test_greek_signs_call():
 
 
 def test_put_delta_negative():
-    res = BlackScholesPricer().price(
-        PricingRequest(spot=100.0, strike=100.0, maturity=1.0, rate=0.05, volatility=0.2, option_type="put")
-    )
+    res = BlackScholesPricer().price(_req(option_type="put"))
     assert res.delta < 0.0
 
 
 def test_supports_gate():
-    req = PricingRequest(spot=100, strike=100, maturity=1, rate=0.05, volatility=0.2)
+    req = _req(spot=100, strike=100, maturity=1)
     assert BlackScholesPricer().supports(req) is True
     bad = dataclasses.replace(req, option_type="straddle")
     assert BlackScholesPricer().supports(bad) is False
 
 
 def test_degenerate_intrinsic():
-    res = BlackScholesPricer().price(
-        PricingRequest(spot=110.0, strike=100.0, maturity=0.0, rate=0.05, volatility=0.2, option_type="call")
-    )
+    res = BlackScholesPricer().price(_req(spot=110.0, strike=100.0, maturity=0.0))
     assert res.price == pytest.approx(10.0)  # intrinsic
     assert res.warnings  # degenerate warning
 

@@ -24,8 +24,8 @@ persists to parquet; subsequent reads are cache hits.
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from datetime import date
-from typing import Callable
 
 import pandas as pd
 
@@ -177,7 +177,11 @@ class AkshareDataProvider:
             return pd.DataFrame(columns=list(_AKSHARE_COLUMN_MAP.values()))
         # Rename only the columns we recognize; drop the rest.
         renamed = raw.rename(columns=_AKSHARE_COLUMN_MAP)
-        keep = [c for c in ("date", "open", "high", "low", "close", "volume") if c in renamed.columns]
+        keep = [
+            c
+            for c in ("date", "open", "high", "low", "close", "volume")
+            if c in renamed.columns
+        ]
         frame = renamed[keep].copy()
         frame["date"] = pd.to_datetime(frame["date"]).dt.date
         for col in ("open", "high", "low", "close"):

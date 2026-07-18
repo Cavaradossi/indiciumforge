@@ -5,11 +5,9 @@ import dataclasses
 import numpy as np
 import pandas as pd
 import pytest
-
 from indiciumforge_core.quant.portfolio import (
     CvxpyOptimizer,
     PortfolioOptimizationRequest,
-    PortfolioOptimizationRegistry,
     load_portfolio_pack,
 )
 from indiciumforge_core.quant.portfolio.loading import PortfolioOptimizerLoadError

@@ -14,7 +14,6 @@ from pathlib import Path
 
 from indiciumforge_core.ports.storage import (
     FactorMetaRecord,
-    MetadataStore,
     ParityReportRecord,
     RunRecord,
     StageRecord,

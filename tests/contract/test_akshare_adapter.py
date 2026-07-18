@@ -12,7 +12,6 @@ from datetime import date
 
 import pandas as pd
 import pytest
-
 from indiciumforge_core.domain.models import AssetID, AssetType, Exchange
 from indiciumforge_core.providers.akshare import AkshareDataProvider, _exchange_for_code
 from indiciumforge_core.providers.capabilities import DataKind, ProviderAuthorityLevel
@@ -21,14 +20,32 @@ from indiciumforge_core.providers.result import ProviderFailureStatus
 from indiciumforge_core.workflow.model import AssetDomain
 
 
-def _query(code: str = "600000", *, start: date = date(2024, 1, 1), end: date = date(2024, 6, 1)) -> DataQuery:
-    asset = AssetID(code=code, exchange=_exchange_for_code(code),
-                    asset_type=AssetType.STOCK, currency="CNY")
-    return DataQuery(asset=asset, asset_domain=AssetDomain.CHINA_A_SHARE,
-                     data_kind=DataKind.OHLCV, start=start, end=end)
+def _query(
+    code: str = "600000",
+    *,
+    start: date = date(2024, 1, 1),
+    end: date = date(2024, 6, 1),
+) -> DataQuery:
+    asset = AssetID(
+        code=code,
+        exchange=_exchange_for_code(code),
+        asset_type=AssetType.STOCK,
+        currency="CNY",
+    )
+    return DataQuery(
+        asset=asset,
+        asset_domain=AssetDomain.CHINA_A_SHARE,
+        data_kind=DataKind.OHLCV,
+        start=start,
+        end=end,
+    )
 
 
-def _fake_akshare_module(frame: pd.DataFrame | None = None, *, raises: Exception | None = None) -> types.ModuleType:
+def _fake_akshare_module(
+    frame: pd.DataFrame | None = None,
+    *,
+    raises: Exception | None = None,
+) -> types.ModuleType:
     mod = types.ModuleType("akshare")
 
     def stock_zh_a_hist(**kwargs):  # noqa: ANN202

@@ -76,7 +76,7 @@ class FactorScanRunner:
             # can walk assets in input order regardless of worker scheduling.
             results = {
                 arg[0].uid: res
-                for arg, res in zip(args, executor.map(_detect_asset, args))
+                for arg, res in zip(args, executor.map(_detect_asset, args), strict=True)
             }
 
         signals: list[FactorSignal] = []

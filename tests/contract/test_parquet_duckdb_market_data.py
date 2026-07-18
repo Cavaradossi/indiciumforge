@@ -4,8 +4,6 @@ from datetime import date
 from pathlib import Path
 
 import pandas as pd
-import pytest
-
 from indiciumforge_core.domain.models import AssetID, AssetType, Exchange
 from indiciumforge_core.ports.storage import asset_uid_from_asset_id
 from indiciumforge_core.providers.capabilities import DataKind, ProviderAuthorityLevel

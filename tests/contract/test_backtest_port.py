@@ -5,10 +5,9 @@ from datetime import date, timedelta
 import numpy as np
 import pandas as pd
 import pytest
-
 from indiciumforge_core.quant.backtest import (
-    BacktestRequest,
     BacktesterLoadError,
+    BacktestRequest,
     VectorizedBacktester,
     load_backtest_pack,
 )

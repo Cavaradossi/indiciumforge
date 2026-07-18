@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, Any, Protocol
 
 import pandas as pd
 
-from indiciumforge_core.domain.models import AssetID, Provenance
+from indiciumforge_core.domain.models import AssetID
 from indiciumforge_core.ports.contracts import FetchResult
 
 if TYPE_CHECKING:

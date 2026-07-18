@@ -14,17 +14,21 @@ def _echo_payload(payload: dict) -> None:
 
 @quant_app.command("analytics", help="Evaluate a factor panel (IC / Fama-MacBeth / turnover).")
 def analytics(
-    factor_panel: Path = typer.Option(..., "--factor-panel", help="CSV: date,asset_uid,factor_value"),
-    returns_panel: Path = typer.Option(..., "--returns-panel", help="CSV: date,asset_uid,ret"),
+    factor_panel: Path = typer.Option(
+        ..., "--factor-panel", help="CSV: date,asset_uid,factor_value"
+    ),
+    returns_panel: Path = typer.Option(
+        ..., "--returns-panel", help="CSV: date,asset_uid,ret"
+    ),
     factor_name: str = typer.Option("factor", "--factor-name"),
     horizons: str = typer.Option("1,5,10", "--horizons"),
 ) -> None:
     # Lazy import: the extra is only required when the command actually runs.
+    import pandas as pd
     from indiciumforge_core.quant.analytics import (
         FactorEvaluationRequest,
         StatsmodelsFactorEngine,
     )
-    import pandas as pd
 
     fp = pd.read_csv(factor_panel)
     rp = pd.read_csv(returns_panel)
@@ -39,16 +43,20 @@ def analytics(
 
 @quant_app.command("optimize", help="Mean-variance / min-variance weight optimization.")
 def optimize(
-    expected_returns: Path = typer.Option(..., "--expected-returns", help="CSV: asset_uid,mu"),
-    covariance: Path = typer.Option(..., "--covariance", help="CSV: square matrix, asset_uid indexed"),
+    expected_returns: Path = typer.Option(
+        ..., "--expected-returns", help="CSV: asset_uid,mu"
+    ),
+    covariance: Path = typer.Option(
+        ..., "--covariance", help="CSV: square matrix, asset_uid indexed"
+    ),
     objective: str = typer.Option("mean_variance", "--objective"),
     risk_aversion: float = typer.Option(2.0, "--risk-aversion"),
 ) -> None:
+    import pandas as pd
     from indiciumforge_core.quant.portfolio import (
         CvxpyOptimizer,
         PortfolioOptimizationRequest,
     )
-    import pandas as pd
 
     mu = pd.read_csv(expected_returns, index_col=0).iloc[:, 0]
     cov = pd.read_csv(covariance, index_col=0)
@@ -69,11 +77,11 @@ def backtest(
     returns: Path = typer.Option(..., "--returns", help="CSV: date-indexed, asset_uid columns"),
     cost_bps: float = typer.Option(0.0, "--cost-bps"),
 ) -> None:
+    import pandas as pd
     from indiciumforge_core.quant.backtest import (
         BacktestRequest,
         VectorizedBacktester,
     )
-    import pandas as pd
 
     w = pd.read_csv(weights, index_col=0, parse_dates=True)
     r = pd.read_csv(returns, index_col=0, parse_dates=True)
@@ -119,11 +127,11 @@ def pipeline(
     cost_bps: float = typer.Option(5.0, "--cost-bps"),
     risk_aversion: float = typer.Option(2.0, "--risk-aversion"),
 ) -> None:
+    import pandas as pd
     from indiciumforge_core.quant.pipeline import (
         QuantPipelineConfig,
         run_quant_pipeline,
     )
-    import pandas as pd
 
     if str(panel).endswith(".parquet"):
         df = pd.read_parquet(panel)

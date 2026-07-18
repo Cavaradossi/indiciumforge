@@ -1,10 +1,10 @@
 from __future__ import annotations
 
+from datetime import date, timedelta
+
 import numpy as np
 import pandas as pd
 import pytest
-from datetime import date, timedelta
-
 from indiciumforge_core.quant.analytics import (
     FactorAnalyticsLoadError,
     FactorAnalyticsRegistry,
@@ -14,8 +14,6 @@ from indiciumforge_core.quant.analytics import (
     load_analytics_from_config,
     load_analytics_pack,
 )
-from indiciumforge_core.quant.analytics.loading import FactorAnalyticsLoadError as _FALoadError
-
 
 N_DATES = 60
 N_ASSETS = 20

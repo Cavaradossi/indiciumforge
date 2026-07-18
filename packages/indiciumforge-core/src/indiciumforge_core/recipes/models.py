@@ -54,7 +54,7 @@ class StageRunResult:
         return payload
 
     @classmethod
-    def from_payload(cls, payload: dict[str, Any]) -> "StageRunResult":
+    def from_payload(cls, payload: dict[str, Any]) -> StageRunResult:
         return cls(
             stage_id=payload["stage_id"],
             stage_dir=Path(payload["stage_dir"]),

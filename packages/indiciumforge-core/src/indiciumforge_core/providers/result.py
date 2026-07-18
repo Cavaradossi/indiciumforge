@@ -7,7 +7,7 @@ from typing import Any
 
 import pandas as pd
 
-from indiciumforge_core.clock import utc_now_iso
+from indiciumforge_core.clock import utc_now_iso  # noqa: F401  (re-exported for local_fixture_v2)
 from indiciumforge_core.providers.capabilities import DataKind, ProviderAuthorityLevel
 from indiciumforge_core.workflow.model import AssetDomain, SessionModel
 

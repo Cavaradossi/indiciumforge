@@ -6,8 +6,6 @@ from datetime import date
 from pathlib import Path
 
 import pandas as pd
-import pytest
-
 from indiciumforge_core.domain.models import AssetID, AssetType, Exchange
 from indiciumforge_core.providers.capabilities import DataKind, ProviderAuthorityLevel
 from indiciumforge_core.providers.golden_snapshot import GoldenSnapshotProvider
@@ -25,7 +23,10 @@ def _build_panel(tmp_path: Path) -> Path:
         rows.append((_UID, d, 10.0 + i, 10.5 + i, 9.8 + i, 10.2 + i, 100000 + i * 1000))
         from datetime import timedelta
         d = d + timedelta(days=1 if d.weekday() < 4 else 3)  # skip weekends roughly
-    panel = pd.DataFrame(rows, columns=["asset_uid", "date", "open", "high", "low", "close", "volume"])
+    panel = pd.DataFrame(
+        rows,
+        columns=["asset_uid", "date", "open", "high", "low", "close", "volume"],
+    )
     path = tmp_path / "panel.parquet"
     panel.to_parquet(path, index=False)
     return path

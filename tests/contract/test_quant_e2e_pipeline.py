@@ -4,7 +4,6 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
-import pytest
 
 GOLDEN = (
     Path(__file__).resolve().parents[1] / "fixtures" / "golden_ashare" / "panel.parquet"

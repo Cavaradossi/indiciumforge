@@ -40,9 +40,9 @@ from typing import Any
 import pandas as pd
 
 from indiciumforge_core.domain.models import Provenance
-from indiciumforge_core.ports.contracts import FetchResult, OHLCV_COLUMNS
-from indiciumforge_core.providers.result import ProviderProvenance
+from indiciumforge_core.ports.contracts import OHLCV_COLUMNS, FetchResult
 from indiciumforge_core.ports.storage import MarketDataStore
+from indiciumforge_core.providers.result import ProviderProvenance
 
 # Provenance columns persisted alongside the OHLCV rows so each snapshot can be
 # reconstructed and point-in-time filtered. Prefixed to avoid clashing with any
@@ -149,7 +149,6 @@ class ParquetDuckDBMarketDataStore:
         reconstructed domain :class:`Provenance` (or ``None`` when empty) is
         returned alongside.
         """
-        from indiciumforge_core.clock import utc_now_iso
 
         asset_dir = self._asset_dir(asset_uid)
         if not asset_dir.exists():

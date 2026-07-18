@@ -78,8 +78,12 @@ def run_quant_pipeline(
     )
     warnings.extend(evaluation.warnings)
 
-    ret_wide = returns_panel.pivot(index="date", columns="asset_uid", values="ret").sort_index()
-    fac_wide = factor_panel.pivot(index="date", columns="asset_uid", values="factor_value").sort_index()
+    ret_wide = returns_panel.pivot(
+        index="date", columns="asset_uid", values="ret"
+    ).sort_index()
+    fac_wide = factor_panel.pivot(
+        index="date", columns="asset_uid", values="factor_value"
+    ).sort_index()
     assets = list(ret_wide.columns)
     all_dates = list(ret_wide.index)
 

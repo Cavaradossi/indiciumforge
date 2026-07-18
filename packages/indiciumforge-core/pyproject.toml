@@ -24,7 +24,14 @@ classifiers = [
   "Topic :: Scientific/Engineering",
   "Topic :: Software Development :: Libraries",
 ]
-dependencies = ["pandas>=2.0", "tabulate>=0.9", "pyyaml>=6.0"]
+dependencies = [
+  "pandas>=2.0",
+  "tabulate>=0.9",
+  "pyyaml>=6.0",
+  # `tomllib` is stdlib from 3.11; `tomli` backport keeps secrets.toml
+  # support working on Python 3.10.
+  "tomli>=2.0; python_version < '3.11'",
+]
 
 [project.optional-dependencies]
 # Opt-in heavy deps for the DuckDB/Parquet time-series store.

@@ -1,3 +1,4 @@
+from indiciumforge_core.quant.portfolio.cvxpy_optimizer import CvxpyOptimizer
 from indiciumforge_core.quant.portfolio.loading import (
     PortfolioOptimizerLoadError,
     load_portfolio_optimizers_from_config,
@@ -17,7 +18,6 @@ from indiciumforge_core.quant.portfolio.registry import (
     DuplicateOptimizerError,
     PortfolioOptimizationRegistry,
 )
-from indiciumforge_core.quant.portfolio.cvxpy_optimizer import CvxpyOptimizer
 
 __all__ = [
     "PORTFOLIO_PACK_SCHEMA",

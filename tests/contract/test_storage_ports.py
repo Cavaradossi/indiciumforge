@@ -4,9 +4,10 @@ from datetime import date
 from pathlib import Path
 
 import pandas as pd
-import pytest
-
 from indiciumforge_core.domain.models import AssetID, AssetType, Exchange
+from indiciumforge_core.ports.storage import (
+    asset_uid_from_asset_id,
+)
 from indiciumforge_core.providers.caching import CachingDataProvider
 from indiciumforge_core.providers.capabilities import (
     DataKind,
@@ -14,14 +15,8 @@ from indiciumforge_core.providers.capabilities import (
     ProviderAuthorityLevel,
     ProviderCapability,
 )
-from indiciumforge_core.providers.contracts_v2 import DataProviderPortV2
 from indiciumforge_core.providers.query import DataQuery
 from indiciumforge_core.providers.result import ProviderProvenance, ProviderResult
-from indiciumforge_core.ports.storage import (
-    MarketDataStore,
-    MetadataStore,
-    asset_uid_from_asset_id,
-)
 from indiciumforge_core.storage import ParquetDuckDBMarketDataStore, SQLiteMetadataStore
 from indiciumforge_core.workflow.model import AssetDomain
 

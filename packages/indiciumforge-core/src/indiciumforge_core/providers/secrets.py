@@ -12,16 +12,22 @@ read ``os.getenv`` directly instead).
 Resolution order (first hit wins):
 1. Environment variable ``INDICIUMFORGE_SECRET_<NAME>_<KEY>`` (uppercased).
 2. TOML table in ``~/.indiciumforge/secrets.toml`` — ``[name]`` with a ``key``
-   field — read via stdlib :mod:`tomllib`.
+   field — read via :mod:`tomllib` (or the ``tomli`` backport on Python 3.10).
 3. ``None`` (no exception on a missing file/section).
 """
 
 from __future__ import annotations
 
 import os
-import tomllib
 from dataclasses import dataclass
 from pathlib import Path
+
+# `tomllib` is stdlib from Python 3.11+. On 3.10 fall back to the `tomli`
+# backport so the package imports cleanly across the whole supported range.
+try:
+    import tomllib
+except ModuleNotFoundError:
+    import tomli as tomllib  # type: ignore[no-redef]
 
 _ENV_PREFIX = "INDICIUMFORGE_SECRET_"
 _DEFAULT_SECRETS_FILE = Path.home() / ".indiciumforge" / "secrets.toml"

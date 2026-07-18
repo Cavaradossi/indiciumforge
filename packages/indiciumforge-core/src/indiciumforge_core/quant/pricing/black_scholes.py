@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import math
-from typing import Any
 
 from indiciumforge_core.quant.pricing.models import PricingRequest, PricingResult
 

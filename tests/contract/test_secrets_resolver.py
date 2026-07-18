@@ -6,7 +6,6 @@ import textwrap
 from pathlib import Path
 
 import pytest
-
 from indiciumforge_core.providers.secrets import resolve_secret, secret_status
 
 

@@ -1,3 +1,4 @@
+from indiciumforge_core.quant.pricing.black_scholes import BlackScholesPricer
 from indiciumforge_core.quant.pricing.loading import (
     PricerLoadError,
     load_pricers_from_config,
@@ -14,7 +15,6 @@ from indiciumforge_core.quant.pricing.registry import (
     DuplicatePricerError,
     PricingRegistry,
 )
-from indiciumforge_core.quant.pricing.black_scholes import BlackScholesPricer
 
 __all__ = [
     "PRICING_PACK_SCHEMA",
