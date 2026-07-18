@@ -37,7 +37,7 @@ reference trees without importing legacy runtime code.
 
 We describe seven contributions: contract-first packaging, artifact schema audit,
 recipe/session orchestration, an explicit open-core boundary, golden parity methodology,
-agent-friendly governance, and real quant capability behind four audited ports. A three-layer
+agent-friendly governance, and real quant capability behind four audited ports--factor analytics (cross-sectional IC and Fama-MacBeth slopes), portfolio optimization (mean-variance Markowitz), a vectorized backtester, and analytic option pricing (Black-Scholes)--demonstrated end-to-end on a synthetic A-share golden panel. A three-layer
 validation story combines public golden tests,
 a synthetic parity demo, and category-level operator sign-off without disclosing private
 rows or paths. IndiciumForge is a quantitative finance framework: it is not a trading system, not
@@ -87,15 +87,11 @@ feasibility. When these concerns share one codebase without artifact contracts, 
 cannot reconstruct point-in-time evidence. Regression testing devolves into manual diffing
 of opaque outputs.
 
-Migration from legacy implementations creates another failure mode: copying modules imports
-hidden path assumptions, network side effects, and domain rules that should not become
-universal core semantics. This resembles the legacy-code problem of preserving observable
-behavior before refactoring, but the preserved surface here is a set of exported research
-artifacts rather than in-process APIs \cite{feathers2004legacy}. IndiciumForge compares
-artifacts against the frozen reference label \schema{indiciumgrid-golden-v1} and records
-behavior outside the covered surface as an intentional change or unsupported gap. Eleven
-anti-inheritance rules guard the public core against hidden legacy paths, network fetches,
-and direct promotion of raw provider output into strict gate decisions.\claim{C08,C10,C11,C29,C30}
+Migration from legacy implementations creates a failure mode of its own: copying modules imports
+hidden path assumptions and domain rules that should not become universal core semantics.
+IndiciumForge preserves observable behavior against the frozen reference label
+\schema{indiciumgrid-golden-v1} under eleven anti-inheritance rules (Appendix~A), recording
+behavior outside the covered surface as an intentional change or unsupported gap.\claim{C08,C10,C11,C29,C30}
 
 \section{System Architecture}
 
@@ -312,56 +308,10 @@ handoff shape, market-gate strict semantics, and workflow chain summary fields. 
 a research-audit disclaimer. Historical \schema{indiciumgrid.*} IDs remain only in frozen
 golden expected artifacts.
 
-\section{Case Study: Migration Evidence Without Private Data}
+\section{Case Study: A-Share Factor-to-Backtest Pipeline}
+\label{sec:case-ashare}
 
-The validation story is intentionally layered. Layer L1 uses public golden market-gate tests,
-including strict-pass evidence. Layer L2 uses a synthetic parity demo. Layer L3 is an
-operator-local sign-off summarized only at category level. No private paths, tickers, row-level
-data, or trading performance appear in this section.
-
-\begin{table}[t]
-\centering
-\small
-\begin{tabularx}{\linewidth}{lY}
-\toprule
-Layer & Evidence summary \\
-\midrule
-L1: OSS golden & Five public market-gate scenarios exercise strict, observation, watch, and rejected bucket semantics. The public golden layer includes strict-pass evidence. \\
-L2: synthetic parity & The public parity demo exercises the harness path and includes strict-count evidence without private paths. \\
-L3: operator sign-off & On golden date \texttt{2026-07-03}, five of five parity dimensions matched and the aggregate verdict was \texttt{all\_match: true}. No mismatch was attributed to an IndiciumForge open-core bug or private extension defect. \\
-\bottomrule
-\end{tabularx}
-\caption{Three-layer migration evidence. L1 and L2 are public and reproducible; L3 is
-reported only as category-level sign-off to preserve the private-extension boundary.}
-\label{tab:case-layers}
-\end{table}
-
-The L3 golden date covered the dimensions shown in Table~\ref{tab:l3-dimensions}. Two other
-candidate dates were intentionally classified as unsupported gaps rather than failures: the
-\texttt{2026-06-24} frozen reference layout lacked the stage directory needed for parity
-prepare, and the \texttt{2026-06-23} legacy post-close layout lacked the required handoff
-artifact. These blocked dates document reference coverage limits, not open-core defects.
-
-\begin{table}[t]
-\centering
-\small
-\begin{tabularx}{\linewidth}{lY}
-\toprule
-Parity dimension & Golden-date category verdict \\
-\midrule
-\texttt{daily\_review\_structure} & match \\
-\texttt{post\_close\_handoff\_shape} & match \\
-\texttt{preopen\_handoff\_shape} & match \\
-\texttt{market\_gate\_strict\_semantics} & match \\
-\texttt{workflow\_chain\_summary\_v4} & match \\
-\bottomrule
-\end{tabularx}
-\caption{Category-level L3 verdicts for golden date \texttt{2026-07-03}. The table mirrors
-the reconciled v1.0-rc1 evidence summary without disclosing private artifacts.}
-\label{tab:l3-dimensions}
-\end{table}
-
-\paragraph{Reference quant pipeline on the synthetic golden panel.}
+\paragraph{9.1 Data.}
 This release instantiates the four quant ports with reference adapters and wires them into an
 end-to-end pipeline \verb|run_quant_pipeline|.\claim{C43-C50} To keep the demonstration
 reproducible and honest, the pipeline runs on a committed synthetic A-share-like panel
@@ -372,11 +322,13 @@ horizon-increasing IC--a credible demo signal, not a fabricated one. All numbers
 byte-deterministic across runs and locked by \texttt{tests/golden/test\_quant\_pipeline.py}.
 \claim{C49}
 
+\paragraph{9.2 Factor.}
 A trailing-\texttt{lookback} momentum factor is evaluated over forward horizons
 $h \in \{1,5,10\}$. IC is the cross-sectional Spearman rank correlation of factor versus
 forward return; the Fama-MacBeth slope is the per-date cross-sectional OLS slope aggregated
 over time with a t-statistic.
 
+\paragraph{9.3 Evaluation (IC / Fama-MacBeth).}
 \begin{table}[t]
 \centering
 \small
@@ -396,12 +348,22 @@ IC-decay pattern, reported exactly as the engine produces it.}
 \label{tab:quant-analytics}
 \end{table}
 
+\paragraph{9.4 Optimization (Markowitz).}
 At the final rebalance, mean-variance optimization yields expected return 0.00278, expected
-risk 0.00861, Sharpe 0.322 (long-only, weight bounds). The vectorized backtest
+risk 0.00861, Sharpe 0.322 (long-only, weight bounds).
+
+\paragraph{9.5 Backtest.}
+The vectorized backtest
 (prior-period weights, flat cost, no look-ahead) with \texttt{rebalance\_every = 10} and
 \texttt{cost\_bps = 5} reports total return 0.4102, annualized return 0.1809, annualized
 volatility 0.1254, Sharpe 1.44, max drawdown $-0.0987$, Calmar 1.83 (n = 521); portfolio
 weights sum to 1.0.
+
+\paragraph{9.6 Reproduction.}
+The end-to-end pipeline reproduces from a clean checkout via
+\verb|indiciumforge quant pipeline --panel tests/fixtures/golden_ashare/panel.parquet --rebalance-every 10|
+(Section~\ref{sec:repro}); all reported numbers are byte-locked by
+\texttt{tests/golden/test\_quant\_pipeline.py}.\claim{C49,C50}
 
 \paragraph*{Scope of these numbers.}
 They are computed on the synthetic golden panel and demonstrate \emph{framework correctness
@@ -410,11 +372,6 @@ investment advice. The vectorized backtester is daily, single-asset-return, and 
 only; it models no slippage, market impact, or intraday dynamics (Section~``Limitations'',
 ADR-0026). The forbidden trading-performance claim remains in force for any real-market
 assertion.
-
-The frozen operator reference contains no \texttt{strict\_count > 0} date. Strict-pass
-semantics are therefore supported by L1 public golden scenarios and L2 synthetic parity rather
-than by the private frozen-reference export. This distinction prevents the case study from
-over-claiming production coverage while preserving the useful behavioral migration evidence.
 
 \section{Availability and Governance}
 
@@ -426,6 +383,7 @@ The source repository is publicly available under the Apache-2.0 license. Packag
 published on PyPI at v2.0.1, while MCP and plugin surfaces remain documented as future operational work.
 
 \section{Reproducibility}
+\label{sec:repro}
 
 From a clean checkout of tag \texttt{v2.0.1}:
 \begin{verbatim}
@@ -529,6 +487,71 @@ artifacts and explicit contracts, enabling legacy migration evidence through gol
 methodology rather than module inheritance. The architecture prioritizes reviewer trust and
 reproducible stage evidence over execution latency, making it appropriate for research audit
 rather than broker routing.
+
+
+\appendix
+\section{Migration Evidence and Anti-Inheritance Rules}
+\label{app:migration}
+
+IndiciumForge preserves observable behavior against the frozen reference label
+\schema{indiciumgrid-golden-v1} under eleven anti-inheritance rules; behavior outside the
+covered surface is recorded as an intentional change or unsupported gap. The rules guard the
+public core against hidden legacy paths, network fetches, and direct promotion of raw provider
+output into strict gate decisions.
+
+\paragraph{Three-layer migration evidence.}
+
+The validation story is intentionally layered. Layer L1 uses public golden market-gate tests,
+including strict-pass evidence. Layer L2 uses a synthetic parity demo. Layer L3 is an
+operator-local sign-off summarized only at category level. No private paths, tickers, row-level
+data, or trading performance appear in this section.
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabularx}{\linewidth}{lY}
+\toprule
+Layer & Evidence summary \\
+\midrule
+L1: OSS golden & Five public market-gate scenarios exercise strict, observation, watch, and rejected bucket semantics. The public golden layer includes strict-pass evidence. \\
+L2: synthetic parity & The public parity demo exercises the harness path and includes strict-count evidence without private paths. \\
+L3: operator sign-off & On golden date \texttt{2026-07-03}, five of five parity dimensions matched and the aggregate verdict was \texttt{all\_match: true}. No mismatch was attributed to an IndiciumForge open-core bug or private extension defect. \\
+\bottomrule
+\end{tabularx}
+\caption{Three-layer migration evidence. L1 and L2 are public and reproducible; L3 is
+reported only as category-level sign-off to preserve the private-extension boundary.}
+\label{tab:case-layers}
+\end{table}
+
+The L3 golden date covered the dimensions shown in Table~\ref{tab:l3-dimensions}. Two other
+candidate dates were intentionally classified as unsupported gaps rather than failures: the
+\texttt{2026-06-24} frozen reference layout lacked the stage directory needed for parity
+prepare, and the \texttt{2026-06-23} legacy post-close layout lacked the required handoff
+artifact. These blocked dates document reference coverage limits, not open-core defects.
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabularx}{\linewidth}{lY}
+\toprule
+Parity dimension & Golden-date category verdict \\
+\midrule
+\texttt{daily\_review\_structure} & match \\
+\texttt{post\_close\_handoff\_shape} & match \\
+\texttt{preopen\_handoff\_shape} & match \\
+\texttt{market\_gate\_strict\_semantics} & match \\
+\texttt{workflow\_chain\_summary\_v4} & match \\
+\bottomrule
+\end{tabularx}
+\caption{Category-level L3 verdicts for golden date \texttt{2026-07-03}. The table mirrors
+the reconciled v1.0-rc1 evidence summary without disclosing private artifacts.}
+\label{tab:l3-dimensions}
+\end{table}
+
+The frozen operator reference contains no \texttt{strict\_count > 0} date. Strict-pass
+semantics are therefore supported by L1 public golden scenarios and L2 synthetic parity rather
+than by the private frozen-reference export. This distinction prevents the case study from
+over-claiming production coverage while preserving the useful behavioral migration evidence.
 
 \bibliographystyle{plain}
 \bibliography{references}
