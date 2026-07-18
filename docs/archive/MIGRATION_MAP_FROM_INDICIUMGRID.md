@@ -1,5 +1,12 @@
 # Migration Map From IndiciumGrid
 
+> **Status: Historical (archived).** This document is a migration-era working tracker
+> retained for provenance. The migration it describes is complete; the map is no longer
+> actively updated and is not a source of truth for current capabilities. For current
+> capability status see [CAPABILITY_REGISTER.md](../../CAPABILITY_REGISTER.md); for the
+> permanent anti-inheritance boundary see
+> [ADR-0019](../decisions/ADR-0019-anti-inheritance-from-indiciumgrid-v0.9.md).
+
 IndiciumGrid is frozen at `indiciumgrid-golden-v1`. This map records what IndiciumForge v0.1 implements, defers, or treats as reference-only.
 
 | IndiciumGrid Source | IndiciumForge Target | v0.1 Scope | Golden Scenario |
@@ -38,11 +45,11 @@ Do not use line numbers as migration anchors. Use symbol names, scenario ids, an
 
 Factor-core rows above inventory IG reference surface only. Real long-structure detector internals,
 calibrated thresholds, and proprietary alpha logic are **private-extension only** per
-[ADR-0011](docs/decisions/ADR-0011-open-core-private-extension-boundary.md). Open-source IndiciumForge
+[ADR-0011](../decisions/ADR-0011-open-core-private-extension-boundary.md). Open-source IndiciumForge
 may implement ports, schemas, demo detectors, and golden tools; private packs load through explicit
 ports/config.
 
-Forward capability schedule: [docs/MIGRATION_ROADMAP.md](docs/MIGRATION_ROADMAP.md).
+Forward capability schedule: [docs/MIGRATION_ROADMAP.md](../MIGRATION_ROADMAP.md).
 
 ## Local Ignored Assets Migration Inventory
 

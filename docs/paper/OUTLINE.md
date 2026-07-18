@@ -18,7 +18,7 @@
 | --- | --- | --- |
 | Abstract | Summary | CLAIMS_REGISTER rows C01–C06 |
 | 1 | Introduction | README, INDICIUMFORGE_CONSTITUTION.md |
-| 2 | Problem statement | ADR-0019, MIGRATION_MAP_FROM_INDICIUMGRID.md |
+| 2 | Problem statement | ADR-0019, docs/archive/MIGRATION_MAP_FROM_INDICIUMGRID.md |
 | 3 | Contributions | CAPABILITY_REGISTER.md, ADR-0011..0022 |
 | 4 | Architecture | packages/*, docs/SYSTEM_MAP.md |
 | 5 | Artifact lifecycle & audit | ADR-0008, ADR-0014, manifest.py |

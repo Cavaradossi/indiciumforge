@@ -25,7 +25,7 @@ ALLOWLIST_PATHS = {
     ROOT / "docs" / "decisions" / "ADR-0010-factor-core-inventory.md",
     ROOT / "docs" / "decisions" / "ADR-0011-open-core-private-extension-boundary.md",
     ROOT / "docs" / "decisions" / "ADR-0012-factor-detector-port-v0.3.md",
-    ROOT / "MIGRATION_MAP_FROM_INDICIUMGRID.md",
+    ROOT / "docs" / "archive" / "MIGRATION_MAP_FROM_INDICIUMGRID.md",
     ROOT / "GOLDEN_ARTIFACT_TEST_PLAN.md",
     ROOT / "tests" / "security" / "test_no_private_factor_leak.py",
 }

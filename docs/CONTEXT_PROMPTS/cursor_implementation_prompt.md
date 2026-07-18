@@ -27,7 +27,7 @@ Read:
 ## Implementation rules
 
 - Minimal diff — match existing naming, types, and test patterns.
-- Update `MIGRATION_MAP_FROM_INDICIUMGRID.md` when a mapping completes.
+- Update `CAPABILITY_REGISTER.md` when a capability's status changes. (`docs/archive/MIGRATION_MAP_FROM_INDICIUMGRID.md` is archived/historical.)
 - Synthetic fixtures only in OSS; private adapters stay in operator packs.
 - CLI/schema IDs stay ASCII-stable; docs may use Unicode.
 

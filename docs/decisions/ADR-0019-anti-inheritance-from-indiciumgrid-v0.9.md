@@ -1,6 +1,14 @@
 # ADR-0019: Anti-Inheritance Rules from IndiciumGrid v0.9
 
-Status: accepted
+Status: accepted (permanent boundary)
+
+> **Note.** This ADR originated during the IndiciumGrid migration, but the anti-inheritance
+> rules below are a **permanent** design boundary of the open core, not migration
+> scaffolding. They are actively enforced by the security regression tests
+> (`tests/security/test_no_provider_path_leak.py`,
+> `tests/security/test_no_private_factor_leak.py`) and are retained in `docs/decisions/`
+> rather than archived. The migration-era working tracker it references has been archived
+> to [`docs/archive/`](../archive/MIGRATION_MAP_FROM_INDICIUMGRID.md).
 
 ## Context
 
@@ -45,7 +53,7 @@ IndiciumForge open core MUST NOT inherit the following from IndiciumGrid:
 - CLI commands (`provider inspect`, `provider fetch`)
 - Contract tests and no-leak regression tests
 - Forward research dossier ADR planning (v0.10+)
-- [CAPABILITY_REGISTER.md](../../CAPABILITY_REGISTER.md) and [MIGRATION_MAP_FROM_INDICIUMGRID.md](../../MIGRATION_MAP_FROM_INDICIUMGRID.md)
+- [CAPABILITY_REGISTER.md](../../CAPABILITY_REGISTER.md) and [MIGRATION_MAP_FROM_INDICIUMGRID.md](../archive/MIGRATION_MAP_FROM_INDICIUMGRID.md)
 
 ## Consequences
 

@@ -58,7 +58,7 @@ python -m pytest -p no:cacheprovider -q --basetemp "$env:TEMP\indiciumforge_pyte
 
 1. Read [INDICIUMFORGE_CONSTITUTION.md](../INDICIUMFORGE_CONSTITUTION.md), relevant ADR, and [CAPABILITY_REGISTER.md](../CAPABILITY_REGISTER.md).
 2. Implement only the requested capability slice.
-3. Update [MIGRATION_MAP_FROM_INDICIUMGRID.md](../MIGRATION_MAP_FROM_INDICIUMGRID.md) when a mapping completes.
+3. Update [CAPABILITY_REGISTER.md](../CAPABILITY_REGISTER.md) when a capability's status changes. (The migration tracker [MIGRATION_MAP_FROM_INDICIUMGRID.md](archive/MIGRATION_MAP_FROM_INDICIUMGRID.md) is archived/historical.)
 4. Run quality gates.
 5. For golden changes, update `GOLDEN_MANIFEST.yaml` with `intentional_change` or `unsupported_gap`.
 

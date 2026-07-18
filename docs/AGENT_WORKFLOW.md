@@ -4,7 +4,7 @@
 
 1. Read `INDICIUMFORGE_CONSTITUTION.md`, relevant ADR, and `CAPABILITY_REGISTER.md`.
 2. Implement only the requested capability slice.
-3. Update `MIGRATION_MAP_FROM_INDICIUMGRID.md` checkboxes when a mapping is complete.
+3. Update `CAPABILITY_REGISTER.md` when a capability's status changes. (The historical migration tracker `docs/archive/MIGRATION_MAP_FROM_INDICIUMGRID.md` is archived and no longer updated.)
 4. Run `ruff check .` and `pytest -q`.
 5. For market-gate changes, run `pytest tests/golden -k market_gate`.
 

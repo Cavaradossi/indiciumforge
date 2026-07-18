@@ -113,7 +113,7 @@ v0.2.2 selects five cases for the first golden export batch (see FACTOR_GOLDEN_M
 
 ## Ignored local assets (mandatory)
 
-Per [MIGRATION_MAP_FROM_INDICIUMGRID.md](../MIGRATION_MAP_FROM_INDICIUMGRID.md) Local Ignored Assets
+Per [MIGRATION_MAP_FROM_INDICIUMGRID.md](archive/MIGRATION_MAP_FROM_INDICIUMGRID.md) (archived) Local Ignored Assets
 Migration Inventory:
 
 | Path | Factor-core handling |

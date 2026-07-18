@@ -209,5 +209,5 @@ v0.11 production review generation may consume dossier/evidence modules as downs
 ## Related documents
 
 - [CAPABILITY_REGISTER.md](../CAPABILITY_REGISTER.md) — capability status
-- [MIGRATION_MAP_FROM_INDICIUMGRID.md](../MIGRATION_MAP_FROM_INDICIUMGRID.md) — symbol-level mapping
+- [MIGRATION_MAP_FROM_INDICIUMGRID.md](archive/MIGRATION_MAP_FROM_INDICIUMGRID.md) — symbol-level mapping (archived, historical)
 - [docs/FACTOR_GOLDEN_SCENARIO_PLAN.md](FACTOR_GOLDEN_SCENARIO_PLAN.md) — factor demo vs IG private-reference
