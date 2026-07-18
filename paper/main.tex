@@ -37,7 +37,7 @@ reference trees without importing legacy runtime code.
 
 We describe seven contributions: contract-first packaging, artifact schema audit,
 recipe/session orchestration, an explicit open-core boundary, golden parity methodology,
-agent-friendly governance, and real quant capability behind four audited ports--factor analytics (cross-sectional IC and Fama-MacBeth slopes), portfolio optimization (mean-variance Markowitz), a vectorized backtester, and analytic option pricing (Black-Scholes)--demonstrated end-to-end on a synthetic A-share golden panel. A three-layer
+agent-friendly governance, and real quant capability behind four audited ports--factor analytics (cross-sectional IC and Fama-MacBeth slopes), portfolio optimization (mean-variance Markowitz), a vectorized backtester, and analytic option pricing (Black-Scholes)--demonstrated end-to-end on a synthetic A-share golden panel and, through a global (US-equity) OpenBB adapter, an offline-by-default public demo. A three-layer
 validation story combines public golden tests,
 a synthetic parity demo, and category-level operator sign-off without disclosing private
 rows or paths. IndiciumForge is a quantitative finance framework: it is not a trading system, not
@@ -70,7 +70,7 @@ This paper makes seven software-architecture contributions:
   \item Open-core/private-extension boundary: an ADR-governed IP and security split.\claim{C12,C29}
   \item Golden artifact and parity methodology: exported references and five parity dimensions.\claim{C05-C11}
   \item Agent-friendly governance: ADRs, agent rules, and in-repository skills for safe automation.\claim{C32-C33}
-  \item Real quant capability: four ports--analytics, portfolio, backtest, pricing--with reference adapters, an A-share golden snapshot, and a deterministic end-to-end pipeline behind \texttt{indiciumforge quant}.\claim{C43-C51, ADR-0026}
+  \item Real quant capability: four ports--analytics, portfolio, backtest, pricing--with reference adapters (an A-share golden snapshot and an opt-in global OpenBB US-equity adapter), a deterministic end-to-end pipeline behind \texttt{indiciumforge quant}, and an offline-by-default public demo (\texttt{quant openbb-demo}).\claim{C43-C53, ADR-0026, ADR-0027}
 \end{enumerate}
 
 \paragraph{Non-claims.}
@@ -144,7 +144,7 @@ comparison only; they are not imported at runtime.}
 registry, and a pack loader.\claim{C43} Adapters lazily import heavy dependencies behind
 \verb|_require_*| helpers so the package imports with only the core install; optional deps
 sit behind the \texttt{[analytics]} (statsmodels, scipy), \texttt{[portfolio]} (cvxpy), and
-\texttt{[data]} (akshare, lxml) extras.\claim{C44-C47, ADR-0026} The end-to-end pipeline
+\texttt{[data]} (akshare, lxml) and \texttt{[openbb]} (OpenBB, US-equity) extras.\claim{C44-C47, ADR-0026, ADR-0027} The end-to-end pipeline
 \verb|run_quant_pipeline| and the \texttt{indiciumforge quant} CLI group compose these
 ports.\claim{C49,C50}
 
@@ -250,11 +250,12 @@ exercises the same harness without private paths.
 Evidence layer & Public or reported evidence & Claim IDs \\
 \midrule
 Package surface & Three installable packages and the \texttt{indiciumforge} CLI & C01, C02 \\
-Static and unit gates & Ruff in CI; pytest reported 241 passed and 1 skipped at draft time & C19, C20 \\
+Static and unit gates & Ruff in CI; pytest reported 250 passed and 1 skipped at draft time & C19, C20 \\
 Golden market gate & Five exported market-gate scenarios under \schema{indiciumgrid-golden-v1} & C05, C10 \\
 Synthetic parity & Public \texttt{parity\_reference\_demo} exercises the harness without private paths & C09, C22 \\
 Quant pipeline & Deterministic factor$\to$analytics$\to$optimize$\to$backtest on the synthetic golden panel & C43-C51, ADR-0026 \\
-Governance & 25 ADRs plus anti-inheritance rules and agent onboarding documents & C29, C32, C33 \\
+Public demo & Offline \texttt{quant openbb-demo} on a committed synthetic US-equity sample; opt-in OpenBB adapter & C52, C53, ADR-0027 \\
+Governance & 26 ADRs plus anti-inheritance rules and agent onboarding documents & C29, C32, C33 \\
 \bottomrule
 \end{tabularx}
 \caption{Artifact-based evidence used in this paper. The table reports software and
@@ -365,8 +366,22 @@ The end-to-end pipeline reproduces from a clean checkout via
 (Section~\ref{sec:repro}); all reported numbers are byte-locked by
 \texttt{tests/golden/test\_quant\_pipeline.py}.\claim{C49,C50}
 
+\paragraph{9.7 Global public demo (OpenBB).}
+The same pipeline runs on a global (US-equity) universe through a second reference adapter,
+\texttt{OpenBBDataProvider}, which fetches daily OHLCV via the OpenBB
+Platform behind an opt-in \texttt{[openbb]} extra (routing to the token-free yfinance
+vendor).\claim{C52, ADR-0027} To keep a fresh clone or PyPI install runnable with no network
+and no API keys, \texttt{indiciumforge quant openbb-demo} is \emph{offline by default}: it
+reads a committed synthetic sample panel shipped as package data (eight US tickers, 129
+dates, 1{,}032 rows) whose manifest flags \texttt{not\_real\_market\_data:\ true}, and writes
+an auditable \texttt{summary.json} (IC-by-horizon, optimization, backtest) plus the panel
+manifest.\claim{C53} A \texttt{-{}-online} flag opts into a real fetch. A contract test with a
+faked OpenBB result object exercises the adapter's coercion, normalization, and error paths
+without touching the network, so default CI stays deterministic (ADR-0027).
+
 \paragraph*{Scope of these numbers.}
-They are computed on the synthetic golden panel and demonstrate \emph{framework correctness
+They are computed on the synthetic golden panel (and, for the public demo, a synthetic
+US-equity sample) and demonstrate \emph{framework correctness
 and pipeline wiring}, not market performance, not a live-trading backtest, and not
 investment advice. The vectorized backtester is daily, single-asset-return, and cost-flat
 only; it models no slippage, market impact, or intraday dynamics (Section~``Limitations'',
@@ -397,7 +412,7 @@ indiciumforge parity run \
   --parity-config tests/fixtures/parity_reference_demo/parity_config_demo.yaml \
   --artifact-root /tmp/indiciumforge-parity-demo
 \end{verbatim}
-At draft time the public suite reported 241 passing tests and one skipped test. The parity
+At draft time the public suite reported 250 passing tests and one skipped test. The parity
 command emits a \texttt{parity\_run\_report.json} with dimension-level verdicts.
 
 The \texttt{quant} command group runs without the optional \texttt{[analytics]}/\texttt{[portfolio]}
@@ -407,9 +422,11 @@ indiciumforge quant pipeline \
   --panel tests/fixtures/golden_ashare/panel.parquet --rebalance-every 10
 indiciumforge quant price \
   --spot 100 --strike 100 --maturity 1 --rate 0.05 --volatility 0.2 --type call
+# Global public demo (offline by default; no network, no API keys):
+indiciumforge quant openbb-demo --artifact-root /tmp/openbb_demo
 \end{verbatim}
 All reported numbers are byte-locked by \texttt{tests/golden/test\_quant\_pipeline.py} on the
-synthetic golden panel.\claim{C49,C50}
+synthetic golden panel; the OpenBB demo's offline sample is deterministic package data.\claim{C49,C50,C53}
 
 \section{Limitations and Threats to Validity}
 

@@ -65,6 +65,8 @@ Status values:
 | analytic option pricing | `implemented_v2.0.1` | `PricingPort` + `BlackScholesPricer`; European price + Greeks, put-call parity; stdlib `math.erf`, no extra deps; ADR-0026. |
 | A-share golden data provider | `implemented_v2.0.1` | `GoldenSnapshotProvider` (DataProviderPortV2) over committed `tests/fixtures/golden_ashare/panel.parquet`; synthetic A-share-like panel; ADR-0026. |
 | A-share akshare adapter | `implemented_v2.0.1` | `AkshareDataProvider` behind `data` extra (akshare, lxml); offline-only `cache_only` mode; no private paths in OSS; ADR-0026. |
+| OpenBB US-equity adapter | `implemented_v2.1.0` | `OpenBBDataProvider` (DataProviderPortV2) behind opt-in `openbb` extra; US-equity OHLCV via OpenBB→yfinance (no API key); network-strict lazy import; `tests/contract/test_openbb_adapter.py`; ADR-0027. |
+| OpenBB public demo | `implemented_v2.1.0` | `indiciumforge quant openbb-demo`, offline-by-default over committed synthetic sample package data (`indiciumforge_core/data/openbb_demo/`, `not_real_market_data: true`); `--online` opt-in; no network/keys/private paths in default CI; ADR-0027. |
 | end-to-end quant pipeline | `implemented_v2.0.1` | `quant.pipeline.run_quant_pipeline` wiring factor->analytics->optimize->backtest; `indiciumforge quant` CLI group with lazy imports; deterministic golden test; ADR-0026. |
 
 Promotion rule: a capability can advance only when implementation, tests, and documentation agree.

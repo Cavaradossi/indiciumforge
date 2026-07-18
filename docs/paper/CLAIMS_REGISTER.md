@@ -54,7 +54,9 @@ Every major technical statement in [INDICIUMFORGE_ARXIV_DRAFT.md](INDICIUMFORGE_
 | C48 | A-share data adapter + golden snapshot provider | Adapter + provider + fixture | `providers/akshare.py`, `providers/golden_snapshot.py`; `tests/fixtures/golden_ashare/panel.parquet`; `test_golden_pipeline.py` | high | "akshare adapter behind akshare extra; committed golden A-share panel" |
 | C49 | End-to-end quant pipeline is deterministic on the golden panel | E2E + golden tests | `quant/pipeline.py`; `tests/contract/test_quant_e2e_pipeline.py`, `tests/golden/test_quant_pipeline.py` | high | "factor->analytics->optimize->backtest pipeline; locked numbers" |
 | C50 | Quant CLI group behind lazy imports | CLI wiring | `packages/indiciumforge-cli/.../quant.py`; `indiciumforge quant {analytics,optimize,backtest,price,pipeline}` | high | "indiciumforge quant subcommands import heavy deps lazily" |
-| C51 | OSS pytest suite passes on the quant increment | CI + local pytest | `python -m pytest -q` (241 passed, 1 skipped; retested 2026-07-16) | high | "241 contract/golden/cli tests pass (1 skipped)" |
+| C51 | OSS pytest suite passes on the quant increment | CI + local pytest | `python -m pytest -q` (250 passed, 1 skipped; retested 2026-07-18) | high | "250 contract/golden/cli tests pass (1 skipped)" |
+| C52 | OpenBB (US-equity) data adapter behind opt-in extra, network-strict | Adapter + contract tests | `providers/openbb.py`; `OpenBBDataProvider`; `tests/contract/test_openbb_adapter.py` (9 tests, faked openbb, no network); ADR-0027 | high | "OpenBBDataProvider behind [openbb] extra; lazy import; yfinance vendor, no API key" |
+| C53 | Offline-by-default public demo runs the full pipeline on a committed synthetic US-equity sample | CLI + package-data fixture | `indiciumforge quant openbb-demo`; `indiciumforge_core/data/openbb_demo/sample_us_equity_ohlcv.csv` (1,032 rows, `not_real_market_data: true`); writes `openbb_demo/summary.json` | high | "quant openbb-demo offline sample; --online opt-in; no network/keys/private paths" |
 
 ## Claims explicitly forbidden in paper
 
@@ -69,6 +71,8 @@ Every major technical statement in [INDICIUMFORGE_ARXIV_DRAFT.md](INDICIUMFORGE_
 | daily_review parity mismatch on golden date 2026-07-03 | Contradicts v1.0-rc1 five-dimension match evidence |
 
 **Clarification — synthetic pipeline numbers in §9.5.** Claim C50/C51 and §9.5 report engine-computed metrics (IC, Fama-MacBeth slope, turnover, Sharpe, max drawdown) produced by the four quant ports **on the committed synthetic A-share golden panel** (`tests/fixtures/golden_ashare/panel.parquet`). Those figures demonstrate *framework correctness and pipeline wiring*, are byte-deterministic across runs, and are **not** market performance, not backtested live trading, and not investment advice. The forbidden-claim row "Trading performance, Sharpe, alpha" remains in force for any real-market or live-trading performance assertion; §9.5 is explicitly scoped to synthetic-fixture methodology demonstration.
+
+**Clarification — OpenBB public demo numbers in §9.7 (C52/C53).** The offline `quant openbb-demo` runs on a committed **synthetic** US-equity sample (`indiciumforge_core/data/openbb_demo/sample_us_equity_ohlcv.csv`); the ticker symbols are public identifiers but the OHLCV values are generated (manifest `not_real_market_data: true`). Any metrics it emits demonstrate *pipeline wiring on a global universe*, not real market performance, and are not investment advice. The `--online` path fetches live data via OpenBB (opt-in `[openbb]` extra) and is **not** exercised in default CI. The forbidden-claim row "Trading performance, Sharpe, alpha" remains in force for any real-market assertion.
 
 ## Maintenance
 
