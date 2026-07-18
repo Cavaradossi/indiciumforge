@@ -154,6 +154,6 @@ def asset_uid_from_asset_id(asset: AssetID) -> str:
     """Normalize an ``AssetID`` to the canonical ``asset_uid`` used by stores.
 
     Centralizes the ``exchange:asset_type:code`` convention so callers (and the
-    W1-merged identity model) don't hard-code the uid format at every call site.
+    canonical identity model) don't hard-code the uid format at every call site.
     """
     return asset.uid

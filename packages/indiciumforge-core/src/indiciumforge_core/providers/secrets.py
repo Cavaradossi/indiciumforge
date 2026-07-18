@@ -1,4 +1,4 @@
-"""Secret resolution for data providers (W4a).
+"""Secret resolution for data providers.
 
 Secrets are **local runtime inputs**, never project configuration. They are read
 from the ignored profile directory (``~/.indiciumforge/``) or process

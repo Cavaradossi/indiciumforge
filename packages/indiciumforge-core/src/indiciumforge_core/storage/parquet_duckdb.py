@@ -12,7 +12,7 @@ Design notes (also recorded in ADR-0025):
       <root>/ohlcv/<exchange>/<asset_type>/<code>/year=<YYYY>/part-<uid>.parquet
 
 * **Point-in-time correctness.** Reads apply two guards to prevent
-  look-ahead bias (W2 risk ①), matching the W2 spec exactly:
+  look-ahead bias, matching the point-in-time correctness spec exactly:
 
     - ``date <= as_of`` — only trade rows known as of the snapshot date;
     - ``provenance_as_of <= as_of`` — the snapshot's own as-of (the last trade
@@ -162,7 +162,7 @@ class ParquetDuckDBMarketDataStore:
 
         # Build the point-in-time + range predicate.
         #
-        # Point-in-time correctness follows the W2 spec exactly: a row is
+        # Point-in-time correctness follows the point-in-time spec exactly: a row is
         # admissible only when its trade ``date`` and the snapshot's own
         # ``provenance_as_of`` (the last trade date it represents) are both on
         # or before ``as_of``. This prevents look-ahead on the *data* axis. The

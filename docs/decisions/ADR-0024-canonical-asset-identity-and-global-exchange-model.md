@@ -4,9 +4,9 @@ Status: accepted
 
 ## Context
 
-- v2.0.0 rebranded IndiciumGrid → IndiciumForge as a **global quantitative finance
-  framework**, but the core domain model (`indiciumforge_core.domain.models`) still
-  carried A-share-only assumptions:
+- IndiciumForge is positioned as a **global quantitative finance framework**, but the
+  core domain model (`indiciumforge_core.domain.models`) still carried A-share-only
+  assumptions:
   - `Exchange` was a 3-member `str, Enum` (`SSE` / `SZSE` / `BSE_CN`) — impossible to
     represent US, HK, JP, or any other venue without editing framework code, violating
     the open/closed principle for a "global" framework.
@@ -16,8 +16,8 @@ Status: accepted
     `uid` semantics (`exchange:value:code` vs `market:code`), inviting drift.
 - The recipe runner (`recipes/runner.py`) hard-coded `ashare_cycle_id(trade_date)` for
   **every** recipe, so a US-equity or crypto recipe would inherit an A-share cycle id.
-- These were flagged in the W1 optimization plan as "域模型去 A 股烙印" (de-A-share-branding)
-  and prerequisite for the storage (W2) and concurrency (W3) workflows.
+- These were flagged as de-A-share-branding prerequisites for the storage and
+  concurrency workflows.
 
 ## Decision
 
@@ -60,8 +60,8 @@ IndiciumForge v2.0.1 delivers a market-agnostic domain core:
 
 - Adding real US-equity / crypto / HK cycle resolvers (registered on demand when those
   recipes land).
-- Migrating the `indiciumgrid.workflow.v1` artifact schema string (deferred to W6 — see
-  W0 execution notes; it is pinned by golden fixtures and `manifest.py`).
+- Migrating the `indiciumgrid.workflow.v1` artifact schema string (deferred; it is
+  pinned by golden fixtures and `manifest.py`).
 - Removing the deprecated `AssetId` alias (one-release grace period).
 
 ## Consequences

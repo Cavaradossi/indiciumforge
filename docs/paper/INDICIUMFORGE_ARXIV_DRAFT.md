@@ -35,7 +35,7 @@ IndiciumForge targets the middle ground: **evidence-first financial research** i
 4. **Open-core / private-extension boundary** — ADR-governed IP and security split (C12, C29).
 5. **Golden artifact and parity harness methodology** — five OSS golden scenarios and five parity dimensions vs frozen reference exports (C05–C11, C21–C24).
 6. **Agent-friendly governance** — constitution, 25 ADRs, AGENTS.md, and in-repo Cursor skills for safe automation (C32, C33).
-7. **Real quant capability (W4)** — four ports (analytics, portfolio, backtest, pricing) with reference adapters, an A-share golden snapshot, and a deterministic end-to-end pipeline behind `indiciumforge quant` (C43–C51, ADR-0026).
+7. **Real quant capability** — four ports (analytics, portfolio, backtest, pricing) with reference adapters, an A-share golden snapshot, and a deterministic end-to-end pipeline behind `indiciumforge quant` (C43–C51, ADR-0026).
 
 ### 1.2 Non-claims
 
@@ -111,7 +111,7 @@ configure packs → run recipe/chain stage → write stage directory
 
 Structural audit intentionally precedes semantic comparison so incomplete runs fail before expensive diffs (C04).
 
-### 3.4 Quant analytics, optimization, backtest and pricing (W4)
+### 3.4 Quant analytics, optimization, backtest and pricing
 
 `indiciumforge_core.quant` mirrors the `factors/` domain-packaging pattern: each
 submodule (`analytics`, `portfolio`, `backtest`, `pricing`) declares a `typing.Protocol`
@@ -141,7 +141,7 @@ Breaking namespace changes bump major release version (v2.0.0 rebrand from legac
 
 ### 4.4 Governance
 
-Twenty-five ADRs document boundaries from evidence-first principles (ADR-0001) through the W4 quant increment (ADR-0026) (C33). The capability register marks each feature `implemented_*`, `private_extension`, `contract_only`, or `technical_reserve` (C26–C28).
+Twenty-five ADRs document boundaries from evidence-first principles (ADR-0001) through the quant capability increment (ADR-0026) (C33). The capability register marks each feature `implemented_*`, `private_extension`, `contract_only`, or `technical_reserve` (C26–C28).
 
 ---
 
@@ -245,9 +245,9 @@ This case study validates the **open-core / private-extension boundary** and par
 
 All reproducible commands in §13 use synthetic fixtures under `tests/fixtures/` only (C09, C40).
 
-### 9.5 W4 reference quant pipeline on the synthetic golden panel
+### 9.5 Reference quant pipeline on the synthetic golden panel
 
-W4 instantiates the four quant ports (§3.4) with reference adapters and wires them into
+This release instantiates the four quant ports (§3.4) with reference adapters and wires them into
 an end-to-end pipeline `run_quant_pipeline` (C43–C50). To make the demonstration
 **reproducible and honest**, the pipeline runs on a committed synthetic A-share-like
 panel (`tests/fixtures/golden_ashare/panel.parquet`, 36 assets × 521 trading dates)
@@ -316,8 +316,8 @@ Skills deliberately exclude private paths, credentials, and trading API guidance
 7. **Manifest audit ≠ economic truth** — structure only; semantics require golden/parity (C04).
 8. **Parity ≠ production sign-off** — research audit disclaimer (C31).
 9. **Accounting-risk research** — planning stub only; no OSS experiments (C37).
-10. **Quant engine scope (W4)** — the vectorized backtester is daily, single-asset-return, and cost-flat only; it models no slippage, market impact, intraday dynamics, or factor decay beyond the IC sweep. Pricing is analytic European Black-Scholes only. A-share demonstration uses a **synthetic** golden panel; reported metrics demonstrate framework correctness, not market or live-trading performance (C43–C51, ADR-0026).
-11. **External quant frameworks deferred** — QuantLib / rqalpha / qlib integration is out of scope for W4; the ports remain swappable for alternative adapters (ADR-0026).
+10. **Quant engine scope** — the vectorized backtester is daily, single-asset-return, and cost-flat only; it models no slippage, market impact, intraday dynamics, or factor decay beyond the IC sweep. Pricing is analytic European Black-Scholes only. A-share demonstration uses a **synthetic** golden panel; reported metrics demonstrate framework correctness, not market or live-trading performance (C43–C51, ADR-0026).
+11. **External quant frameworks deferred** — QuantLib / rqalpha / qlib integration is out of scope for this release; the ports remain swappable for alternative adapters (ADR-0026).
 
 ---
 
@@ -363,7 +363,7 @@ indiciumforge parity run \
 
 Expected: pytest reports 241 passed, 1 skipped (C19, C51); parity demo produces `parity_run_report.json` with dimension verdicts (C09).
 
-The W4 quant group runs without the optional `[analytics]` / `[portfolio]` extras
+The quant command group runs without the optional `[analytics]` / `[portfolio]` extras
 because its commands import heavy deps lazily:
 
 ```bash

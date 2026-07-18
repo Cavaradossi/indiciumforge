@@ -1,8 +1,8 @@
-# IndiciumForge documentation migration audit
+# Documentation provenance map (maintainer reference)
 
-Date: 2026-07-09 (updated through v0.5-alpha public alpha gate)
-
-Source: frozen `indiciumgrid @ indiciumgrid-golden-v1`
+This table records where each predecessor document landed in IndiciumForge, so
+maintainers can trace the origin of any doc. Source baseline: frozen
+`indiciumgrid @ indiciumgrid-golden-v1`.
 
 | IndiciumGrid document | Action | IndiciumForge target |
 | --- | --- | --- |

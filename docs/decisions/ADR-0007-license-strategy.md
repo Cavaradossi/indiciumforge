@@ -4,7 +4,7 @@ Status: accepted
 
 ## Context
 
-- IndiciumForge began as a private scaffold extracted from the frozen IndiciumGrid reference.
+- IndiciumForge builds on the frozen IndiciumGrid reference, extending it as an open-core framework with an explicit boundary.
 - Public open-source alpha requires an explicit, SPDX-identifiable license.
 - ADR-0011 separates open-core from private-extension packs; the open-source repository
   needs a permissive license compatible with ports, schemas, and demo implementations.

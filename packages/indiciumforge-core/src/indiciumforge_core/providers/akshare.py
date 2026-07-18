@@ -1,4 +1,4 @@
-"""akshare data provider for A-share OHLCV (W4a).
+"""akshare data provider for A-share OHLCV.
 
 ``AkshareDataProvider`` is a :class:`DataProviderPortV2` adapter that fetches
 daily OHLCV for China A-shares via the `akshare <https://akshare.akfamily.xyz/>`_

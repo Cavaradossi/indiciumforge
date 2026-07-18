@@ -1,7 +1,10 @@
-# Design Defect Migration Audit
+# Predecessor Design Patterns Deliberately Excluded (Open-Core Boundary)
 
-Read-only audit: IndiciumGrid patterns that informed IndiciumForge and defects we intentionally do **not**
-migrate. Reference: frozen `indiciumgrid @ indiciumgrid-golden-v1`. See
+This reference documents IndiciumGrid patterns that informed IndiciumForge and the
+design defects that are intentionally **kept out** of the open-core. It explains *why*
+certain predecessor behaviors (A-share/Tongdaxin path defaults, single-stock report
+builders, etc.) are not universal core semantics. Reference: frozen
+`indiciumgrid @ indiciumgrid-golden-v1`. See
 [ADR-0019](decisions/ADR-0019-anti-inheritance-from-indiciumgrid-v0.9.md).
 
 ## Workflow naming defects

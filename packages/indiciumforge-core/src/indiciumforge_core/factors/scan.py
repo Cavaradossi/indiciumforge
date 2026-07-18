@@ -32,7 +32,7 @@ class FactorScanRunner:
     ) -> FactorScanResult:
         """Scan ``assets`` for factor signals.
 
-        ``max_workers`` is opt-in parallelism (W3). When ``None``/``<=1``/single
+        ``max_workers`` is opt-in parallelism. When ``None``/``<=1``/single
         asset, runs serially (legacy behavior). Otherwise the CPU-bound detector
         step is fanned out across a process pool while OHLCV fetching stays on
         the main process — providers are deliberately kept out of the pickle

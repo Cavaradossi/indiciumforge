@@ -12,7 +12,7 @@ Status values:
 - `implemented_v0.9`: session-aware data provider contract v2 (ADR-0019/0020).
 - `implemented_v0.10`: A-share private recipe integration — ports, RecipeRunner, fake extension (ADR-0021).
 - `implemented_v0.11`: private local parity harness — config-driven reference compare (ADR-0022).
-- `implemented_v2.0.1`: W4 quant increment — factor analytics, portfolio optimization, vectorized backtest, analytic pricing, A-share golden data, and the end-to-end pipeline; implemented, tested, documented.
+- `implemented_v2.0.1`: quant capability increment — factor analytics, portfolio optimization, vectorized backtest, analytic pricing, A-share golden data, and the end-to-end pipeline; implemented, tested, documented.
 - `validated_private_path`: readiness evidence from external private pack; not implemented in OSS.
 - `signed_v1.0`: v1.0 sign-off evidence complete; open-core semantics frozen; gaps accepted in private register. GitHub public onboarding docs (Agent Pack, Extension Author Guide, research stub) added in the v1.0.0 polish patch — no capability status changes.
 - `implemented_v0.7`: private factor pack loading integration + workflow chain factor_scan stage.
@@ -151,12 +151,12 @@ Forward schedule and original-plan reconciliation:
 - Partial frozen layout adapter support
 - Optional open-core v1.0.1 comparator/config patches
 
-## v2.0.1 / W4 vertical slice (completed)
+## v2.0.1 quant capability (completed)
 
-- W4 delivered **real quant capability** behind `indiciumforge_core.quant` (Route A of
-  `blazing-forging-babbage.md`): four ports — analytics, portfolio, backtest, pricing —
-  each with a reference adapter (statsmodels, cvxpy, vectorized numpy/pandas,
-  analytic Black-Scholes) and a registry + pack loader (ADR-0026).
+- IndiciumForge v2.0.1 delivers **real quant capability** behind `indiciumforge_core.quant`:
+  four ports — analytics, portfolio, backtest, pricing — each with a reference adapter
+  (statsmodels, cvxpy, vectorized numpy/pandas, analytic Black-Scholes) and a registry +
+  pack loader (ADR-0026).
 - `GoldenSnapshotProvider` serves a committed synthetic A-share-like panel
   (`tests/fixtures/golden_ashare/panel.parquet`, 36 assets, 521 dates); the `AkshareDataProvider`
   adapter sits behind the `data` extra and an offline `cache_only` mode (no private paths in OSS).

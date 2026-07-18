@@ -1,4 +1,4 @@
-# ADR-0026: Real Quantitative Capability Increment (W4)
+# ADR-0026: Implemented Quantitative Capability (v2.0.1)
 
 Status: accepted
 
@@ -8,26 +8,26 @@ IndiciumForge had, through v1.0 / v2.0.1, a complete **research-workflow** surfa
 (workflow chains, artifact audit, golden/parity methodology, open-core boundary) but
 **no implemented quant engine**. The capability register marked `research engine port`
 as `contract_only` and `research dossier model` / `factor trade-plan/evaluate/backtest
-adapter` as `technical_reserve`. The prior plan (`blazing-forging-babbage.md`) offered
-two routes:
+adapter` as `technical_reserve`. Two strategic options were considered:
 
-- **Route A ("补肉")** — implement real, tested quant capability (factor analytics,
-  portfolio optimization, backtest, pricing) behind the existing hexagonal port pattern,
-  using mature OSS libraries (statsmodels, cvxpy) and a committed synthetic A-share
-  golden panel.
-- **Route B ("换骨")** — defer to heavyweight external frameworks (QuantLib, rqalpha,
-  qlib, backtrader).
+- **Build a reference implementation in-house** — implement real, tested quant
+  capability (factor analytics, portfolio optimization, backtest, pricing) behind the
+  existing hexagonal port pattern, using mature OSS libraries (statsmodels, cvxpy) and a
+  committed synthetic A-share golden panel.
+- **Defer to external frameworks** — rely on heavyweight external frameworks
+  (QuantLib, rqalpha, qlib, backtrader) for the quant substance.
 
 The framework's open-core value proposition ("auditable artifacts + explicit
 contracts") is justified only if the contracts have at least one credible reference
-implementation. Pure deferral (Route B) would leave the quant ports as empty
+implementation. Pure deferral would leave the quant ports as empty
 interfaces and the paper's "instantiated system" claim unbacked.
 
 ## Decision
 
-Adopt **Route A**. W4 ships real quant capability behind `indiciumforge_core.quant`,
-mirroring the `factors/` domain-packaging pattern (per submodule: `ports.py` +
-`models.py` + adapter + `registry.py` + `loading.py` + `pack.py` + `__init__.py`).
+Adopt the build-in-house approach. IndiciumForge v2.0.1 ships real quant capability
+behind `indiciumforge_core.quant`, mirroring the `factors/` domain-packaging pattern
+(per submodule: `ports.py` + `models.py` + adapter + `registry.py` + `loading.py` +
+`pack.py` + `__init__.py`).
 
 ### Four quant ports
 
@@ -76,15 +76,15 @@ mirroring the `factors/` domain-packaging pattern (per submodule: `ports.py` +
 1. The vectorized backtester is **single-asset-return, daily, cost-flat only**. It does
    not model factor decay beyond the IC sweep, intraday dynamics, slippage, or
    market-impact. These are explicitly *out of scope* and must not be implied.
-2. All §9.5 paper numbers are computed on the **synthetic golden panel**. They
-   demonstrate framework correctness and pipeline wiring; they are **not** market
-   performance, not live-trading backtests, and not investment advice. The
+2. All paper numbers for the quant pipeline are computed on the **synthetic golden
+   panel**. They demonstrate framework correctness and pipeline wiring; they are **not**
+   market performance, not live-trading backtests, and not investment advice. The
    CLAIMS_REGISTER forbidden-claim row on "Trading performance, Sharpe, alpha" remains
    in force for any real-market assertion.
 
-## Out of scope (W4)
+## Out of scope
 
-- QuantLib / rqalpha / qlib integration (Route B) — deferred; ports remain swappable.
+- QuantLib / rqalpha / qlib integration — deferred; ports remain swappable.
 - Slippage / market-impact / intraday models in the backtester.
 - Live A-share data fetch in CI (only the offline `cache_only` path is exercised in OSS).
 - Production-grade factor library beyond the demo momentum factor in the pipeline.
@@ -92,7 +92,7 @@ mirroring the `factors/` domain-packaging pattern (per submodule: `ports.py` +
 ## Consequences
 
 - The quant ports now have credible reference implementations; the paper's "instantiated
-  quant system" framing is backed by passing contract + golden tests (38 W4-specific
+  quant system" framing is backed by passing contract + golden tests (38 quant-specific
   tests; 241 total passed, 1 skipped, zero regression).
 - Heavy deps stay isolated behind extras and lazy imports, preserving the core install's
   light footprint and ADR-0011's open-core boundary.

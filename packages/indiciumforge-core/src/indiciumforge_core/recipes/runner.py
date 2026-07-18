@@ -75,7 +75,7 @@ class RecipeRunner:
         stage_results: list[StageRunResult] = []
         extension_ids: set[str] = set()
 
-        # W3: mint a stable run identity. A caller-supplied run_id wins; an
+        # Mint a stable run identity (run_id). A caller-supplied run_id wins; an
         # "isolate_run" option mints a fresh one; otherwise the legacy default
         # (flat, shared) namespace is used so behavior is unchanged.
         run_id = options.get("run_id") or (
@@ -214,7 +214,7 @@ class RecipeRunner:
         warnings: list[str],
         extension_ids: set[str],
     ) -> StageRunResult:
-        # W3 idempotency: if a prior stage with identical inputs already ran
+        # Idempotency: if a prior stage with identical inputs already ran
         # and its on-disk output is still intact, reuse the prior result
         # instead of re-executing (skip = no side effects, deterministic).
         if metadata_store is not None:

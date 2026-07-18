@@ -20,7 +20,7 @@ jobs:
       - name: Install packages
         run: |
           python -m pip install --upgrade pip
-          python -m pip install -e packages/indiciumforge-core
+          python -m pip install -e "packages/indiciumforge-core[analytics,portfolio,storage]"
           python -m pip install -e packages/indiciumforge-workflow
           python -m pip install -e packages/indiciumforge-cli
           python -m pip install -e ".[dev]"

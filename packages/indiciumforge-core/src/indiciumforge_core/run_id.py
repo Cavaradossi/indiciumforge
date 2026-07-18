@@ -1,6 +1,6 @@
 """Run identity, hashing, and idempotency primitives for reproducible runs.
 
-W3 introduces a first-class ``run_id`` so that:
+A first-class ``run_id`` is introduced so that:
 
 * every recipe run gets a stable, unique identity (``mint_run_id``), or reuses a
   caller-supplied one;

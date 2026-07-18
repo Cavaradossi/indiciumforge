@@ -1,4 +1,4 @@
-"""Golden A-share snapshot provider (W4a).
+"""Golden A-share snapshot provider.
 
 ``GoldenSnapshotProvider`` serves a *committed* parquet panel of real A-share
 OHLCV so that CI, tests, and the paper's §9 case study run **offline and

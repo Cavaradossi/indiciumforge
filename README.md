@@ -116,11 +116,11 @@ Deeper diagrams: [docs/SYSTEM_MAP.md](docs/SYSTEM_MAP.md), [docs/diagrams/contex
 | Reference comparison | `indiciumforge parity run` with demo fixtures |
 | Extension packs | Provider, factor, and recipe entry points via YAML |
 | OSS demos | Synthetic fixtures only—no live credentials in repo |
-| Quant pipeline | `indiciumforge quant ...` — factor analytics, portfolio optimization, vectorized backtest, Black-Scholes pricing (W4) |
+| Quant pipeline | `indiciumforge quant ...` — factor analytics, portfolio optimization, vectorized backtest, Black-Scholes pricing |
 
 Full capability matrix: [CAPABILITY_REGISTER.md](CAPABILITY_REGISTER.md).
 
-## Quant quickstart (W4)
+## Quant quickstart
 
 IndiciumForge now ships real, tested quant capability behind `indiciumforge_core.quant`,
 following the same port + pack-loading pattern:
@@ -151,12 +151,12 @@ indiciumforge quant price \
 > panel, returns panel, expected returns, covariance, weight history); `pipeline` starts
 > from the OHLCV panel and is the out-of-the-box end-to-end demo.
 
-> **Honesty note:** the W4 backtester is a daily, single-asset-return, cost-flat model
+> **Honesty note:** the backtester is a daily, single-asset-return, cost-flat model
 > with no slippage, market impact, or intraday dynamics; the demo runs on a **synthetic**
 > golden panel, so all reported metrics demonstrate framework correctness, not market
 > performance or live-trading backtests, and not investment advice (see
 > [ADR-0026](docs/decisions/ADR-0026-quant-capability-increment.md)). QuantLib / rqalpha
-> integration is out of scope for W4; the ports remain swappable for alternative adapters.
+> integration is out of scope for this release; the ports remain swappable for alternative adapters.
 
 ## Open core vs private extensions
 

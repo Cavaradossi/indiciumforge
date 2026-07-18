@@ -11,8 +11,8 @@
   for next time.
 
 Asset identity is normalized once, up front, via
-:func:`asset_uid_from_asset_id`, so the merged W1 identity model never leaks
-raw ``AssetID`` objects into the storage layer (W2 risk ②).
+:func:`asset_uid_from_asset_id`, so the merged canonical identity model never
+leaks raw ``AssetID`` objects into the storage layer (identity-isolation risk).
 """
 
 from __future__ import annotations
